@@ -10,7 +10,7 @@ Arc (matches the film's emotional progression):
 
 Outputs: audio/build/music.wav, audio/build/sfx.wav, audio/build/vo.wav (placed), audio/build/mix.wav
 """
-import json, os, wave
+import json, os, sys, wave
 import numpy as np
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -18,7 +18,10 @@ TL = json.load(open(os.path.join(ROOT, '..', 'scene', 'timeline.json')))
 SR = 48000
 DUR = TL['duration']
 N = int(SR * DUR)
-OUT = os.path.join(ROOT, 'build'); os.makedirs(OUT, exist_ok=True)
+LANG = sys.argv[1] if len(sys.argv) > 1 else 'ar'
+VO_DIR = 'vo_en' if LANG == 'en' else 'vo'
+VO_T = TL['vo_en'] if LANG == 'en' else TL['vo']
+OUT = os.path.join(ROOT, 'build_en' if LANG == 'en' else 'build'); os.makedirs(OUT, exist_ok=True)
 rng = np.random.default_rng(7)
 S = TL['scenes']
 
@@ -255,8 +258,8 @@ def read_wav(p):
     return np.fft.irfft(np.fft.rfft(a), n2 * 1)[:n2] if False else np.interp(np.linspace(0, len(a) - 1, n2), np.arange(len(a)), a)
 
 vo = np.zeros((2, N)); vo_env = np.zeros(N)
-for sid, t0 in TL['vo'].items():
-    a = read_wav(os.path.join(ROOT, 'vo', sid + '.wav'))
+for sid, t0 in VO_T.items():
+    a = read_wav(os.path.join(ROOT, VO_DIR, sid + '.wav'))
     a = fft_filter(a, lo=85, hi=11000, slope=2)          # clean rumble & hiss
     # gentle presence lift (~3 kHz) for intelligibility on phone speakers
     a = a + 0.25 * fft_filter(a, lo=2200, hi=5000, slope=2)
@@ -267,7 +270,9 @@ vo = reverb(vo, decay=0.6, mix=0.06, seed=9)               # small room, keeps i
 
 # sidechain duck: music −8 dB under VO with smooth 250 ms ramps
 k = int(0.25 * SR); kern = np.ones(k) / k
-duck = 1 - 0.6 * np.convolve(vo_env, kern, 'same')
+cs = np.concatenate([[0.0], np.cumsum(vo_env)])          # O(N) centred moving average
+lo = np.clip(np.arange(N) - k // 2, 0, N); hi = np.clip(np.arange(N) + (k - k // 2), 0, N)
+duck = 1 - 0.6 * (cs[hi] - cs[lo]) / k
 
 def write(p, x):
     x = np.clip(x, -1, 1)

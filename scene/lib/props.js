@@ -154,15 +154,18 @@ export function buildContract(M) {
   const H = c.height;
   g.fillStyle = '#f5f0e6'; g.fillRect(0, 0, S, H);
   g.strokeStyle = '#c9a96a'; g.lineWidth = 6; g.strokeRect(40, 40, S - 80, H - 80); g.lineWidth = 1.5; g.strokeRect(56, 56, S - 112, H - 112);
-  g.fillStyle = '#1b2433'; g.textAlign = 'center'; g.direction = 'rtl';
-  g.font = '700 70px "IBM Plex Sans Arabic"'; g.fillText('عقد بيع وحدة عقارية', S / 2, 190);
-  g.font = '500 34px "IBM Plex Sans Arabic"'; g.fillStyle = '#7a6a50'; g.fillText('على المخطط — نموذج توضيحي', S / 2, 255);
+  const en = window.__LANG === 'en';
+  g.fillStyle = '#1b2433'; g.textAlign = 'center'; g.direction = en ? 'ltr' : 'rtl';
+  g.font = en ? '600 58px "Plex Latin"' : '700 70px "IBM Plex Sans Arabic"';
+  g.fillText(en ? 'Sale & Purchase Agreement' : 'عقد بيع وحدة عقارية', S / 2, 190);
+  g.font = en ? '500 32px "Plex Latin"' : '500 34px "IBM Plex Sans Arabic"'; g.fillStyle = '#7a6a50';
+  g.fillText(en ? 'Off-plan unit — illustrative sample' : 'على المخطط — نموذج توضيحي', S / 2, 255);
   const r = rng(4); g.fillStyle = 'rgba(27,36,51,0.22)';
-  let y = 340; const sections = ['المطوّر', 'المشروع', 'الوحدة', 'خطة الدفع', 'موعد التسليم المتوقع'];
+  let y = 340; const sections = en ? ['Developer', 'Project', 'Unit', 'Payment plan', 'Expected handover'] : ['المطوّر', 'المشروع', 'الوحدة', 'خطة الدفع', 'موعد التسليم المتوقع'];
   for (const s of sections) {
-    g.fillStyle = '#1b2433'; g.textAlign = 'right'; g.font = '600 38px "IBM Plex Sans Arabic"'; g.fillText(s, S - 110, y); y += 34;
+    g.fillStyle = '#1b2433'; g.textAlign = en ? 'left' : 'right'; g.font = en ? '600 36px "Plex Latin"' : '600 38px "IBM Plex Sans Arabic"'; g.fillText(s, en ? 110 : S - 110, y); y += 34;
     g.fillStyle = 'rgba(27,36,51,0.18)';
-    for (let i = 0; i < 3; i++) { const w = (0.55 + r() * 0.3) * (S - 220); g.fillRect(S - 110 - w, y, w, 12); y += 30; }
+    for (let i = 0; i < 3; i++) { const w = (0.55 + r() * 0.3) * (S - 220); g.fillRect(en ? 110 : S - 110 - w, y, w, 12); y += 30; }
     y += 40;
   }
   g.strokeStyle = 'rgba(27,36,51,0.5)'; g.lineWidth = 2; g.beginPath(); g.moveTo(120, H - 200); g.lineTo(420, H - 200); g.moveTo(S - 420, H - 200); g.lineTo(S - 120, H - 200); g.stroke();

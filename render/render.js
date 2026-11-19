@@ -8,14 +8,15 @@ const serve = require('./serve');
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((a, v, i, arr) => (v.startsWith('--') ? a.concat([[v.slice(2), arr[i + 1]]]) : a), []));
 const FPS = 30;
-const OUT = path.resolve(__dirname, '..', 'frames');
+const LANG = args.lang === 'en' ? 'en' : 'ar';
+const OUT = path.resolve(__dirname, '..', LANG === 'en' ? 'frames_en' : 'frames');
 fs.mkdirSync(OUT, { recursive: true });
 
 async function openPage(browser, port) {
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
   page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') console.log('[page]', m.text()); });
   page.on('pageerror', (e) => console.log('[pageerror]', e.message));
-  await page.goto(`http://127.0.0.1:${port}/scene/`);
+  await page.goto(`http://127.0.0.1:${port}/scene/${LANG === 'en' ? '?lang=en' : ''}`);
   await page.waitForFunction(() => window.__ready === true, null, { timeout: 180000 });
   return page;
 }

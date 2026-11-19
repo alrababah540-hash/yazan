@@ -16,21 +16,47 @@ function reveal(e, t, a, b, { rise = 34, blur = 10, fi = 0.6, fo = 0.45, scale =
   return v;
 }
 
-export function buildOverlay({ narration, durations, timeline }) {
+const STR = {
+  ar: {
+    s1: 'كيف تشتري عقاراً<br>قبل أن يُبنى؟', s2: 'الشراء على المخطط', s3: 'أبوظبي', path: ['المشروع', 'الوحدة', 'التفاصيل'], arrow: '←',
+    s5: 'خطة الدفع تختلف<br>من مشروع لآخر', chips: ['خيارات', 'دفعات مرحلية', 'تخطيط للمستقبل'], s7a: 'مخاطر يجب معرفتها', s7: 'تحقق قبل أن تقرر',
+    checks: ['المطوّر', 'المشروع', 'العقد', 'خطة الدفع'], align: 'right',
+    foot: 'تحقّق من بيانات المشروع وحساب الضمان (Escrow)<br>لدى الجهات الرسمية، مثل مركز أبوظبي العقاري (ADREC)',
+    delay: ['تأخّر التسليم', 'DELAY'], price: ['تغيّر الأسعار', 'PRICE CHANGE'],
+    close: ['اعرف المشروع.', 'افهم التفاصيل.', 'اختار بوعي.'], cta: 'اكتشف المزيد عن عقارات أبوظبي',
+    map: { yas: ['جزيرة ياس', 'Yas Island'], saadiyat: ['جزيرة السعديات', 'Saadiyat Island'], reem: ['جزيرة الريم', 'Al Reem Island'] },
+    ms: [['الحجز والعقد', 'BOOKING · CONTRACT'], ['دفعات أثناء البناء', 'CONSTRUCTION'], ['التسليم', 'HANDOVER']],
+    lay: ['غرفة نوم', 'غرفتا نوم', 'ثلاث غرف'], plan: ['المخطط', 'FLOOR PLAN'], split: /(?<=[،.!…؟])\s+/,
+  },
+  en: {
+    s1: 'How do you buy a home<br>before it’s built?', s2: 'Buying from the plan', s3: 'Abu Dhabi', path: ['Project', 'Unit', 'Details'], arrow: '→',
+    s5: 'Payment plans vary<br>from project to project', chips: ['Choice', 'Staged payments', 'Future planning'], s7a: 'Risks to know', s7: 'Verify before you decide',
+    checks: ['Developer', 'Project', 'Contract', 'Payment plan'], align: 'left',
+    foot: 'Check project details and its escrow account<br>with official bodies such as the Abu Dhabi Real Estate Centre (ADREC)',
+    delay: ['Handover delay', 'DELAY'], price: ['Price changes', 'MARKET'],
+    close: ['Know the project.', 'Understand the details.', 'Choose wisely.'], cta: 'Discover more about Abu Dhabi real estate',
+    map: { yas: ['Yas Island', 'جزيرة ياس'], saadiyat: ['Saadiyat Island', 'جزيرة السعديات'], reem: ['Al Reem Island', 'جزيرة الريم'] },
+    ms: [['Booking & contract', 'STEP 1'], ['Construction installments', 'STEP 2'], ['Handover', 'STEP 3']],
+    lay: ['1 bedroom', '2 bedrooms', '3 bedrooms'], plan: ['Floor plan', 'المخطط'], split: /(?<=[.!…?:,])\s+/,
+  },
+};
+
+export function buildOverlay({ narration, durations, timeline, lang = 'ar' }) {
+  const S = STR[lang]; const VO = (lang === 'en' && timeline.vo_en) || timeline.vo;
   const ui = document.getElementById('ui');
   const gradTop = el('div', '', ''); gradTop.style.cssText = 'position:absolute;left:0;right:0;top:0;height:760px;background:linear-gradient(rgba(5,10,18,.62),rgba(5,10,18,0));';
   const gradBot = el('div', '', ''); gradBot.style.cssText = 'position:absolute;left:0;right:0;bottom:0;height:640px;background:linear-gradient(rgba(5,10,18,0),rgba(5,10,18,.55));';
   const TOP = (y) => `top:${y}px`;
   // ---------- headings
   const H = {
-    s1: el('div', 'layer', `<div class="eyebrow">OFF-PLAN · ABU DHABI</div><div class="rule"></div><div class="h1">كيف تشتري عقاراً<br>قبل أن يُبنى؟</div>`),
-    s2: el('div', 'layer', `<div class="h1"><span class="latin gold" style="font-size:86px">OFF-PLAN</span></div><div class="rule"></div><div class="h2">الشراء على المخطط</div>`),
-    s3: el('div', 'layer', `<div class="eyebrow">ABU DHABI</div><div class="rule"></div><div class="h2">أبوظبي</div>`),
-    s4: el('div', 'layer', `<div class="h2" id="path"><span data-k="0">المشروع</span> <span class="gold">←</span> <span data-k="1">الوحدة</span> <span class="gold">←</span> <span data-k="2">التفاصيل</span></div>`),
-    s5: el('div', 'layer', `<div class="eyebrow">PAYMENT PLAN</div><div class="rule"></div><div class="h2">خطة الدفع تختلف<br>من مشروع لآخر</div>`),
-    s6: el('div', 'layer', `<div id="chips"><span class="chip" data-k="0">خيارات</span><span class="chip" data-k="1">دفعات مرحلية</span><span class="chip" data-k="2">تخطيط للمستقبل</span></div>`),
-    s7a: el('div', 'layer', `<div class="eyebrow" style="color:#e9b86f">RISKS</div><div class="rule"></div><div class="h2">مخاطر يجب معرفتها</div>`),
-    s7: el('div', 'layer', `<div class="eyebrow">VERIFY</div><div class="rule"></div><div class="h1">تحقق قبل أن تقرر</div>`),
+    s1: el('div', 'layer', `<div class="eyebrow">OFF-PLAN · ABU DHABI</div><div class="rule"></div><div class="h1">${S.s1}</div>`),
+    s2: el('div', 'layer', `<div class="h1"><span class="latin gold" style="font-size:86px">OFF-PLAN</span></div><div class="rule"></div><div class="h2">${S.s2}</div>`),
+    s3: el('div', 'layer', `<div class="eyebrow">ABU DHABI</div><div class="rule"></div><div class="h2">${S.s3}</div>`),
+    s4: el('div', 'layer', `<div class="h2" id="path"><span data-k="0">${S.path[0]}</span> <span class="gold">${S.arrow}</span> <span data-k="1">${S.path[1]}</span> <span class="gold">${S.arrow}</span> <span data-k="2">${S.path[2]}</span></div>`),
+    s5: el('div', 'layer', `<div class="eyebrow">PAYMENT PLAN</div><div class="rule"></div><div class="h2">${S.s5}</div>`),
+    s6: el('div', 'layer', `<div id="chips"><span class="chip" data-k="0">${S.chips[0]}</span><span class="chip" data-k="1">${S.chips[1]}</span><span class="chip" data-k="2">${S.chips[2]}</span></div>`),
+    s7a: el('div', 'layer', `<div class="eyebrow" style="color:#e9b86f">RISKS</div><div class="rule"></div><div class="h2">${S.s7a}</div>`),
+    s7: el('div', 'layer', `<div class="eyebrow">VERIFY</div><div class="rule"></div><div class="h1">${S.s7}</div>`),
   };
   H.s1.style.cssText = TOP(250); H.s2.style.cssText = TOP(250); H.s3.style.cssText = TOP(250); H.s4.style.cssText = TOP(270);
   H.s5.style.cssText = TOP(240); H.s6.style.cssText = TOP(270); H.s7a.style.cssText = TOP(250); H.s7.style.cssText = TOP(230);
@@ -40,41 +66,37 @@ export function buildOverlay({ narration, durations, timeline }) {
   chips.forEach((c) => { c.style.fontSize = '36px'; c.style.padding = '12px 24px'; c.style.margin = '0 7px'; });
 
   // checklist (S7)
-  const checklist = el('div', 'layer', `<div style="display:inline-block;text-align:right">
-      <div class="check" data-k="0"><i>✓</i><span>المطوّر</span></div>
-      <div class="check" data-k="1"><i>✓</i><span>المشروع</span></div>
-      <div class="check" data-k="2"><i>✓</i><span>العقد</span></div>
-      <div class="check" data-k="3"><i>✓</i><span>خطة الدفع</span></div></div>`);
+  const checklist = el('div', 'layer', `<div style="display:inline-block;text-align:${S.align}">${S.checks.map((c, k) => `<div class="check" data-k="${k}"><i>✓</i><span>${c}</span></div>`).join('')}</div>`);
   checklist.style.cssText = 'top:520px';
   const checks = [...checklist.querySelectorAll('.check')];
-  const foot = el('div', 'foot', 'تحقّق من بيانات المشروع وحساب الضمان (Escrow)<br>لدى الجهات الرسمية، مثل مركز أبوظبي العقاري (ADREC)');
+  const foot = el('div', 'foot', S.foot);
   foot.style.top = '1000px'; foot.style.bottom = 'auto'; foot.style.fontSize = '27px'; foot.style.lineHeight = '1.6';
 
   // risk labels (S7)
-  const riskDelay = el('div', 'ms', 'تأخّر التسليم<small>DELAY</small>');
-  const riskPrice = el('div', 'ms', 'تغيّر الأسعار<small>PRICE CHANGE</small>');
+  const riskDelay = el('div', 'ms', `${S.delay[0]}<small>${S.delay[1]}</small>`);
+  const riskPrice = el('div', 'ms', `${S.price[0]}<small>${S.price[1]}</small>`);
 
   // closing (S8)
   const close = el('div', 'layer', `<div class="h2" style="font-weight:600">
-      <div data-k="0">اعرف المشروع.</div><div data-k="1">افهم التفاصيل.</div><div data-k="2" class="gold">اختار بوعي.</div></div>`);
+      <div data-k="0">${S.close[0]}</div><div data-k="1">${S.close[1]}</div><div data-k="2" class="gold">${S.close[2]}</div></div>`);
   close.style.cssText = TOP(330);
   const closeLines = [...close.querySelectorAll('[data-k]')];
-  const cta = el('div', 'layer', `<div class="rule" style="width:180px"></div><div style="font-weight:500;font-size:44px">اكتشف المزيد عن عقارات أبوظبي</div>`);
+  const cta = el('div', 'layer', `<div class="rule" style="width:180px"></div><div style="font-weight:500;font-size:44px">${S.cta}</div>`);
   cta.style.cssText = 'bottom:285px';
 
   // map labels (S3), milestone labels (S5), layout labels (S6)
   const mkLabel = (ar, en) => el('div', 'label', `<div class="ar">${ar}</div><div class="en">${en}</div><div class="stem"></div>`);
-  const mapL = { yas: mkLabel('جزيرة ياس', 'Yas Island'), saadiyat: mkLabel('جزيرة السعديات', 'Saadiyat Island'), reem: mkLabel('جزيرة الريم', 'Al Reem Island') };
-  const ms = [el('div', 'ms', 'الحجز والعقد<small>BOOKING · CONTRACT</small>'), el('div', 'ms', 'دفعات أثناء البناء<small>CONSTRUCTION</small>'), el('div', 'ms', 'التسليم<small>HANDOVER</small>')];
-  const lay = ['غرفة نوم', 'غرفتا نوم', 'ثلاث غرف'].map((s) => { const e = el('div', 'ms', s); e.style.fontSize = '32px'; return e; });
-  const planTag = el('div', 'ms', 'المخطط<small>FLOOR PLAN</small>');
+  const mapL = Object.fromEntries(Object.entries(S.map).map(([k, [a, b]]) => [k, mkLabel(a, b)]));
+  const ms = S.ms.map(([a, b]) => el('div', 'ms', `${a}<small>${b}</small>`));
+  const lay = S.lay.map((s) => { const e = el('div', 'ms', s); e.style.fontSize = '32px'; return e; });
+  const planTag = el('div', 'ms', `${S.plan[0]}<small>${S.plan[1]}</small>`);
 
   // ---------- captions (VO subtitles), chunked at punctuation, timed by character share
   const capBox = el('div', 'cap', '<span></span>'); const capSpan = capBox.firstChild;
   const chunks = [];
   for (const L of narration.lines) {
-    const t0 = timeline.vo[L.id], d = durations[L.id];
-    const parts = L.text.split(/(?<=[،.!…؟])\s+/).filter(Boolean);
+    const t0 = VO[L.id], d = durations[L.id];
+    const parts = L.text.split(S.split).filter(Boolean).reduce((acc, p) => { if (lang !== 'en') { acc.push(p); return acc; } if (acc.length && (acc[acc.length - 1].length < 22 || p.length < 14)) acc[acc.length - 1] += ' ' + p; else acc.push(p); return acc; }, []);
     const total = parts.reduce((a, p) => a + p.length, 0); let acc = 0;
     for (const p of parts) { const a = t0 + (acc / total) * d; acc += p.length; chunks.push({ a, b: t0 + (acc / total) * d, text: p }); }
   }
@@ -85,7 +107,7 @@ export function buildOverlay({ narration, durations, timeline }) {
 
   function place(e, p, v, dy = 0) { // p = projected {x,y,visible}
     if (!p || !p.visible || v <= 0.001) { e.style.display = 'none'; return; }
-    e.style.display = ''; e.style.left = `${p.x}px`; e.style.top = `${p.y + dy}px`; e.style.opacity = v.toFixed(3);
+    e.style.display = ''; const hw = (e.offsetWidth || 0) / 2; e.style.left = `${Math.min(1080 - hw - 36, Math.max(hw + 36, p.x))}px`; e.style.top = `${p.y + dy}px`; e.style.opacity = v.toFixed(3);
   }
 
   return {

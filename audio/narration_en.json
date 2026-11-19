@@ -1,0 +1,54 @@
+{
+ "voice": "kokoro-en-v0_19 bm_george (sid 9)",
+ "sid": 9,
+ "lines": [
+  {
+   "id": "s1",
+   "text": "Imagine buying an apartment… before it's even built.",
+   "tts": "Imagine buying an apartment... before it's even built.",
+   "speed": 0.85
+  },
+  {
+   "id": "s2",
+   "text": "This is off-plan: buying a property before the project is completed, or while it's still under development.",
+   "tts": "This is off-plan. Buying a property before the project is completed, or while it's still under development.",
+   "speed": 0.86
+  },
+  {
+   "id": "s3",
+   "text": "In Abu Dhabi, you'll find real-estate projects in areas like Yas, Saadiyat and Al Reem.",
+   "tts": "In Abu Dhabi, you'll find real-estate projects in areas like Yas, Saadiyat, and Al Reem.",
+   "speed": 0.86
+  },
+  {
+   "id": "s4",
+   "text": "You choose the project and the right unit, then review the floor plan, the size, the view and the details.",
+   "tts": "You choose the project and the right unit, then review the floor plan, the size, the view, and the details.",
+   "speed": 0.88
+  },
+  {
+   "id": "s5",
+   "text": "You pay according to the payment plan and the contract terms, and payments may be spread across the project's development stages.",
+   "tts": "You pay according to the payment plan and the contract terms, and payments may be spread across the project's development stages.",
+   "speed": 0.9
+  },
+  {
+   "id": "s6",
+   "text": "Some choose off-plan for the variety of units, for staged payments, or to plan a future property purchase.",
+   "tts": "Some choose off-plan for the variety of units, for staged payments, or to plan a future property purchase.",
+   "speed": 0.88
+  },
+  {
+   "id": "s7",
+   "text": "But there are risks, like handover delays and price changes. So verify the developer and the project, and read the contract and the payment plan.",
+   "tts": "But it's important to know there are risks, like handover delays, and price changes. So, verify the developer and the project, and read the contract and the payment plan.",
+   "speed": 0.9
+  },
+  {
+   "id": "s8",
+   "text": "Off-plan isn't just buying from a plan… it's a decision that starts with the right information.",
+   "tts": "Off-plan isn't just buying from a plan... it's a decision that starts with the right information.",
+   "speed": 0.84
+  }
+ ]
+}

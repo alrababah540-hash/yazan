@@ -52,6 +52,7 @@ export const LAYOUTS = {
 };
 
 const FONT = '"IBM Plex Sans Arabic"';
+const EN = { 'المعيشة': 'LIVING', 'المطبخ': 'KITCHEN', 'نوم رئيسية': 'MASTER', 'نوم': 'BEDROOM', 'حمام': 'BATH', 'شرفة': 'BALCONY' };
 
 // Architectural drawing: poché exterior walls, thin partitions, door swings, dimension line.
 // style: 'blueprint' (champagne lines on transparent) | 'paper' (charcoal on ivory)
@@ -65,8 +66,8 @@ export function drawPlan(ctx, L, { size = 1024, style = 'blueprint', labels = tr
   ctx.clearRect(0, 0, size, size);
   if (style === 'paper') { ctx.fillStyle = '#f4efe5'; ctx.fillRect(0, 0, size, size); }
   ctx.save();
-  // progressive reveal: clip from right to left (RTL reading direction)
-  ctx.beginPath(); ctx.rect(size * (1 - reveal), 0, size * reveal, size); ctx.clip();
+  // progressive reveal in reading direction (RTL for Arabic, LTR for English)
+  ctx.beginPath(); if (window.__LANG === 'en') ctx.rect(0, 0, size * reveal, size); else ctx.rect(size * (1 - reveal), 0, size * reveal, size); ctx.clip();
   // fine grid
   ctx.strokeStyle = style === 'paper' ? 'rgba(0,0,0,0.05)' : 'rgba(230,207,156,0.07)'; ctx.lineWidth = 1;
   for (let g = 0; g <= size; g += s * 0.5) { ctx.beginPath(); ctx.moveTo(g, 0); ctx.lineTo(g, size); ctx.moveTo(0, g); ctx.lineTo(size, g); ctx.stroke(); }
@@ -99,9 +100,10 @@ export function drawPlan(ctx, L, { size = 1024, style = 'blueprint', labels = tr
   }
   // room labels
   if (labels) {
-    ctx.fillStyle = ink; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.direction = 'rtl';
-    ctx.font = `500 ${Math.round(s * 0.42)}px ${FONT}`;
-    for (const r of L.rooms) ctx.fillText(r.ar, ...P(r.x, r.y));
+    const en = window.__LANG === 'en';
+    ctx.fillStyle = ink; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.direction = en ? 'ltr' : 'rtl';
+    ctx.font = en ? `500 ${Math.round(s * 0.3)}px "Plex Latin"` : `500 ${Math.round(s * 0.42)}px ${FONT}`;
+    for (const r of L.rooms) ctx.fillText(en ? EN[r.ar] : r.ar, ...P(r.x, r.y));
   }
   // overall dimension line (no invented areas — geometry only)
   if (dims) {

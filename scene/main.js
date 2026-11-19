@@ -11,16 +11,19 @@ import { buildOverlay } from './lib/overlay.js';
 import { clamp, lerp, remap, smooth, smoother, easeOut, easeInOut, easeOutBack, track, cine } from './lib/util.js';
 
 const Q = new URLSearchParams(location.search);
+const LANG = Q.get('lang') === 'en' ? 'en' : 'ar';
+if (LANG === 'en') { document.documentElement.lang = 'en'; document.documentElement.dir = 'ltr'; window.__LANG = 'en'; }
 const E = createEngine(document.getElementById('gl'), { dof: Q.get('dof') !== '0' });
 const { scene, camera } = E;
 const M = makeMaterials();
 await document.fonts.load('600 40px "IBM Plex Sans Arabic"'); await document.fonts.load('500 40px "IBM Plex Sans Arabic"');
 await document.fonts.load('700 40px "IBM Plex Sans Arabic"'); await document.fonts.load('600 30px "Plex Latin"');
+await document.fonts.load('500 30px "Plex Latin"'); await document.fonts.load('700 30px "Plex Latin"');
 await document.fonts.ready;
 
 const TL = await (await fetch('/scene/timeline.json')).json();
-const NAR = await (await fetch('/audio/narration.json')).json();
-const DUR = await (await fetch('/audio/vo/durations.json')).json();
+const NAR = await (await fetch(LANG === 'en' ? '/audio/narration_en.json' : '/audio/narration.json')).json();
+const DUR = await (await fetch(LANG === 'en' ? '/audio/vo_en/durations.json' : '/audio/vo/durations.json')).json();
 
 // ---------------------------------------------------------------- world
 const tower = buildTower(M); scene.add(tower.root);
@@ -70,7 +73,7 @@ const dGhost = new THREE.Mesh(new THREE.OctahedronGeometry(1.4), new THREE.MeshB
 const dashes = new THREE.Group(); for (let i = 0; i < 8; i++) { const d = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.36, 0.36), new THREE.MeshBasicMaterial({ color: 0xe9a85a, toneMapped: false })); d.position.x = i * 1.3; dashes.add(d); }
 delay.add(dRail, dMarker, dGhost, dashes);
 
-const overlay = buildOverlay({ narration: NAR, durations: DUR, timeline: TL });
+const overlay = buildOverlay({ narration: NAR, durations: DUR, timeline: TL, lang: LANG });
 
 // ---------------------------------------------------------------- helpers
 const V = (x, y, z) => new THREE.Vector3(x, y, z);

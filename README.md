@@ -2,7 +2,9 @@
 
 A vertical (1080×1920, 30 fps, 76 s) Arabic film that explains off-plan property buying in Abu Dhabi. It runs as one continuous procedural 3D world: empty plot → blueprint → tower → selected apartment → payment timeline → completed building → model on stone.
 
-**Final video:** `output/offplan_abu_dhabi_ar_1080x1920.mp4`
+**Final videos:**
+- Arabic: `output/offplan_abu_dhabi_ar_1080x1920.mp4`
+- English: `output/offplan_abu_dhabi_en_1080x1920.mp4` (same visuals; English VO, text, captions, plan labels and contract; left-to-right layout)
 
 | Doc | Contents |
 |---|---|
@@ -21,7 +23,7 @@ The production environment has **no GPU and no Blender**, and only package regis
 | 3D scene, animation, camera | **three.js 0.170** (PBR materials, PMREM image-based lighting, PCF soft shadows, MSAA, bokeh DOF, bloom, film grade) |
 | Rendering | Headless **Chromium + Playwright**, WebGL2 on SwiftShader (CPU). `renderAt(t)` is a pure function of time, so frames are deterministic |
 | Typography | HTML/CSS overlay in the same page: native Arabic shaping and RTL, IBM Plex Sans Arabic |
-| Voice | **Piper** neural TTS `ar_JO-kareem-medium`, offline, with hand-diacritised input |
+| Voice | Arabic: **Piper** `ar_JO-kareem-medium` (hand-diacritised input). English: **Kokoro-82M** `bm_george` (Apache-2.0). Both offline |
 | Music + SFX | Original synthesis in NumPy (`audio/score.py`), cue-locked to `scene/timeline.json` |
 | Map data | OpenStreetMap-derived land polygons (ODbL), clipped and projected by `tools/clip_geo.py` |
 | Encode / master | FFmpeg: x264 CRF 14 segments → concat, two-pass loudnorm −14 LUFS / −1 dBTP, AAC 320k |
@@ -33,8 +35,14 @@ npm install                      # three.js + fonts
 bash tools/fetch_assets.sh       # Piper Arabic voice model + python deps
 python3 audio/tts.py             # VO lines → audio/vo/*.wav (+ durations.json)
 python3 audio/score.py           # music, SFX, ducking, mix → audio/build/
-node render/render.js --workers 2   # frames → frames/seg_*.mp4 (resumable)
-bash render/build.sh             # concat + master + mux → output/
+node render/render.js --workers 1   # Arabic frames → frames/seg_*.mp4 (resumable; run 2 processes on split --from/--to ranges for speed)
+bash render/build.sh             # concat + master + mux → output/ (Arabic)
+
+# English version
+venv/bin/python audio/tts_en.py   # needs sherpa-onnx==1.12.40 + tools/tts/kokoro-en-v0_19
+python3 audio/score.py en
+node render/render.js --lang en --workers 1   # → frames_en/
+bash render/build.sh en
 node render/render.js --stills 3,10,22 --dir docs/stills   # optional frame grabs
 ```
 

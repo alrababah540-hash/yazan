@@ -44,3 +44,25 @@ Burned-in Arabic captions follow the narration throughout (chunked at punctuatio
 - No real projects, developers or brands are depicted; the tower, apartment layouts and contract are generic illustrations (the contract is labelled «نموذج توضيحي»).
 - Map shows **areas** (Yas, Saadiyat, Al Reem islands) only, using OpenStreetMap-derived coastlines; no project is placed on the map.
 - Regulatory reference (Scene 7 footnote) was checked on 2026-11-19 against law-firm summaries of Abu Dhabi Law No. 3 of 2015, as amended by Law No. 2 of 2025, which requires a dedicated escrow account per off-plan project, with the Abu Dhabi Real Estate Centre (ADREC) and the Department of Municipalities and Transport issuing the implementing decisions. Before publishing, check it against the official ADREC / DMT text.
+
+
+---
+
+# English version — "What is off-plan real estate in Abu Dhabi?"
+
+Voice: **Kokoro-82M** (Apache-2.0), voice `bm_george` (warm British male), rendered offline via sherpa-onnx 1.12. Whisper ASR round-trip similarity: **98.4 %** (`audio/vo_en/asr_check.json`).
+
+| # | VO in (s) | Length (s) | Narration |
+|---|-----------|------------|-----------|
+| 1 | 1.20 | 3.37 | Imagine buying an apartment… before it's even built. |
+| 2 | 7.60 | 6.78 | This is off-plan: buying a property before the project is completed, or while it's still under development. |
+| 3 | 18.60 | 6.36 | In Abu Dhabi, you'll find real-estate projects in areas like Yas, Saadiyat and Al Reem. |
+| 4 | 26.60 | 6.52 | You choose the project and the right unit, then review the floor plan, the size, the view and the details. |
+| 5 | 35.00 | 7.65 | You pay according to the payment plan and the contract terms, and payments may be spread across the project's development stages. |
+| 6 | 43.60 | 6.64 | Some choose off-plan for the variety of units, for staged payments, or to plan a future property purchase. |
+| 7 | 53.20 | 10.33 | But there are risks, like handover delays and price changes. So verify the developer and the project, and read the contract and the payment plan. |
+| 8 | 67.20 | 5.93 | Off-plan isn't just buying from a plan… it's a decision that starts with the right information. |
+
+Total speech: 53.6 s in the same 76.0 s cut (identical visuals and scene timings).
+
+On-screen text (EN): "How do you buy a home before it’s built?" · "OFF-PLAN / Buying from the plan" · "Abu Dhabi" · Yas / Saadiyat / Al Reem Island (Arabic sub-labels) · "Project → Unit → Details" · "Payment plans vary from project to project" · Booking & contract / Construction installments / Handover · "Choice | Staged payments | Future planning" · "Risks to know", "Handover delay", "Price changes" · "Verify before you decide" ✓ Developer ✓ Project ✓ Contract ✓ Payment plan · escrow/ADREC footnote · "Know the project. Understand the details. Choose wisely." · CTA "Discover more about Abu Dhabi real estate". Floor-plan room names and the illustrative contract are also in English.

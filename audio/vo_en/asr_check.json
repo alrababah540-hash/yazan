@@ -1,0 +1,42 @@
+[
+ {
+  "id": "s1",
+  "similarity": 1.0,
+  "asr": "Imagine buying an apartment before it's even built."
+ },
+ {
+  "id": "s2",
+  "similarity": 1.0,
+  "asr": "This is off plan, buying a property before the project is completed or while it's still under development."
+ },
+ {
+  "id": "s3",
+  "similarity": 0.963,
+  "asr": "In Abu Dhabi, you'll find real estate projects in areas like Yaz, Sadiat and Al-Riem."
+ },
+ {
+  "id": "s4",
+  "similarity": 1.0,
+  "asr": "You choose the project and the right unit, then review the floor plan, the size, the view, and the details."
+ },
+ {
+  "id": "s5",
+  "similarity": 1.0,
+  "asr": "You pay according to the payment plan and the contract terms, and payments may be spread across the project's development stages."
+ },
+ {
+  "id": "s6",
+  "similarity": 1.0,
+  "asr": "Some choose off-plan for the variety of units, for staged payments, or to plan a future property purchase."
+ },
+ {
+  "id": "s7",
+  "similarity": 0.928,
+  "asr": "But it's important to know there are risks, like handover delays and price changes. So, verify the developer and the project and read the contract and the payment plan."
+ },
+ {
+  "id": "s8",
+  "similarity": 0.978,
+  "asr": "Off plan isn't just buying from a planet a decision that starts with the right information."
+ }
+]

@@ -1,7 +1,11 @@
 node_modules/
 tools/tts/vits-*
+tools/tts/kokoro-*
 frames/
+frames_en/
 *.tmp
 *.tmp.mp4
 audio/build/*.wav
+audio/build_en/*.wav
 render/debug.js
+venv/

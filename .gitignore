@@ -9,3 +9,4 @@ audio/build/*.wav
 audio/build_en/*.wav
 render/debug.js
 venv/
+*.log

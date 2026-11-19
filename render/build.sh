@@ -23,5 +23,8 @@ ffmpeg -y -v error -i $AB/mix.wav -af "loudnorm=I=-14:TP=-1:LRA=11:measured_I=$m
 ffmpeg -y -v error -i $FR/video_only.mp4 -i $AB/master.wav \
   -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 320k -ar 48000 -t 76 -movflags +faststart \
   -metadata title="$TITLE" -metadata language=$ML \
-  "$OUT/$NAME"
-echo "wrote $OUT/$NAME"
+  "$OUT/master_$NAME"
+# delivery encode: social/mobile spec (≤ 8.5 Mb/s VBV), keeps the master as mezzanine
+ffmpeg -y -v error -i "$OUT/master_$NAME" -map 0 -c:v libx264 -preset slow -crf 19 -maxrate 8500k -bufsize 17000k \
+  -profile:v high -level 4.2 -pix_fmt yuv420p -r 30 -c:a copy -movflags +faststart "$OUT/$NAME"
+echo "wrote $OUT/$NAME (+ master_$NAME)"

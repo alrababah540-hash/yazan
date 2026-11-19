@@ -10,3 +10,4 @@ audio/build_en/*.wav
 render/debug.js
 venv/
 *.log
+output/master_*

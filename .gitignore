@@ -1,0 +1,7 @@
+node_modules/
+tools/tts/vits-*
+frames/
+*.tmp
+*.tmp.mp4
+audio/build/*.wav
+render/debug.js

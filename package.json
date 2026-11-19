@@ -1,0 +1,16 @@
+{
+  "name": "offplan-abu-dhabi-film",
+  "version": "1.0.0",
+  "private": true,
+  "description": "70s vertical Arabic 3D motion film: What is off-plan real estate in Abu Dhabi?",
+  "scripts": {
+    "audio": "python3 audio/tts.py && python3 audio/score.py",
+    "frames": "node render/render.js",
+    "build": "bash render/build.sh"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-sans-arabic": "5.2.8",
+    "@fontsource/cormorant-garamond": "5.2.8",
+    "three": "0.170.0"
+  }
+}

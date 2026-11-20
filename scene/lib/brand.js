@@ -16,6 +16,9 @@ export function makeBrand(b = {}) {
   ];
   const theme = (s) => MAP.reduce((acc, [re, v]) => acc.replace(re, v), s);
   const ratio = (h, ref) => { const a = hex(h), r = hex(ref); return a.map((v, i) => Math.min(3, (v + 8) / (r[i] + 8))); };
-  return { ...B, deep, theme, isDefault: JSON.stringify(B) === JSON.stringify(BASE), rgb01: (h) => hex(h).map((v) => v / 255),
+  const lum = (h) => { const c = hex(h).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+  const darkText = lum(B.text) < 0.2;  // dark text ⇒ text sits on accent panels; accent is used for text on backgrounds
+  const rgba = (h, a) => { const [r, g, b] = hex(h); return `rgba(${r},${g},${b},${a})`; };
+  return { ...B, deep, theme, darkText, rgba, lum, isDefault: JSON.stringify(B) === JSON.stringify(BASE), rgb01: (h) => hex(h).map((v) => v / 255),
     accentTint: ratio(B.accent, BASE.accent), primaryTint: ratio(B.primary, BASE.primary) };
 }

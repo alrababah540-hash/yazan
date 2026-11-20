@@ -439,8 +439,9 @@ if (Q.get('reel') === '2' || Q.get('reel') === '3') {
   if (!BR.isDefault) { // brand palette → key 3D materials
     const [ar, ag, ab] = BR.rgb01(BR.accentDeep), [hr, hg, hb] = BR.rgb01(BR.accent), [pr, pg, pb] = BR.rgb01(BR.primary);
     M.gold.color.setRGB(ar, ag, ab); M.goldGlow.color.setRGB(ar, ag, ab); M.goldGlow.emissive.setRGB(ar, ag, ab); M.line.color.setRGB(hr, hg, hb);
-    for (const f of Object.values(map2.focus)) { f.hi.setRGB(ar * 0.75, ag * 0.75, ab * 0.75); f.base.setRGB(pr * 1.3 + 0.03, pg * 1.3 + 0.03, pb * 1.3 + 0.03); f.top.emissive.setRGB(ar, ag, ab); f.edge.material.color.setRGB(hr, hg, hb); f.ringMat.color.setRGB(hr, hg, hb); f.head.material.color.setRGB(hr, hg, hb); f.head.material.emissive.setRGB(ar, ag, ab); }
+    for (const f of Object.values(map2.focus)) { f.hi.setRGB(ar * 0.8, ag * 0.8, ab * 0.8); f.base.setRGB(pr * 0.42, pg * 0.42, pb * 0.42); f.top.emissive.setRGB(ar, ag, ab); f.edge.material.color.setRGB(hr, hg, hb); f.ringMat.color.setRGB(hr, hg, hb); f.head.material.color.setRGB(hr, hg, hb); f.head.material.emissive.setRGB(ar, ag, ab); }
     map2.root.children.find((c) => c.isMesh).material.color.setRGB(...BR.primaryTint);
+    map2.root.traverse((o) => { if (o.isMesh && Array.isArray(o.material) && !Object.values(map2.focus).some((f) => f.top === o.material[0])) { o.material[0].color.setRGB(pr * 0.34, pg * 0.34, pb * 0.34); } });
     studio.mat.color.setRGB(...BR.primaryTint); blueprint.mat.uniforms.uTint.value.set(...BR.accentTint);
     E.backdrop.material.uniforms.uTint.value.set(...BR.primaryTint);
     E.grade.uniforms.uFadeCol.value.set(pr * 0.6, pg * 0.6, pb * 0.6);

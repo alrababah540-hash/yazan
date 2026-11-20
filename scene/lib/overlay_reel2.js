@@ -25,7 +25,7 @@ const css = `
 .r2-rule { width:90px; height:2px; margin:16px auto 18px; background:linear-gradient(90deg,transparent,${GOLD},transparent); }
 .r2-h { font:700 76px/1.1 'Plex Latin'; letter-spacing:-0.015em; text-shadow:0 6px 36px rgba(0,0,0,.55); }
 .r2-h2 { font:700 62px/1.12 'Plex Latin'; letter-spacing:-0.01em; text-shadow:0 5px 30px rgba(0,0,0,.55); }
-.r2 .g { color:${GOLD}; }
+.r2 .g, .r2 .gg { color:${GOLD}; }
 .r2-word { font:500 116px 'Cormorant'; letter-spacing:.14em; color:${GOLD}; text-shadow:0 6px 36px rgba(0,0,0,.55); }
 .r2-steps { display:flex; justify-content:center; gap:14px; align-items:center; font:600 24px 'Plex Latin'; letter-spacing:.18em; }
 .r2-steps .s { color:rgba(243,238,228,.35); } .r2-steps .s.on { color:${IVORY}; } .r2-steps .d { width:40px; height:2px; background:rgba(226,199,143,.35); }
@@ -84,10 +84,35 @@ function stagger(e, t, a, step = 0.14, dur = 0.5) {
 const fmt = ([lon, lat]) => `${lat.toFixed(2)}°N · ${lon.toFixed(2)}°E`;
 
 export function buildReelOverlay2({ narration, durations, reel, brand }) {
-  if (brand && !brand.isDefault) { THEME = brand.theme; GOLD = brand.accent; IVORY = brand.text; DIM = THEME(DIM); }
+  if (brand && !brand.isDefault) { THEME = brand.theme; GOLD = brand.accent; IVORY = brand.darkText ? brand.accent : brand.text; DIM = THEME(DIM); }
+  if (brand && brand.darkText) { // light-panel system: accent panels carry dark text; accent text on primary backgrounds
+    const A = brand.accent, T = brand.text, P = brand.primary, a = (h, x) => brand.rgba(h, x);
+    const ls = document.createElement('style'); ls.textContent = `
+    .r2-h,.r2-h2,.r2-word,.r2-eb,.r2-save .lbl,.r2-note{color:${A}!important}
+    .r2-h .gg{color:${T}!important;background:${A};padding:0 .2em;border-radius:.16em}
+    .r2-h .gg .w{color:${T}!important}
+    .r2-h .g,.r2-h2 .g,.r2-note .g{color:${T}!important;background:${A};padding:0 .22em;border-radius:.18em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+    .r2-rule{background:linear-gradient(90deg,transparent,${A},transparent)!important}
+    .r2-steps .s{color:${a(A, .38)}!important} .r2-steps .s.on{color:${A}!important} .r2-steps .d{background:${a(A, .4)}!important}
+    .r2-isl{background:${a(T, .84)};padding:8px 18px 10px;border-radius:14px} .r2-isl .n{color:${A}!important;text-shadow:none!important} .r2-isl .c,.r2-isl .ar{text-shadow:none!important} .r2-isl .c{color:${a(A, .85)}!important} .r2-isl .ar{color:${a(A, .7)}!important} .r2-attr{color:${a(A, .7)}!important}
+    .r2-send{color:${A}!important}
+    .r2-sel .c{background:${a(A, .96)}!important;border-color:transparent!important;color:${a(T, .42)}!important}
+    .r2-sel .c.on{color:${T}!important;box-shadow:0 10px 30px ${a(T, .35)}!important} .r2-sel .c .num{color:${P}!important} .r2-sel .ic2{background:${a(T, .08)}!important}
+    .r2-tl .card{background:${a(A, .96)}!important;border-color:transparent!important} .r2-tl .hdr{color:${a(T, .55)}!important}
+    .r2-tl .rail{background:${a(T, .15)}!important} .r2-tl .fill{background:${T}!important;box-shadow:none!important}
+    .r2-tl .node{background:${A}!important;border-color:${a(T, .35)}!important} .r2-tl .node.on{background:${T}!important;border-color:${T}!important;box-shadow:0 0 0 8px ${a(T, .12)}!important}
+    .r2-tl .tick{background:${T}!important} .r2-tl .col .st{color:${P}!important} .r2-tl .col .pay{color:${T}!important} .r2-tl .col .when{color:${a(T, .7)}!important}
+    .r2-dd .row{background:${a(A, .96)}!important;border-color:transparent!important} .r2-dd .row.on{box-shadow:0 10px 30px ${a(T, .35)}!important}
+    .r2-dd .t1{color:${T}!important} .r2-dd .t2{color:${a(T, .7)}!important} .r2-dd .ic{background:${a(T, .08)}!important}
+    .r2-sel svg *,.r2-tl svg *,.r2-dd .ic svg *{stroke:${T}!important}
+    .r2-dd .ok svg circle{fill:${T}!important;stroke:none!important} .r2-dd .ok svg path{stroke:${A}!important}
+    .r2-cap .box{background:${a(A, .96)}!important;color:${a(T, .62)}!important} .r2-cap .cw{color:${T}!important}
+    .r2-room{background:${A}!important;color:${T}!important}`;
+    document.head.appendChild(ls);
+  }
   const st = document.createElement('style'); st.textContent = THEME(css); document.head.appendChild(st);
   const E = {
-    hook: mk(`<div class="r2-h">${words('Buying a home')}<br>${words("that isn't built yet?", 1)}</div>`, 300),
+    hook: mk(`<div class="r2-h">${words('Buying a home')}<br>${words('that')} <span class="gg">${words("isn't built yet?")}</span></div>`, 300),
     offT: mk(`<div class="r2-word">OFF-PLAN</div>`, 270),
     offS: mk(`<div class="r2-steps"><span class="s">BLUEPRINT</span><span class="d"></span><span class="s">CONSTRUCTION</span><span class="d"></span><span class="s">COMPLETION</span></div>`, 440),
     mapH: mk(`<div class="r2-eb">Abu Dhabi</div><div class="r2-rule"></div><div class="r2-h2">Location first</div>`, 280),

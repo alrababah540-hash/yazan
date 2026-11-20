@@ -8,6 +8,7 @@ import { buildApartment, buildPlanPanel } from './lib/apartment.js';
 import { buildMap } from './lib/map.js';
 import { buildCrane, buildStudio, buildBlueprint, buildTimeline, buildChart, buildContract, buildPlinth } from './lib/props.js';
 import { buildOverlay } from './lib/overlay.js';
+import { buildReelOverlay } from './lib/overlay_reel.js';
 import { clamp, lerp, remap, smooth, smoother, easeOut, easeInOut, easeOutBack, track, cine } from './lib/util.js';
 
 const Q = new URLSearchParams(location.search);
@@ -378,15 +379,47 @@ function S8(t) { // FINAL MESSAGE 66.0–76.0
 }
 
 const SCENES = [['s1', S1], ['s2', S2], ['s3', S3], ['s4', S4], ['s5', S5], ['s6', S6], ['s7', S7], ['s8', S8]];
-window.renderAt = (t) => {
+function renderSource(t) {
   resetAll(); E.grade.uniforms.uFade.value = 0;
   for (const k in A) delete A[k]; for (const k in AW) delete AW[k];
   const [, fn] = SCENES.find(([k]) => t >= TL.scenes[k][0] && t < TL.scenes[k][1]) || SCENES[SCENES.length - 1];
   fn(t);
+}
+window.renderAt = (t) => {
+  renderSource(t);
   for (const k in AW) A[k] = project(AW[k]);
   E.grade.uniforms.uTime.value = Math.floor(t * 30) / 30;
   overlay.update(t, A);
   E.composer.render();
 };
+
+// ---------------------------------------------------------------- 35 s REEL (re-edit via EDL)
+// Each reel shot plays a time-remapped section of the master film's 3D world (faster, tighter),
+// with a new kinetic-typography layer. Cuts get a 4-frame navy flash-in + subtle zoom punch.
+if (Q.get('reel')) {
+  const R = await (await fetch('/scene/reel.json')).json();
+  const RN = await (await fetch('/audio/narration_reel.json')).json();
+  const RD = await (await fetch('/audio/vo_reel/durations.json')).json();
+  const reelUI = buildReelOverlay({ narration: RN, durations: RD, reel: R });
+  window.__reelWords = reelUI.words;
+  window.renderAt = (t) => {
+    const sh = R.shots.find((x) => t >= x.r[0] && t < x.r[1]) || R.shots[R.shots.length - 1];
+    const k = (sh.src[1] - sh.src[0]) / (sh.r[1] - sh.r[0]);
+    const src = sh.src[0] + (t - sh.r[0]) * k;
+    renderSource(src);
+    const since = t - sh.r[0];
+    const punch = sh.r[0] > 0 ? Math.exp(-since * 5.5) : 0;            // zoom punch on each cut
+    camera.fov = camera.fov / (1 + 0.06 * punch); camera.updateProjectionMatrix();
+    for (const kk in AW) A[kk] = project(AW[kk]);
+    if (sh.r[0] > 0) E.grade.uniforms.uFade.value = Math.max(E.grade.uniforms.uFade.value, 0.75 * clamp(1 - since / 0.13));
+    E.bloom.strength += 0.5 * punch;
+    E.grade.uniforms.uTime.value = Math.floor(t * 30) / 30;
+    overlay.update(src, A, true);
+    const payU = sh.id === 'payment' ? smooth(remap(src, 35.8, 41.2)) : 0;
+    reelUI.update(t, { payU });
+    E.composer.render();
+    camera.fov = 40; camera.updateProjectionMatrix();
+  };
+}
 window.__chunks = overlay.chunks; window.__A = A; window.__dbg = { scene, apt, layouts, tower };
 window.__ready = true;

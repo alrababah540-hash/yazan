@@ -111,8 +111,15 @@ export function buildOverlay({ narration, durations, timeline, lang = 'ar' }) {
   }
 
   return {
-    update(t, A) { // A: anchors {name: {x,y,visible}} computed by the 3D side
+    update(t, A, labelsOnly = false) { // A: anchors {name: {x,y,visible}} computed by the 3D side
       hideAll();
+      if (labelsOnly) { // reel mode: only 3D-anchored labels (map, milestones, plan); reel layer does the rest
+        gradTop.style.display = gradBot.style.display = '';
+        for (const [k, a] of Object.entries({ yas: 21.3, saadiyat: 23.0, reem: 24.2 })) place(mapL[k], A[k], clamp((t - a) / 0.35) * (1 - remap(t, 25.0, 25.5)));
+        place(planTag, A.plan, clamp((t - 11.0) / 0.35) * (1 - remap(t, 14.8, 15.3)));
+        capBox.style.display = 'none';
+        return;
+      }
       reveal(H.s1, t, 1.6, 6.1);
       reveal(H.s2, t, 8.1, 14.8, { scale: 0.04 });
       reveal(H.s3, t, 18.2, 21.2);

@@ -11,3 +11,5 @@ render/debug.js
 venv/
 *.log
 output/master_*
+frames_reel/
+audio/build_reel/*.wav

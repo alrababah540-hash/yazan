@@ -9,14 +9,15 @@ const serve = require('./serve');
 const args = Object.fromEntries(process.argv.slice(2).reduce((a, v, i, arr) => (v.startsWith('--') ? a.concat([[v.slice(2), arr[i + 1]]]) : a), []));
 const FPS = 30;
 const LANG = args.lang === 'en' ? 'en' : 'ar';
-const OUT = path.resolve(__dirname, '..', LANG === 'en' ? 'frames_en' : 'frames');
+const REEL = !!args.reel;
+const OUT = path.resolve(__dirname, '..', REEL ? 'frames_reel' : LANG === 'en' ? 'frames_en' : 'frames');
 fs.mkdirSync(OUT, { recursive: true });
 
 async function openPage(browser, port) {
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
   page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') console.log('[page]', m.text()); });
   page.on('pageerror', (e) => console.log('[pageerror]', e.message));
-  await page.goto(`http://127.0.0.1:${port}/scene/${LANG === 'en' ? '?lang=en' : ''}`);
+  await page.goto(`http://127.0.0.1:${port}/scene/${REEL ? '?lang=en&reel=1' : LANG === 'en' ? '?lang=en' : ''}`);
   await page.waitForFunction(() => window.__ready === true, null, { timeout: 180000 });
   return page;
 }
@@ -58,7 +59,7 @@ const pages = {};
     }
   } else {
     // fixed 120-frame segments (4 s) → resumable: finished segments are skipped
-    const from = +(args.from || 0), to = +(args.to || 2280), W = +(args.workers || 2), SEG = 120;
+    const from = +(args.from || 0), to = +(args.to || (REEL ? 1035 : 2280)), W = +(args.workers || 2), SEG = 120;
     const queue = [];
     for (let a = from; a < to; a += SEG) {
       const b = Math.min(to, a + SEG), f = path.join(OUT, `seg_${String(a).padStart(5, '0')}.mp4`);

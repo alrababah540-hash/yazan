@@ -1,0 +1,12 @@
+{
+ "voice": "kokoro-en-v0_19 bm_george (sid 9)",
+ "sid": 9,
+ "lines": [
+  {"id": "r1", "text": "Buying a home that isn't built yet? That's off-plan.", "tts": "Buying a home that isn't built yet? That's off-plan.", "speed": 1.0},
+  {"id": "r2", "text": "You buy from the plans, and receive the finished unit at handover.", "tts": "You buy from the plans, and receive the finished unit at handover.", "speed": 1.0},
+  {"id": "r3", "text": "In Abu Dhabi, start with the right location, project and unit.", "tts": "In Abu Dhabi, start with the right location, project, and unit.", "speed": 1.0},
+  {"id": "r4", "text": "Payments are staged through construction, and every plan is different.", "tts": "Payments are staged through construction, and every plan is different.", "speed": 1.0},
+  {"id": "r5", "text": "The risks: delays and price changes. So verify the developer, the escrow account, and the contract.", "tts": "The risks? Delays, and price changes. So verify the developer, the escrow account, and the contract.", "speed": 1.0},
+  {"id": "r6", "text": "Save this guide before you buy, and send it to someone who needs it.", "tts": "Save this guide before you buy, and send it to someone who needs it.", "speed": 0.95}
+ ]
+}

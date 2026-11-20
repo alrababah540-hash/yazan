@@ -11,6 +11,7 @@ import { buildOverlay } from './lib/overlay.js';
 import { buildReelOverlay } from './lib/overlay_reel.js';
 import { buildReelOverlay2 } from './lib/overlay_reel2.js';
 import { buildMap2 } from './lib/map2.js';
+import { makeBrand } from './lib/brand.js';
 import { LAYOUTS } from './lib/plan.js';
 import { clamp, lerp, remap, smooth, smoother, easeOut, easeInOut, easeOutBack, track, cine } from './lib/util.js';
 
@@ -434,7 +435,19 @@ if (Q.get('reel') === '2' || Q.get('reel') === '3') {
   const RN = await (await fetch(`/audio/narration_reel${RV}.json`)).json();
   const RD = await (await fetch(`/audio/vo_reel${RV}/durations.json`)).json();
   const map2 = await buildMap2(M); map2.root.visible = false; scene.add(map2.root);
-  const ui2 = buildReelOverlay2({ narration: RN, durations: RD, reel: R });
+  const BR = makeBrand(await (await fetch('/scene/brand.json')).json());
+  if (!BR.isDefault) { // brand palette → key 3D materials
+    const [ar, ag, ab] = BR.rgb01(BR.accentDeep), [hr, hg, hb] = BR.rgb01(BR.accent), [pr, pg, pb] = BR.rgb01(BR.primary);
+    M.gold.color.setRGB(ar, ag, ab); M.goldGlow.color.setRGB(ar, ag, ab); M.goldGlow.emissive.setRGB(ar, ag, ab); M.line.color.setRGB(hr, hg, hb);
+    for (const f of Object.values(map2.focus)) { f.hi.setRGB(ar * 0.75, ag * 0.75, ab * 0.75); f.base.setRGB(pr * 1.3 + 0.03, pg * 1.3 + 0.03, pb * 1.3 + 0.03); f.top.emissive.setRGB(ar, ag, ab); f.edge.material.color.setRGB(hr, hg, hb); f.ringMat.color.setRGB(hr, hg, hb); f.head.material.color.setRGB(hr, hg, hb); f.head.material.emissive.setRGB(ar, ag, ab); }
+    map2.root.children.find((c) => c.isMesh).material.color.setRGB(...BR.primaryTint);
+    studio.mat.color.setRGB(...BR.primaryTint); blueprint.mat.uniforms.uTint.value.set(...BR.accentTint);
+    E.backdrop.material.uniforms.uTint.value.set(...BR.primaryTint);
+    E.grade.uniforms.uFadeCol.value.set(pr * 0.6, pg * 0.6, pb * 0.6);
+    for (const d of document.querySelectorAll('#ui > div')) if (d.style.background) d.style.background = BR.theme(d.style.background.replace(/rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/g, 'rgba($1,$2,$3,$4)'));
+  }
+  window.__brand = BR;
+  const ui2 = buildReelOverlay2({ narration: RN, durations: RD, reel: R, brand: BR });
   window.__reelWords = ui2.words;
   const FK = ['abudhabi', 'reem', 'saadiyat', 'yas'];
   const F = map2.focus;

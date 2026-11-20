@@ -2,7 +2,8 @@
 // Gold = key information, ivory = supporting. Safe zones: y 250–1500, x 50–950.
 import { clamp, remap, easeOut, easeInOut, easeOutBack, smooth } from './util.js';
 
-const GOLD = '#e2c78f', IVORY = '#f3eee4', DIM = 'rgba(243,238,228,0.62)';
+let GOLD = '#e2c78f', IVORY = '#f3eee4', DIM = 'rgba(243,238,228,0.62)';
+let THEME = (x) => x;
 const I = { // consistent line-icon set (gold, 2.5px strokes)
   plan: `<svg viewBox="0 0 48 48" width="54" height="54" fill="none" stroke="${GOLD}" stroke-width="2.5" stroke-linejoin="round"><rect x="7" y="7" width="34" height="34" rx="2"/><path d="M7 22h14v19M21 7v8M29 22h12M29 22v8"/></svg>`,
   crane: `<svg viewBox="0 0 48 48" width="54" height="54" fill="none" stroke="${GOLD}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"><path d="M12 43V8M8 43h10M12 10h30M12 10l-6 4M36 10v9M33 19h6v5h-6z"/><path d="M12 16l6-6M12 22l6-6"/></svg>`,
@@ -68,7 +69,7 @@ const css = `
 .r2-cap .cw { color:${GOLD}; }
 `;
 
-const mk = (html, top, cls = 'r2') => { const e = document.createElement('div'); e.className = cls; e.innerHTML = html; if (top != null) e.style.top = `${top}px`; document.getElementById('ui').appendChild(e); return e; };
+const mk = (html, top, cls = 'r2') => { const e = document.createElement('div'); e.className = cls; e.innerHTML = THEME(html); if (top != null) e.style.top = `${top}px`; document.getElementById('ui').appendChild(e); return e; };
 const words = (t, gold = 99) => t.split(' ').map((w, i) => `<span class="w${i >= gold ? ' g' : ''}">${w}</span>`).join(' ');
 function show(e, t, a, b, { rise = 26, blur = 8, fi = 0.55, fo = 0.3 } = {}) {
   const i = easeOut(remap(t, a, a + fi)), o = 1 - easeInOut(remap(t, b - fo, b)), v = Math.min(i, o);
@@ -82,8 +83,9 @@ function stagger(e, t, a, step = 0.14, dur = 0.5) {
 }
 const fmt = ([lon, lat]) => `${lat.toFixed(2)}°N · ${lon.toFixed(2)}°E`;
 
-export function buildReelOverlay2({ narration, durations, reel }) {
-  const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+export function buildReelOverlay2({ narration, durations, reel, brand }) {
+  if (brand && !brand.isDefault) { THEME = brand.theme; GOLD = brand.accent; IVORY = brand.text; DIM = THEME(DIM); }
+  const st = document.createElement('style'); st.textContent = THEME(css); document.head.appendChild(st);
   const E = {
     hook: mk(`<div class="r2-h">${words('Buying a home')}<br>${words("that isn't built yet?", 1)}</div>`, 300),
     offT: mk(`<div class="r2-word">OFF-PLAN</div>`, 270),
@@ -181,7 +183,7 @@ export function buildReelOverlay2({ narration, durations, reel }) {
       if (show(E.dd, t, S.verify[0] + 0.4, S.verify[1] - 0.05, { rise: 18 })) {
         const L5 = lineWith('escrow'); const on = [at('developer', L5), at('escrow', L5), at('spa', L5)];
         rows.forEach((r, k) => { const done = t >= on[k]; r.classList.toggle('on', done); const okEl = r.querySelector('.ok');
-          const u = easeOutBack(clamp((t - on[k]) / 0.3)); okEl.innerHTML = done ? I.ok : ''; okEl.style.transform = `scale(${u.toFixed(3)})`;
+          const u = easeOutBack(clamp((t - on[k]) / 0.3)); okEl.innerHTML = done ? THEME(I.ok) : ''; okEl.style.transform = `scale(${u.toFixed(3)})`;
           const v = easeOut(clamp((T - 0.45 - k * 0.22) / 0.5)); r.style.opacity = v.toFixed(3); r.style.transform = `translateX(${((1 - v) * -24).toFixed(1)}px)`; });
       }
       show(E.ddN, t, at('spa', lineWith('escrow')) + 0.2, S.verify[1] - 0.05, { rise: 10 });

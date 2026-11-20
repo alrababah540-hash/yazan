@@ -10,9 +10,9 @@ import { makeEnvironment, makeBackdrop } from './materials.js';
 // Film finish: vignette, gentle film grain (seeded by frame → deterministic), slight lens
 // chromatic fringe at edges, and a global fade used for scene in/out.
 const GradeShader = {
-  uniforms: { tDiffuse: { value: null }, uTime: { value: 0 }, uFade: { value: 0 }, uVig: { value: 0.32 }, uGrain: { value: 0.035 } },
+  uniforms: { tDiffuse: { value: null }, uTime: { value: 0 }, uFade: { value: 0 }, uVig: { value: 0.32 }, uGrain: { value: 0.035 }, uFadeCol: { value: new THREE.Vector3(0.027, 0.055, 0.098) } },
   vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.); }',
-  fragmentShader: `uniform sampler2D tDiffuse; uniform float uTime, uFade, uVig, uGrain; varying vec2 vUv;
+  fragmentShader: `uniform sampler2D tDiffuse; uniform float uTime, uFade, uVig, uGrain; uniform vec3 uFadeCol; varying vec2 vUv;
     float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)) + uTime*7.13) * 43758.5453); }
     void main(){
       vec2 d = vUv - 0.5; float r2 = dot(d,d);
@@ -20,7 +20,7 @@ const GradeShader = {
       vec3 c = vec3(texture2D(tDiffuse, vUv + off).r, texture2D(tDiffuse, vUv).g, texture2D(tDiffuse, vUv - off).b);
       c *= 1.0 - uVig * smoothstep(0.08, 0.55, r2 * 1.6);
       c += (h(vUv * vec2(1080.,1920.)) - 0.5) * uGrain;
-      c = mix(c, vec3(0.027,0.055,0.098), uFade);
+      c = mix(c, uFadeCol, uFade);
       gl_FragColor = vec4(c, 1.0);
     }`,
 };

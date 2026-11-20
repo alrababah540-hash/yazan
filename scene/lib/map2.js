@@ -51,11 +51,11 @@ export async function buildMap2(M) {
     const ringMat = new THREE.MeshBasicMaterial({ color: 0xf0d59c, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false, toneMapped: false });
     const ring = new THREE.Mesh(new THREE.RingGeometry(1.6, 2.0, 64), ringMat); ring.rotation.x = -Math.PI / 2; ring.position.y = 0.1;
     pin.add(stem, head, ring); root.add(pin);
-    focus[k] = { ...f, pos, top, edge, pin, head, ring, ringMat };
+    focus[k] = { ...f, pos, top, edge, pin, head, ring, ringMat, base: new THREE.Color(0.14, 0.17, 0.21), hi: new THREE.Color(0.64, 0.59, 0.41) };
   }
   return { root, focus, source: D.source,
     setFocus(k, a, pulseT) { // a ∈ [0,1] highlight; pulseT seconds since marker drop
-      const F = focus[k]; F.top.emissiveIntensity = 0.55 * a; F.top.color.setRGB(0.14 + 0.5 * a, 0.17 + 0.42 * a, 0.21 + 0.2 * a);
+      const F = focus[k]; F.top.emissiveIntensity = 0.55 * a; F.top.color.copy(F.base).lerp(F.hi, a);
       F.edge.material.opacity = 0.35 + 0.65 * a;
       const p = ((pulseT % 1.6) + 1.6) % 1.6 / 1.6; F.ring.scale.setScalar(1 + 2.6 * p); F.ringMat.opacity = pulseT > 0 ? 0.85 * (1 - p) * (0.4 + 0.6 * a) : 0;
     },

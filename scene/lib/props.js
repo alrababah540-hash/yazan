@@ -76,12 +76,12 @@ export function buildBlueprint(T) {
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
   const mat = new THREE.ShaderMaterial({
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-    uniforms: { map: { value: tex }, uReveal: { value: 0 }, uAlpha: { value: 1 }, uGlow: { value: 1 } },
+    uniforms: { map: { value: tex }, uReveal: { value: 0 }, uAlpha: { value: 1 }, uGlow: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) } },
     vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.); }',
-    fragmentShader: `uniform sampler2D map; uniform float uReveal, uAlpha, uGlow; varying vec2 vUv;
+    fragmentShader: `uniform sampler2D map; uniform float uReveal, uAlpha, uGlow; uniform vec3 uTint; varying vec2 vUv;
       void main(){ vec4 c = texture2D(map, vUv); float d = length(vUv-0.5)*2.0;
         float front = smoothstep(uReveal, uReveal-0.06, d); float edge = smoothstep(0.05,0.0,abs(d-uReveal))*0.8;
-        vec3 col = c.rgb * (1.2 + edge*2.0) * uGlow;
+        vec3 col = c.rgb * uTint * (1.2 + edge*2.0) * uGlow;
         gl_FragColor = vec4(col, c.a*front*uAlpha + edge*0.25*uAlpha*step(d,1.0)*c.a); }`,
   });
   const mesh = new THREE.Mesh(new THREE.PlaneGeometry(span, span), mat);

@@ -124,16 +124,16 @@ export function makeEnvironment(renderer) {
 export function makeBackdrop() {
   const mat = new THREE.ShaderMaterial({
     side: THREE.BackSide, depthWrite: false, fog: false,
-    uniforms: { uWarm: { value: 1 }, uDark: { value: 0 } },
+    uniforms: { uWarm: { value: 1 }, uDark: { value: 0 }, uTint: { value: new THREE.Vector3(1, 1, 1) } },
     vertexShader: 'varying vec3 vP; void main(){ vP = normalize(position); vec4 p = projectionMatrix*modelViewMatrix*vec4(position,1.); gl_Position = p.xyww; }',
-    fragmentShader: `uniform float uWarm, uDark; varying vec3 vP;
+    fragmentShader: `uniform float uWarm, uDark; uniform vec3 uTint; varying vec3 vP;
       void main(){
         float h = vP.y;
         vec3 zen = vec3(0.006,0.014,0.035), mid = vec3(0.03,0.045,0.075), hor = vec3(0.22,0.14,0.085);
         vec3 c = mix(mix(hor, mid, smoothstep(-0.02, 0.18, h)), zen, smoothstep(0.15, 0.7, h));
         c = mix(mid*0.6, c, smoothstep(-0.2, 0.0, h));
         c = mix(c, mix(zen, mid, 0.4 + 0.3*h), 1.0 - uWarm);
-        c *= 1.0 - uDark;
+        c *= 1.0 - uDark; c *= uTint;
         gl_FragColor = vec4(c, 1.);
         #include <colorspace_fragment>
       }`,

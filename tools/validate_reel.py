@@ -50,10 +50,10 @@ for k, en, ar, lon, lat in labels:
     ok = en == f['name_en'] and dd < 0.6; geo_ok &= ok; det.append(f"{en} {lat}°N {lon}°E (OSM polygon '{f['name_ar']}', Δ{dd:.2f} km)")
 check('Map labels match OSM-named island polygons', geo_ok and len(labels) == 4, '; '.join(det))
 check('Map source is current, full-resolution OSM coastline', '2026-11-18' in MAP['source'] and len(MAP['land']) > 50, MAP['source'])
-# 7 no unexplained financial figures in the reel graphics
-txt = re.sub(r'<[^>]+>', ' ', ov)
-pct = re.findall(r'\d+\s*%', txt); money = re.findall(r'(AED|\$|USD|€)\s*\d', txt)
-check('No financial figures or percentages', not pct and not money, 'graphics contain no %, no prices, no yields (numbers used: island coordinates, step labels 01–03)')
+# 7 no unexplained financial figures — scan of the text actually visible on screen (tools/scan_onscreen_text.js)
+scan = json.load(open(f'{ROOT}/docs/reel_final_onscreen_text.json'))
+nums = sorted({x for x in scan['text'] if re.search(r'\d', x)})
+check('No financial figures or percentages on screen', not scan['flags'], f"{len(scan['text'])} visible text items sampled every 0.5 s; flags: {scan['flags'] or 'none'}; only numbers shown: {nums}")
 # 8 mobile readability: smallest font sizes used for content text
 sizes = sorted({int(s) for s in re.findall(r'font:\s*\d+\s+(\d+)px', ov)})
 content_min = min(x for x in sizes if x >= 21)

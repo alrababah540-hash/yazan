@@ -1,0 +1,13 @@
+{
+ "voice": "kokoro-en-v0_19 bm_george (sid 9), natural speed",
+ "sid": 9,
+ "lines": [
+  {"id": "v1", "text": "Buying a home that isn't built yet? That's off-plan.", "tts": "Buying a home that isn't built yet? That's off-plan.", "speed": 1.0},
+  {"id": "v2", "text": "You're purchasing a property directly from a developer before completion.", "tts": "You're purchasing a property directly from a developer, before completion.", "speed": 1.0},
+  {"id": "v3", "text": "Start with the right location, project, and unit.", "tts": "Start with the right location, project, and unit.", "speed": 1.0},
+  {"id": "v4", "text": "Understand the payment plan — because every project is different.", "tts": "Understand the payment plan, because every project is different.", "speed": 1.0},
+  {"id": "v5", "text": "Before committing, verify the developer, the project's escrow account, and the SPA.", "tts": "Before committing, verify the developer, the project's escrow account, and the S P A.", "speed": 1.0},
+  {"id": "v6", "text": "Don't invest based on the payment plan alone.", "tts": "Don't invest based on the payment plan alone.", "speed": 1.0},
+  {"id": "v7", "text": "Save this guide before your next property investment.", "tts": "Save this guide before your next property investment.", "speed": 1.0}
+ ]
+}

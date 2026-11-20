@@ -13,3 +13,5 @@ venv/
 output/master_*
 frames_reel/
 audio/build_reel/*.wav
+frames_reel2/
+audio/build_reel2/*.wav

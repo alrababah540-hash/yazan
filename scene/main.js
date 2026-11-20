@@ -9,6 +9,9 @@ import { buildMap } from './lib/map.js';
 import { buildCrane, buildStudio, buildBlueprint, buildTimeline, buildChart, buildContract, buildPlinth } from './lib/props.js';
 import { buildOverlay } from './lib/overlay.js';
 import { buildReelOverlay } from './lib/overlay_reel.js';
+import { buildReelOverlay2 } from './lib/overlay_reel2.js';
+import { buildMap2 } from './lib/map2.js';
+import { LAYOUTS } from './lib/plan.js';
 import { clamp, lerp, remap, smooth, smoother, easeOut, easeInOut, easeOutBack, track, cine } from './lib/util.js';
 
 const Q = new URLSearchParams(location.search);
@@ -106,7 +109,7 @@ function resetAll() {
   M.slab.transparent = false; M.slab.opacity = 1; M.slab.depthWrite = true;
   tower.interiorMats.forEach((m) => { m.opacity = 1; });
   E.backdrop.material.uniforms.uWarm.value = 1; E.backdrop.material.uniforms.uDark.value = 0;
-  scene.fog.density = 0.0016; E.bloom.strength = 0.35; E.sun.intensity = 3.2; E.sun.castShadow = true;
+  scene.fog.density = 0.0016; E.bloom.strength = 0.35; E.sun.intensity = 3.2; E.sun.castShadow = true; E.hemi.intensity = 0.35;
   blueprint.mat.uniforms.uAlpha.value = 1; blueprint.root.position.set(0, -0.4, 0); blueprint.root.scale.setScalar(1);
   crane.root.scale.setScalar(1); crane.root.position.set(0, 0, 0); crane.root.rotation.set(0, 0, 0);
   timeline.railPivot.rotation.set(0, 0, 0);
@@ -396,7 +399,7 @@ window.renderAt = (t) => {
 // ---------------------------------------------------------------- 35 s REEL (re-edit via EDL)
 // Each reel shot plays a time-remapped section of the master film's 3D world (faster, tighter),
 // with a new kinetic-typography layer. Cuts get a 4-frame navy flash-in + subtle zoom punch.
-if (Q.get('reel')) {
+if (Q.get('reel') === '1') {
   const R = await (await fetch('/scene/reel.json')).json();
   const RN = await (await fetch('/audio/narration_reel.json')).json();
   const RD = await (await fetch('/audio/vo_reel/durations.json')).json();
@@ -422,4 +425,80 @@ if (Q.get('reel')) {
   };
 }
 window.__chunks = overlay.chunks; window.__A = A; window.__dbg = { scene, apt, layouts, tower };
+
+// ---------------------------------------------------------------- REEL V2 — calm 7-scene edit (≤ 35 s)
+// Fewer shots, natural-speed voice, slower camera, real Abu Dhabi map, one idea per scene.
+if (Q.get('reel') === '2') {
+  const R = await (await fetch('/scene/reel2.json')).json();
+  const RN = await (await fetch('/audio/narration_reel2.json')).json();
+  const RD = await (await fetch('/audio/vo_reel2/durations.json')).json();
+  const map2 = await buildMap2(M); map2.root.visible = false; scene.add(map2.root);
+  const ui2 = buildReelOverlay2({ narration: RN, durations: RD, reel: R });
+  window.__reelWords = ui2.words;
+  const FK = ['abudhabi', 'reem', 'saadiyat', 'yas'];
+  const F = map2.focus;
+  const P = (k) => F[k].pos;
+  // --- custom scene: real Abu Dhabi map (north-up, slow glide across the four islands)
+  function mapScene(u, T) {
+    resetAll(); map2.root.visible = true; E.sun.castShadow = false; E.sun.intensity = 1.5; E.hemi.intensity = 0.25;
+    E.backdrop.material.uniforms.uWarm.value = 0.1; E.backdrop.material.uniforms.uDark.value = 0.35; scene.fog.density = 0.0007;
+    const drops = [0.15, 0.4, 0.65, 0.9];                  // markers drop in sequence (s)
+    const focusT = [1.55, 2.35, 3.2, 4.05];                // camera passes each island (s)
+    FK.forEach((k, i) => {
+      map2.setPin(k, easeOutBack(remap(T, drops[i], drops[i] + 0.5)));
+      const a = clamp(1 - Math.abs(T - focusT[i]) / 0.75) ** 0.8;
+      map2.setFocus(k, Math.max(0.08 * remap(T, drops[i], drops[i] + 0.5), a), T - drops[i]);
+      AW['isl_' + k] = P(k).clone().add(V(0, 9.5, 0));
+    });
+    const mid = P('abudhabi').clone().lerp(P('yas'), 0.5);
+    const c = (k, d, h) => [P(k).x, h, P(k).z + d];
+    const pos = [{ t: 0, v: [mid.x - 10, 560, mid.z + 300] }, { t: 1.0, v: [mid.x - 25, 470, mid.z + 255] },
+      { t: 1.9, v: c('abudhabi', 150, 245).map((v, i) => v + (i === 0 ? 15 : 0)) }, { t: 2.8, v: c('saadiyat', 170, 240) }, { t: 4.1, v: c('yas', 175, 245) }, { t: 5.0, v: [mid.x + 10, 430, mid.z + 240] }];
+    const look = [{ t: 0, v: [mid.x - 10, 0, mid.z - 30] }, { t: 1.0, v: [mid.x - 25, 0, mid.z - 20] },
+      { t: 1.9, v: [(P('abudhabi').x + P('reem').x) / 2, 0, (P('abudhabi').z + P('reem').z) / 2] }, { t: 2.8, v: [P('saadiyat').x, 0, P('saadiyat').z] }, { t: 4.1, v: [P('yas').x, 0, P('yas').z] }, { t: 5.0, v: [mid.x + 10, 0, mid.z - 15] }];
+    const l = cam(pos, look, T); dof(l, 0.00003);
+  }
+  // --- custom backdrop: payment infographic (low dolly over the gold grid, heavy DOF)
+  function payBg(u, T) {
+    resetAll(); studio.root.visible = true; blueprint.root.visible = true;
+    blueprint.mat.uniforms.uReveal.value = 1.1; blueprint.mat.uniforms.uAlpha.value = 0.35;
+    E.backdrop.material.uniforms.uWarm.value = 0.35; E.backdrop.material.uniforms.uDark.value = 0.25;
+    const l = cam([{ t: 0, v: [-70, 16, 95] }, { t: 5.8, v: [-30, 12, 72] }], [{ t: 0, v: [0, 2, 0] }, { t: 5.8, v: [8, 2, 0] }], T);
+    dof(V(0, 0, 0).lerp(camera.position, 0.15), 0.0006, 0.012); void l;
+  }
+  // --- custom backdrop: due-diligence infographic (slow top-down drift over the site blueprint)
+  function riskBg(u, T) {
+    resetAll(); studio.root.visible = true; blueprint.root.visible = true;
+    blueprint.mat.uniforms.uReveal.value = 1.1; blueprint.mat.uniforms.uAlpha.value = 0.7; blueprint.mat.uniforms.uGlow.value = 0.8;
+    E.backdrop.material.uniforms.uDark.value = 0.4;
+    const a = 0.35 + 0.06 * T;
+    camera.position.set(Math.sin(a) * 22, 92, Math.cos(a) * 22); camera.up.set(0, 1, 0); camera.lookAt(0, 0, 4);
+    if (camera.fov !== 40) { camera.fov = 40; camera.updateProjectionMatrix(); }
+    dof(V(0, 0, 0), 0.0002, 0.006);
+  }
+  const CUSTOM = { map: mapScene, paybg: payBg, riskbg: riskBg };
+  window.renderAt = (t) => {
+    const sh = R.shots.find((x) => t >= x.r[0] && t < x.r[1]) || R.shots[R.shots.length - 1];
+    const T = t - sh.r[0], len = sh.r[1] - sh.r[0];
+    let src = null;
+    for (const kk in AW) delete AW[kk]; for (const kk in A) delete A[kk];
+    map2.root.visible = false;
+    if (sh.custom) CUSTOM[sh.custom](T / len, T);
+    else {
+      src = sh.src[0] + T * (sh.src[1] - sh.src[0]) / len; renderSource(src);
+      if (sh.id === 'unit') { // floating room labels anchored to the 3D apartment
+        apt.root.updateMatrixWorld(true);
+        LAYOUTS.b2.rooms.forEach((r, i) => { AW['room' + i] = apt.inner.localToWorld(V(r.x, 3.1, r.y)); });
+      }
+    }
+    for (const kk in AW) A[kk] = project(AW[kk]);
+    // gentle dip between scenes (no zoom punches, no flashes)
+    const dipIn = sh.r[0] > 0 ? clamp(1 - T / 0.22) : 0, dipOut = sh.r[1] < R.duration ? clamp(1 - (len - T) / 0.22) : 0;
+    E.grade.uniforms.uFade.value = Math.max(E.grade.uniforms.uFade.value, 0.92 * smooth(Math.max(dipIn, dipOut)));
+    E.grade.uniforms.uTime.value = Math.floor(t * 30) / 30;
+    for (const e of document.querySelectorAll('#ui > .layer, #ui > .label, #ui > .ms, #ui > .foot, #ui > .cap')) e.style.display = 'none';
+    ui2.update(t, { A, shot: sh.id, T, len });
+    E.composer.render();
+  };
+}
 window.__ready = true;

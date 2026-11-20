@@ -4,6 +4,7 @@ A vertical (1080×1920, 30 fps, 76 s) Arabic film that explains off-plan propert
 
 **Final videos:**
 - Arabic: `output/offplan_abu_dhabi_ar_1080x1920.mp4`
+- **35-second Instagram Reel (English):** `output/offplan_abu_dhabi_reel_35s_1080x1920.mp4` + captions `output/offplan_abu_dhabi_reel_35s.srt` (see `docs/reel_edit_plan.md`; rebuild: `node render/render.js --reel 1` → `python3 audio/score_reel.py` → `bash render/build_reel.sh`)
 - English: `output/offplan_abu_dhabi_en_1080x1920.mp4` (same visuals; English VO, text, captions, plan labels and contract; left-to-right layout)
 
 | Doc | Contents |

@@ -10,6 +10,7 @@ const I = { // consistent line-icon set (gold, 2.5px strokes)
   dev: `<svg viewBox="0 0 48 48" width="50" height="50" fill="none" stroke="${GOLD}" stroke-width="2.5" stroke-linejoin="round"><path d="M10 42V12l14-6 14 6v30M6 42h36"/><path d="M17 18h4M27 18h4M17 26h4M27 26h4M21 42v-8h6v8"/></svg>`,
   escrow: `<svg viewBox="0 0 48 48" width="50" height="50" fill="none" stroke="${GOLD}" stroke-width="2.5" stroke-linejoin="round"><path d="M24 5l15 6v11c0 10-6.5 17-15 21-8.5-4-15-11-15-21V11z"/><rect x="17" y="22" width="14" height="11" rx="1.5"/><path d="M20 22v-3a4 4 0 018 0v3"/></svg>`,
   spa: `<svg viewBox="0 0 48 48" width="50" height="50" fill="none" stroke="${GOLD}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"><path d="M12 5h17l9 9v29H12z"/><path d="M29 5v9h9M18 22h14M18 28h14M18 34h8"/></svg>`,
+  pin: `<svg viewBox="0 0 48 48" width="46" height="46" fill="none" stroke="${GOLD}" stroke-width="2.6" stroke-linejoin="round"><path d="M24 44s13-13.5 13-24a13 13 0 00-26 0c0 10.5 13 24 13 24z"/><circle cx="24" cy="20" r="5"/></svg>`,
   ok: `<svg viewBox="0 0 40 40" width="40" height="40"><circle cx="20" cy="20" r="18" fill="${GOLD}"/><path d="M12 20.5l5.5 5.5L28.5 14" fill="none" stroke="#0b1626" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   save: `<svg viewBox="0 0 64 80" width="84" height="105"><path d="M10 6H54V74L32 56L10 74Z" fill="none" stroke="${GOLD}" stroke-width="4.5" stroke-linejoin="round"/><path class="fill" d="M10 6H54V74L32 56L10 74Z" fill="${GOLD}"/></svg>`,
   send: `<svg viewBox="0 0 64 64" width="40" height="40" fill="none" stroke="${GOLD}" stroke-width="4" stroke-linejoin="round"><path d="M6 30L58 8L44 58L30 38Z"/><path d="M30 38L58 8"/></svg>`,
@@ -44,16 +45,21 @@ const css = `
 .r2-tl .tick { position:absolute; top:230px; width:2px; height:16px; margin-left:-1px; background:${GOLD}; }
 .r2-tl .col { position:absolute; width:260px; margin-left:-130px; text-align:center; }
 .r2-tl .col .ic { height:58px; }
-.r2-tl .col .st { font:700 27px 'Plex Latin'; letter-spacing:.14em; margin-top:10px; }
-.r2-tl .col .pay { font:700 33px 'Plex Latin'; color:${GOLD}; }
-.r2-tl .col .when { font:500 23px 'Plex Latin'; color:${DIM}; margin-top:6px; }
-.r2-tl .hdr { position:absolute; left:0; right:0; font:600 19px 'Plex Latin'; letter-spacing:.32em; color:rgba(243,238,228,.45); text-align:center; }
-.r2-note { font:500 30px 'Plex Latin'; color:${IVORY}; }
+.r2-tl .col .st { font:700 31px 'Plex Latin'; letter-spacing:.12em; margin-top:10px; }
+.r2-tl .col .pay { font:700 38px 'Plex Latin'; color:${GOLD}; }
+.r2-tl .col .when { font:500 26px 'Plex Latin'; color:${DIM}; margin-top:6px; }
+.r2-tl .hdr { position:absolute; left:0; right:0; font:600 21px 'Plex Latin'; letter-spacing:.32em; color:rgba(243,238,228,.45); text-align:center; }
+.r2-note { font:500 32px 'Plex Latin'; color:${IVORY}; }
+.r2-sel { display:flex; flex-direction:column; gap:18px; align-items:stretch; width:620px; margin:0 auto; }
+.r2-sel .c { display:flex; align-items:center; gap:22px; padding:18px 28px; border-radius:22px; background:rgba(7,14,25,.74); border:1.5px solid rgba(226,199,143,.25); font:700 44px 'Plex Latin'; color:rgba(243,238,228,.4); }
+.r2-sel .c.on { color:${IVORY}; border-color:rgba(226,199,143,.8); box-shadow:0 0 24px rgba(226,199,143,.18); }
+.r2-sel .c .num { font:600 24px 'Plex Latin'; color:${GOLD}; letter-spacing:.2em; width:44px; }
+.r2-sel .c .ic2 { width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(226,199,143,.1); }
 .r2-dd { position:absolute; left:50px; width:900px; }
 .r2-dd .row { display:flex; align-items:center; gap:26px; padding:24px 30px; margin-bottom:20px; border-radius:24px; background:rgba(7,14,25,.74); border:1.5px solid rgba(226,199,143,.26); }
 .r2-dd .row.on { border-color:rgba(226,199,143,.75); }
 .r2-dd .ic { width:76px; height:76px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(226,199,143,.1); flex:none; }
-.r2-dd .tx { flex:1; text-align:left; } .r2-dd .t1 { font:700 40px 'Plex Latin'; } .r2-dd .t2 { font:500 25px 'Plex Latin'; color:${DIM}; margin-top:4px; }
+.r2-dd .tx { flex:1; text-align:left; } .r2-dd .t1 { font:700 44px 'Plex Latin'; } .r2-dd .t2 { font:500 28px 'Plex Latin'; color:${DIM}; margin-top:4px; }
 .r2-dd .ok { flex:none; width:40px; height:40px; }
 .r2-save { display:flex; flex-direction:column; align-items:center; gap:12px; } .r2-save .lbl { font:700 62px 'Plex Latin'; letter-spacing:.04em; text-transform:uppercase; }
 .r2-send { display:flex; align-items:center; justify-content:center; gap:14px; font:500 32px 'Plex Latin'; color:${DIM}; }
@@ -85,7 +91,8 @@ export function buildReelOverlay2({ narration, durations, reel }) {
     mapH: mk(`<div class="r2-eb">Abu Dhabi</div><div class="r2-rule"></div><div class="r2-h2">Location first</div>`, 280),
     north: mk(I.north, null, 'r2-north'),
     attr: mk('Map data © OpenStreetMap contributors · Overture Maps (ODbL)', null, 'r2-attr'),
-    unitH: mk(`<div class="r2-eb">The unit</div><div class="r2-rule"></div><div class="r2-h2">Layout <span class="g">·</span> Size <span class="g">·</span> View</div>`, 280),
+    unitH: mk(`<div class="r2-eb">Project selection</div><div class="r2-rule"></div><div class="r2-h2">Choose the right</div>`, 270),
+    sel: mk(`<div class="r2-sel">${[['pin', 'Location'], ['dev', 'Developer'], ['plan', 'Unit']].map(([ic, n], k) => `<div class="c" data-k="${k}"><span class="num">0${k + 1}</span><span class="ic2">${I[ic]}</span><span>${n}</span></div>`).join('')}</div>`, 470),
     payH: mk(`<div class="r2-eb">Payment plan</div><div class="r2-rule"></div><div class="r2-h2">Payments follow<br><span class="g">construction</span></div>`, 270),
     tl: mk(`<div class="card"></div>
       <div class="hdr" style="top:28px">CONSTRUCTION</div><div class="hdr" style="top:300px">PAYMENT</div>
@@ -106,7 +113,7 @@ export function buildReelOverlay2({ narration, durations, reel }) {
   const isl = {};
   for (const [k, n, ar, ll] of [['abudhabi', 'Abu Dhabi Island', 'جزيرة أبوظبي', [54.371, 24.469]], ['reem', 'Al Reem Island', 'جزيرة الريم', [54.409, 24.493]], ['saadiyat', 'Saadiyat Island', 'جزيرة السعديات', [54.444, 24.546]], ['yas', 'Yas Island', 'جزيرة ياس', [54.609, 24.486]]])
     isl[k] = mk(`<div class="n">${n}</div><div class="c">${fmt(ll)}</div><div class="ar">${ar}</div>`, null, 'r2-isl');
-  const ROOMS = ['LIVING', 'KITCHEN', 'MASTER', 'BEDROOM', 'BATH', null, 'BALCONY'];
+  const ROOMS = ['LIVING', 'KITCHEN', 'BEDROOM', null, 'BATH', null, 'BALCONY'];
   const rooms = ROOMS.map((r) => r && mk(r, null, 'r2-room'));
   const steps = [...E.offS.querySelectorAll('.s')];
   const nodes = [...E.tl.querySelectorAll('.node')], ticks = [...E.tl.querySelectorAll('.tick')], tops = [...E.tl.querySelectorAll('.col.top')], bots = [...E.tl.querySelectorAll('.col.bot')], fill = E.tl.querySelector('.fill');
@@ -124,6 +131,9 @@ export function buildReelOverlay2({ narration, durations, reel }) {
   W.forEach((x, i) => { g.push(x); if (/[.,?!:—]$/.test(x.w) || x.w === '—' || g.length >= 4 || !W[i + 1] || W[i + 1].line !== x.line) { groups.push(g); g = []; } });
   const at = (re, line) => { const x = W.find((w) => (!line || w.line === line) && w.w.toLowerCase().replace(/[^a-z']/g, '').startsWith(re)); return x ? x.a : 0; };
   const S = Object.fromEntries(reel.shots.map((s) => [s.id, s.r]));
+  const lineWith = (w) => (narration.lines.find((l) => l.text.toLowerCase().includes(w)) || {}).id;
+  const DROPS = (reel.map && reel.map.drops) || [0.15, 0.4, 0.65, 0.9], FOCUS = (reel.map && reel.map.focus) || [1.55, 2.35, 3.2, 4.05];
+  const selC = [...E.sel.querySelectorAll('.c')];
 
   return {
     words: W,
@@ -137,7 +147,7 @@ export function buildReelOverlay2({ narration, durations, reel }) {
       // 3 MAP
       if (shot === 'map') {
         show(E.mapH, t, S.map[0] + 0.25, S.map[1] - 0.05); show(E.north, t, S.map[0] + 0.4, S.map[1] - 0.05, { rise: 0 }); show(E.attr, t, S.map[0] + 0.4, S.map[1] - 0.05, { rise: 0 });
-        const drops = [0.15, 0.4, 0.65, 0.9], focusT = [1.55, 2.35, 3.2, 4.05];
+        const drops = DROPS, focusT = FOCUS;
         ['abudhabi', 'reem', 'saadiyat', 'yas'].forEach((k, i) => {
           const p = A['isl_' + k]; const e = isl[k]; if (!p || !p.visible) return;
           const v = clamp((T - drops[i] - 0.25) / 0.45); if (v <= 0) return;
@@ -149,8 +159,12 @@ export function buildReelOverlay2({ narration, durations, reel }) {
       }
       // 4 UNIT — floating room labels
       if (shot === 'unit') {
-        show(E.unitH, t, S.unit[0] + 0.25, S.unit[1] - 0.05);
-        rooms.forEach((e, i) => { if (!e) return; const p = A['room' + i]; if (!p || !p.visible) return; const v = easeOut(clamp((T - 0.5 - i * 0.18) / 0.45));
+        show(E.unitH, t, S.unit[0] + 0.2, S.unit[1] - 0.05);
+        if (show(E.sel, t, S.unit[0] + 0.35, S.unit[1] - 0.05, { rise: 16 })) {
+          const L3 = lineWith('location'); const on = [at('location', L3), at('developer', L3), at('unit', L3)];
+          selC.forEach((c, k) => { const lit = t >= on[k] - 0.05; c.classList.toggle('on', lit); const v = easeOut(clamp((T - 0.35 - k * 0.2) / 0.5)); c.style.opacity = v.toFixed(3); c.style.transform = `translateX(${((1 - v) * -20).toFixed(1)}px) scale(${lit ? (1 + 0.04 * Math.max(0, 1 - (t - on[k]) / 0.3)).toFixed(3) : 1})`; });
+        }
+        rooms.forEach((e, i) => { if (!e) return; const p = A['room' + i]; if (!p || !p.visible) return; const v = easeOut(clamp((T - 1.6 - i * 0.15) / 0.45));
           if (v <= 0) return; e.style.display = ''; e.style.left = `${p.x}px`; e.style.top = `${p.y}px`; e.style.opacity = v.toFixed(3); e.style.transform = `translate(-50%,-100%) translateY(${((1 - v) * 10).toFixed(1)}px)`; });
       }
       // 5 PAYMENT — one infographic: construction milestones above, payments below
@@ -161,22 +175,23 @@ export function buildReelOverlay2({ narration, durations, reel }) {
         ticks.forEach((x, k) => { x.style.opacity = px >= parseFloat(x.style.left) ? 1 : 0.15; });
         [tops, bots].forEach((arr) => arr.forEach((c, k) => { const v = easeOut(clamp((px - NX[k] + 40) / 80)); c.style.opacity = (0.18 + 0.82 * v).toFixed(3); c.style.transform = `translateY(${((1 - v) * 10).toFixed(1)}px)`; }));
       }
-      show(E.payN, t, at('every', 'v4') - 0.2, S.payment[1] - 0.05, { rise: 12 });
+      show(E.payN, t, S.payment[0] + 3.9, S.payment[1] - 0.05, { rise: 12 });
       // 6 DUE DILIGENCE — three cards, each confirmed on its spoken word
       show(E.ddH, t, S.verify[0] + 0.25, S.verify[1] - 0.05);
       if (show(E.dd, t, S.verify[0] + 0.4, S.verify[1] - 0.05, { rise: 18 })) {
-        const on = [at('developer', 'v5'), at('escrow', 'v5'), at('spa', 'v5')];
+        const L5 = lineWith('escrow'); const on = [at('developer', L5), at('escrow', L5), at('spa', L5)];
         rows.forEach((r, k) => { const done = t >= on[k]; r.classList.toggle('on', done); const okEl = r.querySelector('.ok');
           const u = easeOutBack(clamp((t - on[k]) / 0.3)); okEl.innerHTML = done ? I.ok : ''; okEl.style.transform = `scale(${u.toFixed(3)})`;
           const v = easeOut(clamp((T - 0.45 - k * 0.22) / 0.5)); r.style.opacity = v.toFixed(3); r.style.transform = `translateX(${((1 - v) * -24).toFixed(1)}px)`; });
       }
-      show(E.ddN, t, at('spa', 'v5') + 0.2, S.verify[1] - 0.05, { rise: 10 });
+      show(E.ddN, t, at('spa', lineWith('escrow')) + 0.2, S.verify[1] - 0.05, { rise: 10 });
       // 7 END — one closing graphic
-      if (show(E.save, t, at('save', 'v7') - 0.25, 35.2, { fi: 0.6 })) {
-        const f = easeInOut(remap(t, at('save', 'v7') + 0.25, at('save', 'v7') + 0.85)); saveFill.style.clipPath = `inset(${((1 - f) * 100).toFixed(1)}% 0 0 0)`;
-        saveIc.style.transform = `scale(${(1 + 0.08 * Math.sin(clamp((t - at('save', 'v7') - 0.75) / 0.4) * Math.PI)).toFixed(3)})`;
+      const LS = lineWith('save this guide'), tS = at('save', LS);
+      if (show(E.save, t, Math.min(tS - 0.25, S.end[0] + 0.3), 35.2, { fi: 0.6 })) {
+        const f = easeInOut(remap(t, tS + 0.25, tS + 0.85)); saveFill.style.clipPath = `inset(${((1 - f) * 100).toFixed(1)}% 0 0 0)`;
+        saveIc.style.transform = `scale(${(1 + 0.08 * Math.sin(clamp((t - tS - 0.75) / 0.4) * Math.PI)).toFixed(3)})`;
       }
-      show(E.send, t, at('save', 'v7') + 1.1, 35.2, { rise: 12 });
+      show(E.send, t, tS + 1.1, 35.2, { rise: 12 });
       // SUBTITLES
       const gi = groups.findIndex((gr) => t >= gr[0].a - 0.05 && t < gr[gr.length - 1].b + 0.15);
       if (gi >= 0) { cap.style.display = ''; const gr = groups[gi]; box.innerHTML = gr.map((x) => `<span class="${t >= x.a && t < x.b + 0.05 ? 'cw' : ''}">${x.w}</span>`).join(' ');

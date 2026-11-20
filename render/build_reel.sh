@@ -3,7 +3,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 V="${1:-1}"
-if [ "$V" = 2 ]; then FR=frames_reel2; AB=audio/build_reel2; NAME=offplan_abu_dhabi_reel_v2_35s_1080x1920.mp4; DUR=35.0; RJ=reel2; NJ=narration_reel2; VD=vo_reel2; SRT=offplan_abu_dhabi_reel_v2_35s.srt
+if [ "$V" = 3 ]; then FR=frames_reel3; AB=audio/build_reel3; NAME=offplan_abu_dhabi_reel_final_1080x1920.mp4; DUR=34.9; RJ=reel3; NJ=narration_reel3; VD=vo_reel3; SRT=offplan_abu_dhabi_reel_final.srt
+elif [ "$V" = 2 ]; then FR=frames_reel2; AB=audio/build_reel2; NAME=offplan_abu_dhabi_reel_v2_35s_1080x1920.mp4; DUR=35.0; RJ=reel2; NJ=narration_reel2; VD=vo_reel2; SRT=offplan_abu_dhabi_reel_v2_35s.srt
 else FR=frames_reel; AB=audio/build_reel; NAME=offplan_abu_dhabi_reel_35s_1080x1920.mp4; DUR=34.5; RJ=reel; NJ=narration_reel; VD=vo_reel; SRT=offplan_abu_dhabi_reel_35s.srt; fi
 mkdir -p output
 ls $FR/seg_*.mp4 | grep -v tmp | sort | sed "s#^#file '$(pwd)/#; s#\$#'#" > $FR/concat.txt

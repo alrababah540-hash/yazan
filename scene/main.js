@@ -428,10 +428,11 @@ window.__chunks = overlay.chunks; window.__A = A; window.__dbg = { scene, apt, l
 
 // ---------------------------------------------------------------- REEL V2 — calm 7-scene edit (≤ 35 s)
 // Fewer shots, natural-speed voice, slower camera, real Abu Dhabi map, one idea per scene.
-if (Q.get('reel') === '2') {
-  const R = await (await fetch('/scene/reel2.json')).json();
-  const RN = await (await fetch('/audio/narration_reel2.json')).json();
-  const RD = await (await fetch('/audio/vo_reel2/durations.json')).json();
+if (Q.get('reel') === '2' || Q.get('reel') === '3') {
+  const RV = Q.get('reel');
+  const R = await (await fetch(`/scene/reel${RV}.json`)).json();
+  const RN = await (await fetch(`/audio/narration_reel${RV}.json`)).json();
+  const RD = await (await fetch(`/audio/vo_reel${RV}/durations.json`)).json();
   const map2 = await buildMap2(M); map2.root.visible = false; scene.add(map2.root);
   const ui2 = buildReelOverlay2({ narration: RN, durations: RD, reel: R });
   window.__reelWords = ui2.words;
@@ -442,8 +443,9 @@ if (Q.get('reel') === '2') {
   function mapScene(u, T) {
     resetAll(); map2.root.visible = true; E.sun.castShadow = false; E.sun.intensity = 1.5; E.hemi.intensity = 0.25;
     E.backdrop.material.uniforms.uWarm.value = 0.1; E.backdrop.material.uniforms.uDark.value = 0.35; scene.fog.density = 0.0007;
-    const drops = [0.15, 0.4, 0.65, 0.9];                  // markers drop in sequence (s)
-    const focusT = [1.55, 2.35, 3.2, 4.05];                // camera passes each island (s)
+    const drops = (R.map && R.map.drops) || [0.15, 0.4, 0.65, 0.9];        // markers drop in sequence (s)
+    const focusT = (R.map && R.map.focus) || [1.55, 2.35, 3.2, 4.05];      // camera passes each island (s)
+    const MS = focusT[3] / 4.05;                                             // camera timing scale for longer map shots
     FK.forEach((k, i) => {
       map2.setPin(k, easeOutBack(remap(T, drops[i], drops[i] + 0.5)));
       const a = clamp(1 - Math.abs(T - focusT[i]) / 0.75) ** 0.8;
@@ -452,10 +454,11 @@ if (Q.get('reel') === '2') {
     });
     const mid = P('abudhabi').clone().lerp(P('yas'), 0.5);
     const c = (k, d, h) => [P(k).x, h, P(k).z + d];
-    const pos = [{ t: 0, v: [mid.x - 10, 560, mid.z + 300] }, { t: 1.0, v: [mid.x - 25, 470, mid.z + 255] },
-      { t: 1.9, v: c('abudhabi', 150, 245).map((v, i) => v + (i === 0 ? 15 : 0)) }, { t: 2.8, v: c('saadiyat', 170, 240) }, { t: 4.1, v: c('yas', 175, 245) }, { t: 5.0, v: [mid.x + 10, 430, mid.z + 240] }];
-    const look = [{ t: 0, v: [mid.x - 10, 0, mid.z - 30] }, { t: 1.0, v: [mid.x - 25, 0, mid.z - 20] },
-      { t: 1.9, v: [(P('abudhabi').x + P('reem').x) / 2, 0, (P('abudhabi').z + P('reem').z) / 2] }, { t: 2.8, v: [P('saadiyat').x, 0, P('saadiyat').z] }, { t: 4.1, v: [P('yas').x, 0, P('yas').z] }, { t: 5.0, v: [mid.x + 10, 0, mid.z - 15] }];
+    const tk = (x) => x * MS;
+    const pos = [{ t: 0, v: [mid.x - 10, 560, mid.z + 300] }, { t: tk(1.0), v: [mid.x - 25, 470, mid.z + 255] },
+      { t: tk(1.9), v: c('abudhabi', 150, 245).map((v, i) => v + (i === 0 ? 15 : 0)) }, { t: tk(2.8), v: c('saadiyat', 170, 240) }, { t: tk(4.1), v: c('yas', 175, 245) }, { t: tk(5.0) + 0.6, v: [mid.x + 10, 430, mid.z + 240] }];
+    const look = [{ t: 0, v: [mid.x - 10, 0, mid.z - 30] }, { t: tk(1.0), v: [mid.x - 25, 0, mid.z - 20] },
+      { t: tk(1.9), v: [(P('abudhabi').x + P('reem').x) / 2, 0, (P('abudhabi').z + P('reem').z) / 2] }, { t: tk(2.8), v: [P('saadiyat').x, 0, P('saadiyat').z] }, { t: tk(4.1), v: [P('yas').x, 0, P('yas').z] }, { t: tk(5.0) + 0.6, v: [mid.x + 10, 0, mid.z - 15] }];
     const l = cam(pos, look, T); dof(l, 0.00003);
   }
   // --- custom backdrop: payment infographic (low dolly over the gold grid, heavy DOF)
@@ -469,7 +472,7 @@ if (Q.get('reel') === '2') {
   // --- custom backdrop: due-diligence infographic (slow top-down drift over the site blueprint)
   function riskBg(u, T) {
     resetAll(); studio.root.visible = true; blueprint.root.visible = true;
-    blueprint.mat.uniforms.uReveal.value = 1.1; blueprint.mat.uniforms.uAlpha.value = 0.7; blueprint.mat.uniforms.uGlow.value = 0.8;
+    blueprint.mat.uniforms.uReveal.value = 1.1; blueprint.mat.uniforms.uAlpha.value = RV === '3' ? 0.3 : 0.7; blueprint.mat.uniforms.uGlow.value = RV === '3' ? 0.55 : 0.8;
     E.backdrop.material.uniforms.uDark.value = 0.4;
     const a = 0.35 + 0.06 * T;
     camera.position.set(Math.sin(a) * 22, 92, Math.cos(a) * 22); camera.up.set(0, 1, 0); camera.lookAt(0, 0, 4);
@@ -486,9 +489,13 @@ if (Q.get('reel') === '2') {
     if (sh.custom) CUSTOM[sh.custom](T / len, T);
     else {
       src = sh.src[0] + T * (sh.src[1] - sh.src[0]) / len; renderSource(src);
-      if (sh.id === 'unit') { // floating room labels anchored to the 3D apartment
-        apt.root.updateMatrixWorld(true);
-        LAYOUTS.b2.rooms.forEach((r, i) => { AW['room' + i] = apt.inner.localToWorld(V(r.x, 3.1, r.y)); });
+      if (sh.id === 'unit') {
+        if (RV === '3') { // frame the apartment in the lower half, under the selection infographic
+          const up = V(0, 1, 0).applyQuaternion(camera.quaternion); camera.position.addScaledVector(up, 7.5); camera.updateMatrixWorld();
+        } else { // V2: floating room labels anchored to the 3D apartment
+          apt.root.updateMatrixWorld(true);
+          LAYOUTS.b2.rooms.forEach((r, i) => { AW['room' + i] = apt.inner.localToWorld(V(r.x, 3.1, r.y)); });
+        }
       }
     }
     for (const kk in AW) A[kk] = project(AW[kk]);

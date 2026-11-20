@@ -10,7 +10,7 @@ const args = Object.fromEntries(process.argv.slice(2).reduce((a, v, i, arr) => (
 const FPS = 30;
 const LANG = args.lang === 'en' ? 'en' : 'ar';
 const REEL = !!args.reel;
-const OUT = path.resolve(__dirname, '..', REEL ? (args.reel === '2' ? 'frames_reel2' : 'frames_reel') : LANG === 'en' ? 'frames_en' : 'frames');
+const OUT = path.resolve(__dirname, '..', REEL ? (args.reel === '1' ? 'frames_reel' : `frames_reel${args.reel}`) : LANG === 'en' ? 'frames_en' : 'frames');
 fs.mkdirSync(OUT, { recursive: true });
 
 async function openPage(browser, port) {
@@ -59,7 +59,7 @@ const pages = {};
     }
   } else {
     // fixed 120-frame segments (4 s) → resumable: finished segments are skipped
-    const from = +(args.from || 0), to = +(args.to || (REEL ? (args.reel === '2' ? 1050 : 1035) : 2280)), W = +(args.workers || 2), SEG = 120;
+    const from = +(args.from || 0), to = +(args.to || (REEL ? ({ '1': 1035, '2': 1050, '3': 1047 })[args.reel] : 2280)), W = +(args.workers || 2), SEG = 120;
     const queue = [];
     for (let a = from; a < to; a += SEG) {
       const b = Math.min(to, a + SEG), f = path.join(OUT, `seg_${String(a).padStart(5, '0')}.mp4`);

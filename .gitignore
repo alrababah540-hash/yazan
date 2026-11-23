@@ -17,3 +17,7 @@ frames_reel2/
 audio/build_reel2/*.wav
 frames_reel3/
 audio/build_reel3/*.wav
+ad27/frames_*/
+ad27/audio/build/*.wav
+tools/tts/sherpa-onnx-*
+geo_raw/

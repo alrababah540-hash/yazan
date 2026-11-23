@@ -1,0 +1,127 @@
+{
+ "voice": "Kokoro-82M v0.19 (Apache-2.0), speaker bm_george (sid 9), offline via sherpa-onnx 1.12.40",
+ "sid": 9,
+ "lines": [
+  {
+   "id": "v1",
+   "start": 0.35,
+   "window": [
+    0.3,
+    3.9
+   ],
+   "text": "Seven emirates. One nation.",
+   "tts": "Seven emirates. One nation.",
+   "speed": 1.0
+  },
+  {
+   "id": "v2",
+   "start": 4.25,
+   "window": [
+    4.2,
+    7.9
+   ],
+   "text": "And at its heart, the capital: Abu Dhabi.",
+   "tts": "And at its heart... the capital, Abu Dhabi.",
+   "speed": 1.0
+  },
+  {
+   "id": "v3_1",
+   "start": 8.12,
+   "window": [
+    8.12,
+    9.11
+   ],
+   "text": "Yas.",
+   "tts": "Yas.",
+   "speed": 1.0
+  },
+  {
+   "id": "v3_2",
+   "start": 9.12,
+   "window": [
+    9.12,
+    10.11
+   ],
+   "text": "Al Fahid.",
+   "tts": "Al Fahid.",
+   "speed": 1.0
+  },
+  {
+   "id": "v3_3",
+   "start": 10.12,
+   "window": [
+    10.12,
+    11.11
+   ],
+   "text": "Saadiyat.",
+   "tts": "Saadiyat.",
+   "speed": 1.0
+  },
+  {
+   "id": "v3_4",
+   "start": 11.12,
+   "window": [
+    11.12,
+    12.11
+   ],
+   "text": "Al Reem.",
+   "tts": "Al Reem.",
+   "speed": 1.0
+  },
+  {
+   "id": "v3_5",
+   "start": 12.12,
+   "window": [
+    12.12,
+    13.11
+   ],
+   "text": "Al Maryah.",
+   "tts": "Al Maryah.",
+   "speed": 1.0
+  },
+  {
+   "id": "v3_6",
+   "start": 13.12,
+   "window": [
+    13.12,
+    14.11
+   ],
+   "text": "Hudayriyat.",
+   "tts": "Hudayriyat.",
+   "speed": 1.0
+  },
+  {
+   "id": "v3_7",
+   "start": 14.12,
+   "window": [
+    14.12,
+    15.11
+   ],
+   "text": "Lulu Island.",
+   "tts": "Lulu Island.",
+   "speed": 1.0
+  },
+  {
+   "id": "v4",
+   "start": 16.25,
+   "window": [
+    16.2,
+    22.9
+   ],
+   "text": "2025: a record year. Then the first half of 2026 more than doubled.",
+   "tts": "Twenty twenty-five... a record year. Then, the first half of twenty twenty-six... more than doubled.",
+   "speed": 1.0
+  },
+  {
+   "id": "v5",
+   "start": 23.3,
+   "window": [
+    23.2,
+    26.6
+   ],
+   "text": "Abu Dhabi. An evolving investment destination.",
+   "tts": "Abu Dhabi. An evolving investment destination.",
+   "speed": 1.0
+  }
+ ]
+}

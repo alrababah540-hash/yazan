@@ -1,0 +1,79 @@
+{
+ "v1": {
+  "dur": 2.283,
+  "speed": 1.0,
+  "start": 0.35,
+  "end": 2.633,
+  "fits": true
+ },
+ "v2": {
+  "dur": 2.364,
+  "speed": 1.0,
+  "start": 4.25,
+  "end": 6.614,
+  "fits": true
+ },
+ "v3_1": {
+  "dur": 0.6,
+  "speed": 1.0,
+  "start": 8.12,
+  "end": 8.72,
+  "fits": true
+ },
+ "v3_2": {
+  "dur": 0.929,
+  "speed": 1.0,
+  "start": 9.12,
+  "end": 10.049,
+  "fits": true
+ },
+ "v3_3": {
+  "dur": 0.846,
+  "speed": 1.0,
+  "start": 10.12,
+  "end": 10.966,
+  "fits": true
+ },
+ "v3_4": {
+  "dur": 0.968,
+  "speed": 1.0,
+  "start": 11.12,
+  "end": 12.088,
+  "fits": true
+ },
+ "v3_5": {
+  "dur": 0.819,
+  "speed": 1.0,
+  "start": 12.12,
+  "end": 12.939,
+  "fits": true
+ },
+ "v3_6": {
+  "dur": 0.979,
+  "speed": 1.21,
+  "start": 13.12,
+  "end": 14.099,
+  "fits": true
+ },
+ "v3_7": {
+  "dur": 0.981,
+  "speed": 1.15,
+  "start": 14.12,
+  "end": 15.101,
+  "fits": true
+ },
+ "v4": {
+  "dur": 5.252,
+  "speed": 1.0,
+  "start": 16.25,
+  "end": 21.502,
+  "fits": true
+ },
+ "v5": {
+  "dur": 3.281,
+  "speed": 1.06,
+  "start": 23.3,
+  "end": 26.581,
+  "fits": true
+ }
+}

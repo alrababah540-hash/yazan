@@ -1,0 +1,28 @@
+{
+ "islands": {
+  "yas": [],
+  "fahid": [],
+  "saadiyat": [],
+  "reem": [],
+  "maryah": [],
+  "hudayriyat": [],
+  "lulu": []
+ },
+ "skyline": null,
+ "logo": null,
+ "signoff": null,
+ "inventory": {
+  "01_UAE_Maps": [],
+  "02_Abu_Dhabi_Maps": [],
+  "03_Yas_Island": [],
+  "04_Al_Fahid": [],
+  "05_Saadiyat": [],
+  "06_Al_Reem": [],
+  "07_Al_Maryah": [],
+  "08_Hudayriyat": [],
+  "09_Lulu_Island": [],
+  "10_Market_Statistics": [],
+  "11_Economic_Growth": [],
+  "12_Personal_Branding": []
+ }
+}

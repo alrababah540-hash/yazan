@@ -9,8 +9,9 @@
     "build": "bash render/build.sh"
   },
   "dependencies": {
-    "@fontsource/ibm-plex-sans-arabic": "5.2.8",
     "@fontsource/cormorant-garamond": "5.2.8",
+    "@fontsource/ibm-plex-sans-arabic": "5.2.8",
+    "@fontsource/inter": "^5.2.8",
     "three": "0.170.0"
   }
 }

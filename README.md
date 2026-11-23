@@ -1,5 +1,7 @@
 # ما هو العقار على المخطط (أوف بلان) في أبوظبي؟ — 3D motion film
 
+> **Latest project:** `ad27/`: *Abu Dhabi Real Estate — From UAE to Investment Opportunities*, a 27-second 4K landscape film. See `ad27/README.md`.
+
 A vertical (1080×1920, 30 fps, 76 s) Arabic film that explains off-plan property buying in Abu Dhabi. It runs as one continuous procedural 3D world: empty plot → blueprint → tower → selected apartment → payment timeline → completed building → model on stone.
 
 **Final videos:**

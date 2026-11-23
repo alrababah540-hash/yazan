@@ -1,0 +1,52 @@
+{
+ "duration": 27.0,
+ "fps": 30,
+ "islands": [
+  {"key": "yas", "t": 8.0, "name": "Yas Island", "tag": "Entertainment · Tourism · Residential communities",
+   "fact": "Disneyland Abu Dhabi announced for Yas Island", "factSrc": "Disney & Miral, May 2025 · opening date not yet confirmed"},
+  {"key": "fahid", "t": 9.0, "name": "Al Fahid Island", "tag": "Waterfront residential · Future investment potential",
+   "fact": "AED 40 bn masterplan unveiled by Aldar", "factSrc": "Aldar / WAM, 2025"},
+  {"key": "saadiyat", "t": 10.0, "name": "Saadiyat Island", "tag": "Luxury beachfront · Culture · Premium residential",
+   "fact": "Home of the Saadiyat Cultural District", "factSrc": "Louvre Abu Dhabi opened here in 2017"},
+  {"key": "reem", "t": 11.0, "name": "Al Reem Island", "tag": "High-rise residential · Urban lifestyle",
+   "fact": "Dense high-rise waterfront district", "factSrc": "Tower heights: Overture / OSM building data"},
+  {"key": "maryah", "t": 12.0, "name": "Al Maryah Island", "tag": "Financial district · Business · Luxury lifestyle",
+   "fact": "Home of Abu Dhabi Global Market (ADGM)", "factSrc": "ADGM, international financial centre"},
+  {"key": "hudayriyat", "t": 13.0, "name": "Hudayriyat Island", "tag": "Waterfront living · Villas · Sports · Future development",
+   "fact": "Sports, leisure and waterfront villa district", "factSrc": "Modon Properties master developer"},
+  {"key": "lulu", "t": 14.0, "name": "Lulu Island", "tag": "Waterfront location · Long-term development potential",
+   "fact": "Development plan confirmed", "factSrc": "The National, 25 Aug 2026"}
+ ],
+ "stats": {
+  "p1": {
+   "hero": [
+    {"label": "Total transactions", "period": "Full year 2025 · record", "value": 142, "prefix": "AED ", "suffix": " bn", "decimals": 0,
+     "badge": "+44% YoY", "src": "ADREC 2025 performance release (Feb 2026)"},
+    {"label": "Total transactions", "period": "H1 2026 (Jan–Jun)", "value": 117, "prefix": "AED ", "suffix": " bn", "decimals": 0,
+     "badge": "+112% YoY", "src": "ADREC H1 2026 release (17 Jul 2026)"}
+   ],
+   "tiles": [
+    {"value": 42814, "decimals": 0, "prefix": "", "suffix": "", "label": "Transactions in 2025", "delta": "+52% volume YoY", "src": "ADREC · FY2025"},
+    {"value": 61.7, "decimals": 1, "prefix": "+", "suffix": "%", "label": "Volume growth, H1 2026", "delta": "vs H1 2025 (annual comparison)", "src": "ADREC · H1 2026"},
+    {"value": 13.8, "decimals": 1, "prefix": "AED ", "suffix": " bn", "label": "Foreign direct investment, H1 2026", "delta": "+309% YoY · above all of 2025", "src": "ADREC · H1 2026"}
+   ]
+  },
+  "p2": {
+   "groups": [
+    {"title": "Residential", "items": [
+     {"value": 11, "decimals": 0, "prefix": "+", "suffix": "%", "label": "Apartment prices", "period": "Q3 2026, year-on-year", "src": "Cavendish Maxwell"},
+     {"value": 8.9, "decimals": 1, "prefix": "+", "suffix": "%", "label": "Villa prices", "period": "Q3 2026, year-on-year", "src": "Cavendish Maxwell"},
+     {"value": 2109, "decimals": 0, "prefix": "AED ", "suffix": "", "label": "Avg. apartment value / sq ft", "period": "Q3 2026 (AED 22,700 / sq m)", "src": "Savills"},
+     {"value": 3.5, "decimals": 1, "prefix": "+", "suffix": "%", "label": "Apartment rents", "period": "Q3 2026, year-on-year", "src": "Cavendish Maxwell"}
+    ]},
+    {"title": "Demand drivers", "items": [
+     {"value": 4.14, "decimals": 2, "prefix": "", "suffix": " m", "label": "Population (+7.5%)", "period": "2024, annual", "src": "Statistics Centre – Abu Dhabi"},
+     {"value": 26.6, "decimals": 1, "prefix": "", "suffix": " m", "label": "Visitors, a record", "period": "2025, annual", "src": "DCT Abu Dhabi"},
+     {"value": 28, "decimals": 0, "prefix": "", "suffix": "", "label": "New projects registered", "period": "H1 2026", "src": "ADREC"}
+    ]}
+   ],
+   "outlook": {"title": "Pipeline · announced projects, not forecasts",
+    "items": ["Disneyland Abu Dhabi · Yas", "Fahid Island · AED 40 bn masterplan", "Lulu Island · development plan", "8 new investment zones (50 total)"]}
+  }
+ }
+}

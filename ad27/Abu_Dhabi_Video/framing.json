@@ -1,0 +1,4 @@
+{
+ "_note": "Per-image framing for the slow push-in: fx/fy = where the move drifts toward (-1 left/top .. +1 right/bottom), z1 = end zoom.",
+ "09_Lulu_Island/01_lulu_client_aerial.jpg": {"fx": 1.0, "fy": 0.4, "z1": 1.16, "subject": "Lulu Island is the long sandy island on the right, parallel to the Corniche"}
+}

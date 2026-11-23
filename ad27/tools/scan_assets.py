@@ -7,14 +7,14 @@ rel = lambda f: '/' + os.path.relpath(f, ROOT).replace(os.sep, '/')
 CR = json.load(open(os.path.join(LIB, 'credits.json'))) if os.path.exists(os.path.join(LIB, 'credits.json')) else {}
 FR = json.load(open(os.path.join(LIB, 'framing.json'))) if os.path.exists(os.path.join(LIB, 'framing.json')) else {}
 def ent(f):
-    k = os.path.relpath(f, LIB).replace(os.sep, '/'); c = CR.get(k); e = {'src': rel(f)}
+    k = os.path.relpath(f, LIB).replace(os.sep, '/'); c = CR.get(k); pp = os.path.join(LIB, '_prepared', os.path.dirname(k), os.path.splitext(os.path.basename(k))[0] + '.png'); e = {'src': rel(pp if os.path.exists(pp) else f), 'original': k}
     if c: e['credit'] = c['credit']
     e.update({kk: vv for kk, vv in FR.get(k, {}).items() if kk in ('fx', 'fy', 'z1', 'kind', 'subject')}); return e
 ISL = {'yas': '03_Yas_Island', 'fahid': '04_Al_Fahid', 'saadiyat': '05_Saadiyat', 'reem': '06_Al_Reem', 'maryah': '07_Al_Maryah', 'hudayriyat': '08_Hudayriyat', 'lulu': '09_Lulu_Island'}
 out = {'islands': {k: [ent(f) for f in imgs(d)] for k, d in ISL.items()}, 'skyline': None, 'logo': None, 'signoff': None, 'inventory': {}}
 for d in sorted(os.listdir(LIB)):
     if os.path.isdir(os.path.join(LIB, d)): out['inventory'][d] = [os.path.basename(f) for f in imgs(d)]
-sky = [f for f in glob.glob(os.path.join(LIB, '*', '*')) if 'skyline' in os.path.basename(f).lower() and f.lower().endswith(EXT)]
+sky = [f for f in glob.glob(os.path.join(LIB, '0*', '*')) if 'skyline' in os.path.basename(f).lower() and f.lower().endswith(EXT)]
 out['skyline'] = ent(sorted(sky)[0]) if sky else None
 logo = [f for f in imgs('12_Personal_Branding') if os.path.basename(f).lower().startswith('logo')]
 out['logo'] = rel(logo[0]) if logo else None

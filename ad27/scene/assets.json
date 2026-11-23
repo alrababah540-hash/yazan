@@ -2,7 +2,8 @@
  "islands": {
   "yas": [
    {
-    "src": "/Abu_Dhabi_Video/03_Yas_Island/01_yas_client.jpg",
+    "src": "/Abu_Dhabi_Video/_prepared/03_Yas_Island/01_yas_client.png",
+    "original": "03_Yas_Island/01_yas_client.jpg",
     "fx": -0.4,
     "fy": 0.1,
     "z1": 1.12,
@@ -12,7 +13,8 @@
   ],
   "fahid": [
    {
-    "src": "/Abu_Dhabi_Video/04_Al_Fahid/01_fahid_client.jpg",
+    "src": "/Abu_Dhabi_Video/_prepared/04_Al_Fahid/01_fahid_client.png",
+    "original": "04_Al_Fahid/01_fahid_client.jpg",
     "fx": 0.2,
     "fy": 0.2,
     "z1": 1.12,
@@ -22,7 +24,8 @@
   ],
   "saadiyat": [
    {
-    "src": "/Abu_Dhabi_Video/05_Saadiyat/01_saadiyat_client.jpg",
+    "src": "/Abu_Dhabi_Video/_prepared/05_Saadiyat/01_saadiyat_client.png",
+    "original": "05_Saadiyat/01_saadiyat_client.jpg",
     "fx": -0.5,
     "fy": 0.0,
     "z1": 1.12,
@@ -32,7 +35,8 @@
   ],
   "reem": [
    {
-    "src": "/Abu_Dhabi_Video/06_Al_Reem/01_reem_client_gate_towers.webp",
+    "src": "/Abu_Dhabi_Video/_prepared/06_Al_Reem/01_reem_client_gate_towers.png",
+    "original": "06_Al_Reem/01_reem_client_gate_towers.webp",
     "fx": -0.6,
     "fy": -0.3,
     "z1": 1.12,
@@ -42,7 +46,8 @@
   ],
   "maryah": [
    {
-    "src": "/Abu_Dhabi_Video/07_Al_Maryah/01_maryah_client_adgm.jpg",
+    "src": "/Abu_Dhabi_Video/_prepared/07_Al_Maryah/01_maryah_client_adgm.png",
+    "original": "07_Al_Maryah/01_maryah_client_adgm.jpg",
     "fx": 0.0,
     "fy": -0.35,
     "z1": 1.12,
@@ -52,7 +57,8 @@
   ],
   "hudayriyat": [
    {
-    "src": "/Abu_Dhabi_Video/08_Hudayriyat/01_hudayriyat_client_render.jpg",
+    "src": "/Abu_Dhabi_Video/_prepared/08_Hudayriyat/01_hudayriyat_client_render.png",
+    "original": "08_Hudayriyat/01_hudayriyat_client_render.jpg",
     "fx": 0.3,
     "fy": 0.2,
     "z1": 1.12,
@@ -62,7 +68,8 @@
   ],
   "lulu": [
    {
-    "src": "/Abu_Dhabi_Video/09_Lulu_Island/01_lulu_client_aerial.jpg",
+    "src": "/Abu_Dhabi_Video/_prepared/09_Lulu_Island/01_lulu_client_aerial.png",
+    "original": "09_Lulu_Island/01_lulu_client_aerial.jpg",
     "fx": 1.0,
     "fy": 0.4,
     "z1": 1.16,
@@ -72,7 +79,8 @@
   ]
  },
  "skyline": {
-  "src": "/Abu_Dhabi_Video/02_Abu_Dhabi_Maps/01_skyline_client_corniche_sunset.jpg",
+  "src": "/Abu_Dhabi_Video/_prepared/02_Abu_Dhabi_Maps/01_skyline_client_corniche_sunset.png",
+  "original": "02_Abu_Dhabi_Maps/01_skyline_client_corniche_sunset.jpg",
   "fx": 0.25,
   "fy": -0.1,
   "z1": 1.08,
@@ -109,11 +117,12 @@
   ],
   "10_Market_Statistics": [],
   "11_Economic_Growth": [],
-  "12_Personal_Branding": []
+  "12_Personal_Branding": [],
+  "_prepared": []
  },
  "branding": {
-  "name": "Yazan Jalamneh",
+  "name": "Yazan Aljalamneh",
   "title": null,
-  "phone": null
+  "phone": "+971 50 500 4472"
  }
 }

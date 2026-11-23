@@ -175,6 +175,7 @@ function gradedPhoto(im, x, y, w, h, u, o = {}) {      // px coords; u = 0..1 pr
   ctx.restore();
 }
 function drawCover(im, x, y, w, h, zoom = 1, px = 0, py = 0) {
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
   const s = Math.max(w / im.width, h / im.height) * zoom, iw = im.width * s, ih = im.height * s;
   ctx.drawImage(im, x + (w - iw) / 2 + px, y + (h - ih) / 2 + py, iw, ih);
 }
@@ -339,7 +340,7 @@ function islandCard(t) {
   } else islandInset(I.key, fx, fy, fw, fh, lt);
   ctx.restore();
   // locator inset (true shape) in the corner of the photo keeps the geography attached to the image
-  if (ph) { ctx.save(); ctx.globalAlpha = a; rrect(fx + 12, fy + 12, 150, 104, 6); ctx.clip(); islandInset(I.key, fx + 12, fy + 12, 150, 104, lt, true); ctx.restore(); ctx.save(); ctx.globalAlpha = a; rrect(fx + 12, fy + 12, 150, 104, 6); ctx.strokeStyle = hexA(C.gold, 0.6); ctx.lineWidth = 1 * K; ctx.stroke(); ctx.restore(); }
+  if (ph) { const ix = fx + fw - 162, iy = fy + fh - 116; ctx.save(); ctx.globalAlpha = a; rrect(ix, iy, 150, 104, 6); ctx.clip(); islandInset(I.key, ix, iy, 150, 104, lt, true); ctx.restore(); ctx.save(); ctx.globalAlpha = a; rrect(ix, iy, 150, 104, 6); ctx.strokeStyle = hexA(C.gold, 0.6); ctx.lineWidth = 1 * K; ctx.stroke(); ctx.restore(); }
   ctx.save(); ctx.globalAlpha = a; rrect(fx, fy, fw, fh, 8); ctx.strokeStyle = hexA(C.gold, 0.75); ctx.lineWidth = 1.5 * K; ctx.stroke(); ctx.restore();
   const cr = CREDIT[I.key];
   text(ph ? (cr && cr.credit ? `Photo: ${cr.credit}` : cr && cr.kind === 'render' ? 'Development render' : 'Photograph') : 'True shape · OpenStreetMap outline, building heights from Overture', fx + 12, fy + fh - 12, F(500, 13), '#D5DCE5', 'left', a);

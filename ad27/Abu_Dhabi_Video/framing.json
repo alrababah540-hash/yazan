@@ -17,5 +17,11 @@
   "fy": -0.35,
   "z1": 1.12,
   "subject": "ADGM Square (Abu Dhabi Global Market), Four Seasons and Rosewood towers, Al Maryah Island"
+ },
+ "08_Hudayriyat/01_hudayriyat_client_render.jpg": {
+  "fx": 0.3,
+  "fy": 0.2,
+  "z1": 1.12,
+  "subject": "Waterfront villa community render (client-identified as Hudayriyat; no unique landmark to verify independently)"
  }
 }

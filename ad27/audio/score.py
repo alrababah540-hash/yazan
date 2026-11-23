@@ -75,22 +75,27 @@ place(sfx, impact(0.6), 0.0, gain=0.35)
 for i in range(7): place(sfx, tick(1500 + 120 * i), 1.45 + i * 0.34 + 0.05, pan=-0.5 + i * 0.16, gain=0.12)      # emirates reveal
 place(sfx, whoosh(3.2, 3000), 3.9, gain=0.22); place(sfx, impact(0.5), 4.0, gain=0.3)                            # zoom to Abu Dhabi
 place(sfx, impact(0.45), 8.0, gain=0.28)
-for i in range(7): place(sfx, tick(2400), 8.0 + i, pan=-0.3 + 0.1 * i, gain=0.16); place(sfx, shimmer(0.8), 8.05 + i, gain=0.08)   # island pins
+FILMJ = json.load(open(os.path.join(ROOT, '..', 'scene', 'film.json')))
+for i, isl in enumerate(FILMJ['islands']): place(sfx, tick(2400), isl['t'], pan=-0.3 + 0.1 * i, gain=0.14); place(sfx, shimmer(0.8), isl['t'] + 0.05, gain=0.07)   # island pins
 place(sfx, shimmer(1.2), 15.0, gain=0.14)
 place(sfx, riser(1.0), 15.0, gain=0.2); place(sfx, impact(0.9), 16.0, gain=0.36)                                  # into data
-for i, x in enumerate([16.55, 17.0, 17.0, 17.3, 17.6] + [19.7 + k * 0.12 for k in range(7)] + [20.75, 20.9, 21.05, 21.2]): place(sfx, tick(2800 + (i % 4) * 150), x, pan=0.2 * ((i % 5) - 2), gain=0.08)
-place(sfx, whoosh(0.6, 5000), 19.3, gain=0.14)
+for i, h in enumerate(FILMJ['stats']['hero']): place(sfx, impact(0.35), h['t'], gain=0.18); place(sfx, tick(3000), h['t'] + 0.9, gain=0.12)   # cards land / counters settle
+for k in range(4): place(sfx, tick(2600 + 120 * k), FILMJ['stats']['secondary']['t'] + 0.12 * k, gain=0.07)
 place(sfx, riser(0.9), 22.1, gain=0.2); place(sfx, impact(0.9), 23.0, gain=0.38); place(sfx, whoosh(2.4, 2500), 23.1, gain=0.16)
 place(sfx, impact(0.5), 25.5, gain=0.26); place(sfx, shimmer(1.4), 25.5, gain=0.16)
 sfx = reverb(sfx, 1.3, 0.18, 5)
-# ---------------- VO + ducking + mix
+# ---------------- VO (client ElevenLabs recording, cut at its own pauses and placed per audio/vo_user_edit.json) + ducking + mix
+import subprocess
+ED = json.load(open(os.path.join(ROOT, 'vo_user_edit.json')))
+raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', os.path.join(ROOT, '..', ED['source']), '-ac', '1', '-ar', str(SR), '-f', 's16le', '-'], capture_output=True, check=True).stdout
+SRC = np.frombuffer(raw, np.int16).astype(float) / 32768
 vo = np.zeros((2, N)); env = np.zeros(N)
-for L in NAR['lines']:
-    with wave.open(os.path.join(ROOT, 'vo', L['id'] + '.wav')) as w:
-        sr = w.getframerate(); a = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(float) / 32768
-    a = np.interp(np.linspace(0, len(a) - 1, int(len(a) * SR / sr)), np.arange(len(a)), a)
-    a = filt(a, 85, 12000, 2); a = a + 0.2 * filt(a, 2200, 5000, 2); a = a / np.max(np.abs(a)) * 0.72
-    place(vo, a, L['start']); i = int(L['start'] * SR); env[i:i + len(a)] = 1
+for c in ED['clips']:
+    i0, i1 = int((c['src'][0] - 0.03) * SR), int((c['src'][1] + 0.05) * SR); a = SRC[max(0, i0):i1].copy()
+    f = int(0.025 * SR); a[:f] *= np.linspace(0, 1, f); a[-f:] *= np.linspace(1, 0, f)          # click-free edges
+    place(vo, a, c['at'] - 0.03); j = int(c['at'] * SR); env[j:j + len(a)] = 1
+vo = np.vstack([filt(vo[0], 80, 14000, 2), filt(vo[1], 80, 14000, 2)])
+vo = vo / np.max(np.abs(vo)) * 0.75
 vo = reverb(vo, 0.45, 0.05, 9)
 k = int(0.25 * SR); cs = np.concatenate([[0.0], np.cumsum(env)]); idx = np.arange(N)
 duck = 1 - 0.55 * (cs[np.clip(idx + k // 2, 0, N)] - cs[np.clip(idx - k // 2, 0, N)]) / k

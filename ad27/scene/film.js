@@ -35,9 +35,12 @@ const fmt = (v, d) => v.toLocaleString('en-US', { minimumFractionDigits: d, maxi
 // ---------------------------------------------------------------- camera
 // cam = {x, y (world m), w (visible width in m at the focus), p (pitch°, 0 = top-down), b (bearing° that points up), oy (focus screen y 0..1)}
 const ISL = Object.fromEntries(Object.entries(GEO.islands));
+const ITIMES = FILM.islands.map((i) => i.t);
+const islIdx = (t) => { let i = 0; while (i < 6 && t >= ITIMES[i + 1]) i++; return i; };
+const islEnd = (i) => (i < 6 ? ITIMES[i + 1] : 15.4);
 const ORDER = FILM.islands.map((i) => i.key);
 const islC = ORDER.reduce((a, k) => [a[0] + ISL[k].pin[0] / 7, a[1] + ISL[k].pin[1] / 7], [0, 0]);
-const ovw = 54e3, ovC = [islC[0] + 0.19 * ovw, islC[1] - 2.0e3];
+const ovw = 56e3, ovC = [islC[0] + 0.24 * ovw, islC[1] - 2.0e3];
 const KEYS = [
   { t: 0.0, x: geo(54.6, 25.0)[0], y: geo(54.6, 25.0)[1], w: 1450e3, p: 0, b: 0 },
   { t: 1.5, x: geo(54.45, 24.75)[0], y: geo(54.45, 24.75)[1], w: 860e3, p: 14, b: 0 },
@@ -156,8 +159,21 @@ function drawBuildings(alpha, exag, warm = 0) {
 
 // ---------------------------------------------------------------- images (user asset library)
 const IMG = {};
-await Promise.all(Object.entries(ASSETS.islands || {}).filter(([, v]) => v.length).map(([k, v]) => new Promise((res) => { const im = new Image(); im.onload = () => { IMG[k] = im; res(); }; im.onerror = res; im.src = '/ad27' + v[0]; })));
-for (const key of ['skyline', 'logo']) if (ASSETS[key]) await new Promise((res) => { const im = new Image(); im.onload = () => { IMG[key] = im; res(); }; im.onerror = res; im.src = '/ad27' + ASSETS[key]; });
+const CREDIT = {};
+const loadImg = (k, e) => new Promise((res) => { if (!e) return res(); const src = typeof e === 'string' ? e : e.src; const im = new Image(); im.onload = () => { IMG[k] = im; CREDIT[k] = typeof e === 'string' ? null : e; res(); }; im.onerror = res; im.src = '/ad27' + src; });
+await Promise.all(Object.entries(ASSETS.islands || {}).filter(([, v]) => v.length).map(([k, v]) => loadImg(k, v[0])));
+for (const key of ['skyline', 'logo']) await loadImg(key, ASSETS[key]);
+// cinematic still treatment: slow push-in + drift, natural grade (contrast/saturation), warm soft-light pass, soft vignette
+function gradedPhoto(im, x, y, w, h, u, o = {}) {      // px coords; u = 0..1 progress of the move
+  const { z0 = 1.05, z1 = 1.13, dx = -1, dy = 0, warm = 0.18, golden = 0, filter = 'contrast(1.06) saturate(1.08) brightness(1.02)' } = o;
+  ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+  ctx.filter = filter; drawCover(im, x, y, w, h, lerp(z0, z1, u), dx * 0.03 * w * u, dy * 0.03 * h * u); ctx.filter = 'none';
+  ctx.globalCompositeOperation = 'soft-light'; ctx.fillStyle = `rgba(232,180,104,${warm})`; ctx.fillRect(x, y, w, h);
+  if (golden) { const g = ctx.createLinearGradient(0, y + h, 0, y); g.addColorStop(0, `rgba(255,150,60,${0.35 * golden})`); g.addColorStop(0.6, `rgba(255,190,110,${0.12 * golden})`); g.addColorStop(1, 'rgba(255,214,160,0)'); ctx.fillStyle = g; ctx.fillRect(x, y, w, h); }
+  ctx.globalCompositeOperation = 'source-over';
+  const v = ctx.createRadialGradient(x + w / 2, y + h / 2, Math.min(w, h) * 0.35, x + w / 2, y + h / 2, Math.max(w, h) * 0.75); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(3,6,12,0.45)'); ctx.fillStyle = v; ctx.fillRect(x, y, w, h);
+  ctx.restore();
+}
 function drawCover(im, x, y, w, h, zoom = 1, px = 0, py = 0) {
   const s = Math.max(w / im.width, h / im.height) * zoom, iw = im.width * s, ih = im.height * s;
   ctx.drawImage(im, x + (w - iw) / 2 + px, y + (h - ih) / 2 + py, iw, ih);
@@ -304,37 +320,37 @@ function hud(t, a) {
 
 // ---------------------------------------------------------------- island card (right panel)
 function islandCard(t) {
-  const i = clamp(Math.floor(t - 8), 0, 6), I = FILM.islands[i], lt = t - I.t;
-  const aIn = ss(7.9, 8.3, t) * (1 - ss(15.0, 15.4, t)); if (aIn <= 0) return;
-  const sw = ss(0, 0.28, lt), x = 1288, y = 236, w = 540, h = 640;
+  const i = islIdx(t), I = FILM.islands[i], lt = t - I.t, dur = islEnd(i) - I.t;
+  const aIn = ss(7.9, 8.3, t) * (1 - ss(15.05, 15.45, t)); if (aIn <= 0) return;
+  const sw = ss(0, 0.25, lt), x = 1180, y = 186, w = 660, h = 668;
   ctx.save(); ctx.globalAlpha = aIn;
-  rrect(x, y, w, h, 14); ctx.fillStyle = 'rgba(6,13,23,0.82)'; ctx.fill(); ctx.strokeStyle = hexA(C.gold, 0.35); ctx.lineWidth = 1 * K; ctx.stroke();
+  rrect(x, y, w, h, 14); ctx.fillStyle = 'rgba(6,13,23,0.86)'; ctx.fill(); ctx.strokeStyle = hexA(C.gold, 0.4); ctx.lineWidth = 1 * K; ctx.stroke();
   ctx.restore();
-  // progress dots
-  for (let k = 0; k < 7; k++) { ctx.save(); ctx.globalAlpha = aIn * (k <= i ? 1 : 0.3); ctx.fillStyle = k === i ? C.goldHi : k < i ? C.gold : C.dim; ctx.beginPath(); ctx.roundRect((x + 36 + k * 22) * K, (y + 34) * K, (k === i ? 16 : 8) * K, 4 * K, 2 * K); ctx.fill(); ctx.restore(); }
-  const a = aIn * sw, dy = (1 - eo(clamp(lt / 0.4))) * 14;
-  text(`${String(i + 1).padStart(2, '0')} / 07`, x + w - 36, y + 42, F(600, 14), C.gold, 'right', aIn, 2);
-  text(I.name, x + 36, y + 104 + dy, F(600, 46, 'serif'), C.text, 'left', a);
-  // tagline (wrap on ' · ')
-  const parts = I.tag.split(' · '); let line = '', ly = y + 142 + dy; ctx.font = F(500, 17);
-  const lines = []; for (const p of parts) { const tryL = line ? line + '  ·  ' + p : p; if (ctx.measureText(tryL).width > (w - 72) * K) { lines.push(line); line = p; } else line = tryL; } lines.push(line);
-  lines.forEach((l, k) => text(l, x + 36, ly + k * 26, F(500, 17), C.goldHi, 'left', a));
-  // visual: user photo if provided, else a true-shape data inset of the island (OSM outline + real buildings)
-  const fx = x + 36, fy = y + 210, fw = w - 72, fh = 292;
-  ctx.save(); rrect(fx, fy, fw, fh, 8); ctx.clip(); ctx.globalAlpha = a;
-  if (IMG[I.key]) { drawCover(IMG[I.key], fx * K, fy * K, fw * K, fh * K, 1.06 + 0.06 * clamp(lt), -10 * K * lt, 0); }
-  else islandInset(I.key, fx, fy, fw, fh, lt);
+  for (let k = 0; k < 7; k++) { ctx.save(); ctx.globalAlpha = aIn * (k <= i ? 1 : 0.3); ctx.fillStyle = k === i ? C.goldHi : k < i ? C.gold : C.dim; ctx.beginPath(); ctx.roundRect((x + 30 + k * 22) * K, (y + 30) * K, (k === i ? 16 : 8) * K, 4 * K, 2 * K); ctx.fill(); ctx.restore(); }
+  const a = aIn * sw, dy = (1 - eo(clamp(lt / 0.4))) * 12;
+  text(`${String(i + 1).padStart(2, '0')} / 07`, x + w - 30, y + 38, F(600, 15), C.gold, 'right', aIn, 2);
+  text(I.name, x + 30, y + 92 + dy, F(600, 44, 'serif'), C.text, 'left', a);
+  text(I.tag, x + 30, y + 126 + dy, F(500, 17), C.goldHi, 'left', a);
+  const fx = x + 30, fy = y + 150, fw = w - 60, fh = 360, ph = IMG[I.key];
+  ctx.save(); ctx.globalAlpha = a; rrect(fx, fy, fw, fh, 8); ctx.clip();
+  if (ph) {
+    gradedPhoto(ph, fx * K, fy * K, fw * K, fh * K, clamp(lt / (dur + 0.3)), { dx: i % 2 ? 1 : -1, ...(CREDIT[I.key] && CREDIT[I.key].focus ? { dy: CREDIT[I.key].focus } : {}) });
+    const g = ctx.createLinearGradient(0, (fy + fh - 60) * K, 0, (fy + fh) * K); g.addColorStop(0, 'rgba(3,6,12,0)'); g.addColorStop(1, 'rgba(3,6,12,0.8)'); ctx.fillStyle = g; ctx.fillRect(fx * K, (fy + fh - 60) * K, fw * K, 60 * K);
+  } else islandInset(I.key, fx, fy, fw, fh, lt);
   ctx.restore();
-  ctx.save(); ctx.globalAlpha = a; rrect(fx, fy, fw, fh, 8); ctx.strokeStyle = hexA(C.gold, 0.3); ctx.lineWidth = 1 * K; ctx.stroke(); ctx.restore();
-  text(IMG[I.key] ? 'Project imagery: client asset library' : 'True shape · OpenStreetMap outline, building heights from Overture', fx + 12, fy + fh - 12, F(400, 12), '#AEB9C7', 'left', a * 0.9);
-  text(I.fact, x + 36, fy + fh + 50 + dy * 0.5, F(600, 19), C.text, 'left', a);
-  text(I.factSrc, x + 36, fy + fh + 76 + dy * 0.5, F(400, 14), C.muted, 'left', a);
+  // locator inset (true shape) in the corner of the photo keeps the geography attached to the image
+  if (ph) { ctx.save(); ctx.globalAlpha = a; rrect(fx + 12, fy + 12, 150, 104, 6); ctx.clip(); islandInset(I.key, fx + 12, fy + 12, 150, 104, lt, true); ctx.restore(); ctx.save(); ctx.globalAlpha = a; rrect(fx + 12, fy + 12, 150, 104, 6); ctx.strokeStyle = hexA(C.gold, 0.6); ctx.lineWidth = 1 * K; ctx.stroke(); ctx.restore(); }
+  ctx.save(); ctx.globalAlpha = a; rrect(fx, fy, fw, fh, 8); ctx.strokeStyle = hexA(C.gold, 0.75); ctx.lineWidth = 1.5 * K; ctx.stroke(); ctx.restore();
+  const cr = CREDIT[I.key];
+  text(ph ? (cr ? `Photo: ${cr.credit}` : 'Photo: client asset library') : 'True shape · OpenStreetMap outline, building heights from Overture', fx + 12, fy + fh - 12, F(500, 13), '#D5DCE5', 'left', a);
+  text(I.fact, x + 30, fy + fh + 50 + dy * 0.5, F(600, 20), C.text, 'left', a);
+  text(I.factSrc, x + 30, fy + fh + 78 + dy * 0.5, F(400, 15), C.muted, 'left', a);
 }
-function islandInset(key, x, y, w, h, lt) {
+function islandInset(key, x, y, w, h, lt, mini = false) {
   const isl = ISL[key]; let x0 = 1e18, y0 = 1e18, x1 = -1e18, y1 = -1e18;
   for (const r of isl.rings) for (const p of r) { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); }
   const g = ctx.createLinearGradient(0, y * K, 0, (y + h) * K); g.addColorStop(0, '#0B1D31'); g.addColorStop(1, '#081422'); ctx.fillStyle = g; ctx.fillRect(x * K, y * K, w * K, h * K);
-  const s = Math.min((w - 60) / (x1 - x0), (h - 60) / (y1 - y0)) * K * (1 + 0.05 * clamp(lt)), cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+  const s = Math.min((w - (mini ? 24 : 60)) / (x1 - x0), (h - (mini ? 24 : 60)) / (y1 - y0)) * K * (1 + 0.05 * clamp(lt)), cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
   const X = (p) => (x + w / 2) * K + (p[0] - cx) * s, Y = (p) => (y + h / 2) * K - (p[1] - cy) * s;
   // neighbouring land for context
   ctx.beginPath(); for (const r of GEO.ad_land) { if (Math.abs(r[0][0] - cx) > 40e3 && r.length < 400) continue; ctx.moveTo(X(r[0]), Y(r[0])); for (const p of r) ctx.lineTo(X(p), Y(p)); ctx.closePath(); }
@@ -347,6 +363,7 @@ function islandInset(key, x, y, w, h, lt) {
     ctx.beginPath(); ctx.moveTo(X(b.c[0]), Y(b.c[0])); for (const p of b.c) ctx.lineTo(X(p), Y(p)); ctx.closePath();
     ctx.fillStyle = hexA('#E9EEF5', 0.25 + 0.6 * clamp(b.h / 200)); ctx.fill();
   }
+  if (mini) return;
   // north arrow + scale bar
   ctx.fillStyle = C.muted; ctx.font = F(600, 11); ctx.textAlign = 'center'; ctx.fillText('N', (x + w - 22) * K, (y + 22) * K);
   ctx.strokeStyle = C.muted; ctx.lineWidth = 1.2 * K; ctx.beginPath(); ctx.moveTo((x + w - 22) * K, (y + 28) * K); ctx.lineTo((x + w - 22) * K, (y + 44) * K); ctx.stroke();
@@ -365,10 +382,33 @@ function statsScene(t) {
   ctx.save(); ctx.globalAlpha = A;
   kicker('THE INVESTMENT PERSPECTIVE', 96, 108, 1);
   text('Abu Dhabi Real Estate — A Market in Transformation', 96, 168, F(600, 52, 'serif'), C.text, 'left', ss(16.05, 16.5, t));
-  const p1 = 1 - ss(19.35, 19.65, t), p2 = ss(19.5, 19.85, t);
-  if (p1 > 0) statsP1(t, p1); if (p2 > 0) statsP2(t, p2);
-  text('All figures historical unless marked. Annual = year-on-year; quarterly figures noted. Sources: official releases (see on-screen credits).', 96, 1040, F(400, 12.5), C.dim, 'left', 0.9);
+  statsV2(t);
+  text('Historical figures as published. Growth rates compare with the same period a year earlier.', 96, 1040, F(400, 14), C.muted, 'left', 0.9);
   ctx.restore();
+}
+function statsV2(t) {
+  FILM.stats.hero.forEach((s, k) => {
+    const t0 = s.t, u = clamp((t - t0) / 0.9), ta = ss(t0 - 0.1, t0 + 0.3, t), x = 96 + k * 594, y = 262, w = 552, h = 440, rise = (1 - eo(clamp((t - t0 + 0.1) / 0.5))) * 24;
+    if (ta <= 0) return;
+    ctx.save(); ctx.globalAlpha *= ta; ctx.translate(0, rise * K);
+    rrect(x, y, w, h, 14); ctx.fillStyle = 'rgba(14,26,42,0.88)'; ctx.fill(); ctx.strokeStyle = hexA(C.gold, 0.45); ctx.lineWidth = 1.2 * K; ctx.stroke();
+    ctx.fillStyle = C.gold; ctx.fillRect((x + 40) * K, (y + 40) * K, 40 * K, 2 * K);
+    text(s.kicker, x + 40, y + 76, F(600, 16), C.gold, 'left', 1, 3);
+    const val = s.decimals ? (s.value * eo(u)).toFixed(s.decimals) : Math.round(s.value * eo(u)).toString();
+    text('AED', x + 40, y + 160, F(600, 30), C.goldHi, 'left', 1, 1);
+    text(u >= 1 ? s.display : val, x + 112, y + 196, F(700, 108), C.text, 'left', 1, -1);
+    text('BILLION', x + 40, y + 248, F(600, 26), C.goldHi, 'left', 1, 6);
+    text(s.period, x + 40, y + 306, F(600, 21), C.teal, 'left');
+    if (s.badge) { ctx.save(); ctx.font = F(700, 17); const bw = ctx.measureText(s.badge).width / K + 26; ctx.fillStyle = hexA(C.teal, 0.14); ctx.beginPath(); ctx.roundRect((x + 40) * K, (y + 326) * K, bw * K, 32 * K, 16 * K); ctx.fill(); ctx.restore(); text(s.badge, x + 53, y + 348, F(700, 17), C.teal, 'left'); }
+    text(s.src, x + 40, y + 404, F(400, 15), C.muted, 'left');
+    ctx.restore();
+  });
+  const S = FILM.stats.secondary, sa = ss(S.t, S.t + 0.4, t);
+  if (sa > 0) {
+    text(S.title, 96, 772, F(600, 15), C.teal, 'left', sa, 3);
+    S.items.forEach((it, k) => { const x = 96 + k * 432, ia = ss(S.t + k * 0.12, S.t + 0.35 + k * 0.12, t); ctx.save(); ctx.globalAlpha *= ia; rrect(x, 792, 408, 150, 10); ctx.fillStyle = 'rgba(14,26,42,0.7)'; ctx.fill(); ctx.restore();
+      text(it.value, x + 24, 850, F(700, 36), C.text, 'left', ia); text(it.label, x + 24, 884, F(600, 16), C.text, 'left', ia); text(it.src, x + 24, 914, F(400, 14), C.muted, 'left', ia); });
+  }
 }
 function counter(v, d, prefix, suffix, u) { return prefix + fmt(v * eo(u), d) + suffix; }
 function statsP1(t, a) {
@@ -434,28 +474,30 @@ function closing(t) {
   const cam = camEnd(t);
   const all = (i) => ({ on: 1, fill: 0.16 + 0.06 * Math.sin(t * 4 + i), draw: 1, cur: 1 });
   drawMapScene(t, cam, { islands: all, buildings: ss(23.0, 23.6, t), warm: 1, atmo: lerp(0.9, 0.35, ss(23.6, 24.6, t)), exag: lerp(2.2, 1.25, ss(23.5, 25.4, t)) });
-  // pins + names for all seven
-  const la = ss(23.15, 23.5, t) * (1 - ss(23.95, 24.3, t));
-  ORDER.forEach((k, i) => { const s = proj(ISL[k].pin[0], ISL[k].pin[1], 0); if (!s) return; const top = drawPin(s[0], s[1], la, 1, C.goldHi, false); if (top) label(GEO.islands[k].name, top[0], top[1], la * 0.95, { size: 14, dx: ILO[k][0] * 0.8, dy: ILO[k][1] + 4, align: ILO[k][2] || 'left' }); });
+  const la = ss(23.15, 23.45, t) * (1 - ss(23.75, 24.05, t));
+  ORDER.forEach((k) => { const s = proj(ISL[k].pin[0], ISL[k].pin[1], 0); if (!s) return; const top = drawPin(s[0], s[1], la, 1, C.goldHi, false); if (top) label(GEO.islands[k].name, top[0], top[1], la * 0.95, { size: 15, dx: ILO[k][0] * 0.8, dy: ILO[k][1] + 4, align: ILO[k][2] || 'left' }); });
+  const sky = IMG.skyline, pa = sky ? ss(23.75, 24.25, t) : 0;     // real skyline photograph, golden-hour grade, slow push
+  if (pa > 0) { ctx.save(); ctx.globalAlpha = pa; gradedPhoto(sky, 0, 0, W, H, clamp((t - 23.75) / 3.25), { z0: 1.03, z1: 1.11, dx: 0.6, dy: -0.3, warm: 0.26, golden: 1, filter: 'contrast(1.08) saturate(1.12) brightness(1.03)' }); ctx.restore(); }
   // statement
-  const sa = ss(23.95, 24.35, t) * (1 - ss(25.2, 25.45, t));
+  const sa = ss(23.95, 24.35, t) * (1 - ss(25.15, 25.4, t));
   if (sa > 0) {
-    const g = ctx.createLinearGradient(0, H * 0.55, 0, H); g.addColorStop(0, 'rgba(4,8,15,0)'); g.addColorStop(0.45, 'rgba(4,8,15,0.7)'); g.addColorStop(1, 'rgba(4,8,15,0.85)');
+    const g = ctx.createLinearGradient(0, H * 0.5, 0, H); g.addColorStop(0, 'rgba(4,8,15,0)'); g.addColorStop(0.5, 'rgba(4,8,15,0.6)'); g.addColorStop(1, 'rgba(4,8,15,0.82)');
     ctx.save(); ctx.globalAlpha = sa; ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.restore();
     text('Abu Dhabi is not just a real estate market.', 960, 846 + (1 - eo(clamp((t - 23.95) / 0.5))) * 12, F(500, 58, 'serif'), C.text, 'center', sa);
     text('It is an evolving investment destination.', 960, 924 + (1 - eo(clamp((t - 24.25) / 0.5))) * 12, `italic ${F(500, 58, 'serif')}`, C.goldHi, 'center', sa * ss(24.25, 24.6, t));
   }
-  // final screen
-  const fa = ss(25.25, 25.6, t);
+  // final screen over the (dimmed) skyline photograph
+  const fa = ss(25.2, 25.6, t);
   if (fa > 0) {
-    ctx.save(); ctx.globalAlpha = fa; ctx.fillStyle = '#050A12'; ctx.fillRect(0, 0, W, H);
-    const g = ctx.createRadialGradient(W / 2, H * 0.46, 0, W / 2, H * 0.46, W * 0.5); g.addColorStop(0, 'rgba(217,178,111,0.07)'); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.restore();
+    ctx.save(); ctx.globalAlpha = fa * (sky ? 0.62 : 1); ctx.fillStyle = '#050A12'; ctx.fillRect(0, 0, W, H); ctx.restore();
+    ctx.save(); ctx.globalAlpha = fa; const g = ctx.createRadialGradient(W / 2, H * 0.47, 0, W / 2, H * 0.47, W * 0.45); g.addColorStop(0, 'rgba(5,10,18,0.55)'); g.addColorStop(1, 'rgba(5,10,18,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.restore();
     const L = ['Understand the Market.', 'Identify the Opportunity.', 'Invest Strategically.'];
-    L.forEach((s, k) => { const t0 = 25.45 + k * 0.28, u = eo(clamp((t - t0) / 0.5)); text(s, 960, 430 + k * 92 + (1 - u) * 14, F(600, 60), k === 2 ? C.goldHi : C.text, 'center', ss(t0, t0 + 0.35, t), 0.5); });
-    const ra = ss(26.1, 26.5, t); ctx.save(); ctx.globalAlpha = ra; ctx.fillStyle = C.gold; const rw = 160 * eo(clamp((t - 26.1) / 0.5)); ctx.fillRect((960 - rw / 2) * K, 740 * K, rw * K, 2 * K); ctx.restore();
-    if (IMG.logo) { const im = IMG.logo, lh = 70 * K, lw = im.width / im.height * lh; ctx.save(); ctx.globalAlpha = ra; ctx.drawImage(im, W / 2 - lw / 2, 780 * K, lw, lh); ctx.restore(); }
-    else if (ASSETS.signoff) text(ASSETS.signoff, 960, 790, F(600, 16), C.gold, 'center', ra, 6);
-    text('Data: ADREC · Statistics Centre – Abu Dhabi · DCT Abu Dhabi · Cavendish Maxwell · Savills.  Map data © OpenStreetMap contributors (ODbL), Overture Maps Foundation.  Not investment advice.', 960, 1036, F(400, 12.5), C.dim, 'center', fa);
+    L.forEach((s, k) => { const t0 = 25.4 + k * 0.28, u = eo(clamp((t - t0) / 0.5)); text(s, 960, 420 + k * 98 + (1 - u) * 14, F(600, 66, 'serif'), k === 2 ? C.goldHi : '#F7F1E6', 'center', ss(t0, t0 + 0.35, t), 0.5); });
+    const ra = ss(26.1, 26.5, t); ctx.save(); ctx.globalAlpha = ra; ctx.fillStyle = C.gold; const rw = 180 * eo(clamp((t - 26.1) / 0.5)); ctx.fillRect((960 - rw / 2) * K, 736 * K, rw * K, 2 * K); ctx.restore();
+    if (IMG.logo) { const im = IMG.logo, lh = 70 * K, lw = im.width / im.height * lh; ctx.save(); ctx.globalAlpha = ra; ctx.drawImage(im, W / 2 - lw / 2, 772 * K, lw, lh); ctx.restore(); }
+    else if (ASSETS.signoff) text(ASSETS.signoff, 960, 790, F(600, 18), C.gold, 'center', ra, 6);
+    const pc = sky && CREDIT.skyline ? `  ·  Photo: ${CREDIT.skyline.credit}` : '';
+    text(`Data: ADREC  ·  Map © OpenStreetMap contributors (ODbL), Overture Maps${pc}  ·  Not investment advice`, 960, 1040, F(400, 14), '#A8B3C2', 'center', fa);
   }
 }
 
@@ -465,7 +507,7 @@ function renderAt(t) {
   if (t < 16.0) {
     const cam = camMap(t);
     const islFn = (i) => {
-      const ti = FILM.islands[i].t, on = ss(ti - 0.05, ti + 0.2, t), cur = t >= ti && t < ti + 1 ? 1 : 0, allOn = ss(15.0, 15.3, t);
+      const ti = FILM.islands[i].t, on = ss(ti - 0.05, ti + 0.2, t), cur = t >= ti && t < islEnd(i) ? 1 : 0, allOn = ss(15.0, 15.3, t);
       return { on, draw: eo(clamp((t - ti) / 0.45)), fill: cur ? 0.30 : lerp(0.1, 0.22, allOn), cur: Math.max(cur, allOn) };
     };
     drawMapScene(t, cam, { reveal: true, border: eo(clamp((t - 0.35) / 1.2)), borderA: ss(0.3, 0.6, t) * (1 - ss(4.6, 6.0, t)), focusAZ: ss(4.0, 4.7, t), islands: t > 7.8 ? islFn : null, buildings: ss(6.6, 7.6, t) * 0.95 });
@@ -491,7 +533,7 @@ function renderAt(t) {
       for (let i = 0; i < 7; i++) {
         const I = FILM.islands[i], ti = I.t, a = ss(ti - 0.02, ti + 0.15, t) * (1 - ss(15.6, 16.0, t)); if (a <= 0) continue;
         const s = proj(ISL[I.key].pin[0], ISL[I.key].pin[1], 0); if (!s) continue;
-        const cur = t >= ti && t < ti + 1;
+        const cur = t >= ti && t < islEnd(i);
         const top = drawPin(s[0], s[1], a, clamp((t - ti) / 0.5), cur ? C.goldHi : C.gold, cur || t > 15);
         const [dx, dy, al] = ILO[I.key];
         if (top) label(I.name, top[0], top[1], a * (cur ? 1 : 0.85), { size: cur ? 19 : 15, dx, dy, align: al || 'left', color: cur ? C.goldHi : C.text });

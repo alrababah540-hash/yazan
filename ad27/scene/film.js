@@ -266,7 +266,7 @@ function drawPin(sx, sy, a, drop, col = C.gold, big = true) {
   return [sx, sy - hgt + off];
 }
 // island label offsets (1920 grid) chosen to avoid overlaps between Reem / Maryah / Lulu
-const ILO = { yas: [-18, -6, 'right'], fahid: [16, -10], saadiyat: [16, -12], reem: [18, 20], maryah: [-18, -12, 'right'], hudayriyat: [16, -8], lulu: [-18, -8, 'right'] };
+const ILO = { yas: [-18, -6, 'right'], fahid: [16, -10], saadiyat: [16, -12], reem: [18, 20], maryah: [-18, -12, 'right'], hudayriyat: [16, -8], lulu: [-10, -34] };
 
 function drawMapScene(t, cam, opt = {}) {
   setCam(cam);
@@ -334,7 +334,7 @@ function islandCard(t) {
   const fx = x + 30, fy = y + 150, fw = w - 60, fh = 360, ph = IMG[I.key];
   ctx.save(); ctx.globalAlpha = a; rrect(fx, fy, fw, fh, 8); ctx.clip();
   if (ph) {
-    gradedPhoto(ph, fx * K, fy * K, fw * K, fh * K, clamp(lt / (dur + 0.3)), { dx: i % 2 ? 1 : -1, ...(CREDIT[I.key] && CREDIT[I.key].focus ? { dy: CREDIT[I.key].focus } : {}) });
+    const fr = CREDIT[I.key] || {}; gradedPhoto(ph, fx * K, fy * K, fw * K, fh * K, clamp(lt / (dur + 0.3)), { dx: fr.fx ?? (i % 2 ? 1 : -1), dy: fr.fy ?? 0, z1: fr.z1 ?? 1.13 });
     const g = ctx.createLinearGradient(0, (fy + fh - 60) * K, 0, (fy + fh) * K); g.addColorStop(0, 'rgba(3,6,12,0)'); g.addColorStop(1, 'rgba(3,6,12,0.8)'); ctx.fillStyle = g; ctx.fillRect(fx * K, (fy + fh - 60) * K, fw * K, 60 * K);
   } else islandInset(I.key, fx, fy, fw, fh, lt);
   ctx.restore();
@@ -342,7 +342,7 @@ function islandCard(t) {
   if (ph) { ctx.save(); ctx.globalAlpha = a; rrect(fx + 12, fy + 12, 150, 104, 6); ctx.clip(); islandInset(I.key, fx + 12, fy + 12, 150, 104, lt, true); ctx.restore(); ctx.save(); ctx.globalAlpha = a; rrect(fx + 12, fy + 12, 150, 104, 6); ctx.strokeStyle = hexA(C.gold, 0.6); ctx.lineWidth = 1 * K; ctx.stroke(); ctx.restore(); }
   ctx.save(); ctx.globalAlpha = a; rrect(fx, fy, fw, fh, 8); ctx.strokeStyle = hexA(C.gold, 0.75); ctx.lineWidth = 1.5 * K; ctx.stroke(); ctx.restore();
   const cr = CREDIT[I.key];
-  text(ph ? (cr ? `Photo: ${cr.credit}` : 'Photo: client asset library') : 'True shape · OpenStreetMap outline, building heights from Overture', fx + 12, fy + fh - 12, F(500, 13), '#D5DCE5', 'left', a);
+  text(ph ? (cr && cr.credit ? `Photo: ${cr.credit}` : cr && cr.kind === 'render' ? 'Development render' : 'Photograph') : 'True shape · OpenStreetMap outline, building heights from Overture', fx + 12, fy + fh - 12, F(500, 13), '#D5DCE5', 'left', a);
   text(I.fact, x + 30, fy + fh + 50 + dy * 0.5, F(600, 20), C.text, 'left', a);
   text(I.factSrc, x + 30, fy + fh + 78 + dy * 0.5, F(400, 15), C.muted, 'left', a);
 }
@@ -477,7 +477,7 @@ function closing(t) {
   const la = ss(23.15, 23.45, t) * (1 - ss(23.75, 24.05, t));
   ORDER.forEach((k) => { const s = proj(ISL[k].pin[0], ISL[k].pin[1], 0); if (!s) return; const top = drawPin(s[0], s[1], la, 1, C.goldHi, false); if (top) label(GEO.islands[k].name, top[0], top[1], la * 0.95, { size: 15, dx: ILO[k][0] * 0.8, dy: ILO[k][1] + 4, align: ILO[k][2] || 'left' }); });
   const sky = IMG.skyline, pa = sky ? ss(23.75, 24.25, t) : 0;     // real skyline photograph, golden-hour grade, slow push
-  if (pa > 0) { ctx.save(); ctx.globalAlpha = pa; gradedPhoto(sky, 0, 0, W, H, clamp((t - 23.75) / 3.25), { z0: 1.03, z1: 1.11, dx: 0.6, dy: -0.3, warm: 0.26, golden: 1, filter: 'contrast(1.08) saturate(1.12) brightness(1.03)' }); ctx.restore(); }
+  if (pa > 0) { ctx.save(); ctx.globalAlpha = pa; const sf = CREDIT.skyline || {}; gradedPhoto(sky, 0, 0, W, H, clamp((t - 23.75) / 3.25), { z0: 1.02, z1: sf.z1 ?? 1.09, dx: sf.fx ?? 0.4, dy: sf.fy ?? -0.2, warm: 0.2, golden: 0.6, filter: 'contrast(1.08) saturate(1.12) brightness(1.03)' }); ctx.restore(); }
   // statement
   const sa = ss(23.95, 24.35, t) * (1 - ss(25.15, 25.4, t));
   if (sa > 0) {
@@ -492,11 +492,19 @@ function closing(t) {
     ctx.save(); ctx.globalAlpha = fa * (sky ? 0.62 : 1); ctx.fillStyle = '#050A12'; ctx.fillRect(0, 0, W, H); ctx.restore();
     ctx.save(); ctx.globalAlpha = fa; const g = ctx.createRadialGradient(W / 2, H * 0.47, 0, W / 2, H * 0.47, W * 0.45); g.addColorStop(0, 'rgba(5,10,18,0.55)'); g.addColorStop(1, 'rgba(5,10,18,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.restore();
     const L = ['Understand the Market.', 'Identify the Opportunity.', 'Invest Strategically.'];
-    L.forEach((s, k) => { const t0 = 25.4 + k * 0.28, u = eo(clamp((t - t0) / 0.5)); text(s, 960, 420 + k * 98 + (1 - u) * 14, F(600, 66, 'serif'), k === 2 ? C.goldHi : '#F7F1E6', 'center', ss(t0, t0 + 0.35, t), 0.5); });
-    const ra = ss(26.1, 26.5, t); ctx.save(); ctx.globalAlpha = ra; ctx.fillStyle = C.gold; const rw = 180 * eo(clamp((t - 26.1) / 0.5)); ctx.fillRect((960 - rw / 2) * K, 736 * K, rw * K, 2 * K); ctx.restore();
-    if (IMG.logo) { const im = IMG.logo, lh = 70 * K, lw = im.width / im.height * lh; ctx.save(); ctx.globalAlpha = ra; ctx.drawImage(im, W / 2 - lw / 2, 772 * K, lw, lh); ctx.restore(); }
+    L.forEach((s, k) => { const t0 = 25.4 + k * 0.28, u = eo(clamp((t - t0) / 0.5)); text(s, 960, 380 + k * 96 + (1 - u) * 14, F(600, 66, 'serif'), k === 2 ? C.goldHi : '#F7F1E6', 'center', ss(t0, t0 + 0.35, t), 0.5); });
+    const ra = ss(26.1, 26.5, t); ctx.save(); ctx.globalAlpha = ra; ctx.fillStyle = C.gold; const rw = 180 * eo(clamp((t - 26.1) / 0.5)); ctx.fillRect((960 - rw / 2) * K, 700 * K, rw * K, 2 * K); ctx.restore();
+    if (IMG.logo) { const im = IMG.logo, lh = 70 * K, lw = im.width / im.height * lh; ctx.save(); ctx.globalAlpha = ra; ctx.drawImage(im, W / 2 - lw / 2, 735 * K, lw, lh); ctx.restore(); }
     else if (ASSETS.signoff) text(ASSETS.signoff, 960, 790, F(600, 18), C.gold, 'center', ra, 6);
-    const pc = sky && CREDIT.skyline ? `  ·  Photo: ${CREDIT.skyline.credit}` : '';
+    const B = ASSETS.branding, ba = ss(26.15, 26.5, t);
+    if (B && B.name) {
+      const by = IMG.logo ? 880 : 806;
+      text(B.name, 960, by, F(600, 44, 'serif'), C.goldHi, 'center', ba, 1);
+      let yy = by + 40;
+      if (B.title) { text(B.title, 960, yy, F(500, 18), '#D9DFE7', 'center', ba, 3); yy += 36; }
+      if (B.phone) text(B.phone, 960, yy + 4, F(600, 28), '#F7F1E6', 'center', ba, 2);
+    }
+    const pc = sky && CREDIT.skyline && CREDIT.skyline.credit ? `  ·  Photo: ${CREDIT.skyline.credit}` : '';
     text(`Data: ADREC  ·  Map © OpenStreetMap contributors (ODbL), Overture Maps${pc}  ·  Not investment advice`, 960, 1040, F(400, 14), '#A8B3C2', 'center', fa);
   }
 }

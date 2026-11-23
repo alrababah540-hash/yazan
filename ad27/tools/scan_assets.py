@@ -5,9 +5,11 @@ EXT = ('.jpg', '.jpeg', '.png', '.webp')
 imgs = lambda d: sorted(f for f in glob.glob(os.path.join(LIB, d, '*')) if f.lower().endswith(EXT))
 rel = lambda f: '/' + os.path.relpath(f, ROOT).replace(os.sep, '/')
 CR = json.load(open(os.path.join(LIB, 'credits.json'))) if os.path.exists(os.path.join(LIB, 'credits.json')) else {}
+FR = json.load(open(os.path.join(LIB, 'framing.json'))) if os.path.exists(os.path.join(LIB, 'framing.json')) else {}
 def ent(f):
-    k = os.path.relpath(f, LIB).replace(os.sep, '/'); c = CR.get(k)
-    return {'src': rel(f), 'credit': c['credit']} if c else rel(f)
+    k = os.path.relpath(f, LIB).replace(os.sep, '/'); c = CR.get(k); e = {'src': rel(f)}
+    if c: e['credit'] = c['credit']
+    e.update({kk: vv for kk, vv in FR.get(k, {}).items() if kk in ('fx', 'fy', 'z1', 'kind', 'subject')}); return e
 ISL = {'yas': '03_Yas_Island', 'fahid': '04_Al_Fahid', 'saadiyat': '05_Saadiyat', 'reem': '06_Al_Reem', 'maryah': '07_Al_Maryah', 'hudayriyat': '08_Hudayriyat', 'lulu': '09_Lulu_Island'}
 out = {'islands': {k: [ent(f) for f in imgs(d)] for k, d in ISL.items()}, 'skyline': None, 'logo': None, 'signoff': None, 'inventory': {}}
 for d in sorted(os.listdir(LIB)):
@@ -18,5 +20,6 @@ logo = [f for f in imgs('12_Personal_Branding') if os.path.basename(f).lower().s
 out['logo'] = rel(logo[0]) if logo else None
 txt = sorted(glob.glob(os.path.join(LIB, '12_Personal_Branding', '*.txt')))
 out['signoff'] = open(txt[0]).readline().strip() if txt else None
+bj = os.path.join(LIB, '12_Personal_Branding', 'branding.json'); out['branding'] = json.load(open(bj)) if os.path.exists(bj) else None
 json.dump(out, open(os.path.join(ROOT, 'scene', 'assets.json'), 'w'), indent=1)
 n = sum(len(v) for v in out['inventory'].values()); print('images found:', n); [print(' ', k, len(v)) for k, v in out['inventory'].items()]

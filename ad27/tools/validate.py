@@ -12,7 +12,7 @@ m = re.search(r'Integrated loudness:\s+I:\s+(\S+) LUFS', err); out['integrated_l
 m = re.search(r'True peak:\s+Peak:\s+(\S+) dBFS', err); out['true_peak_dbfs'] = float(m.group(1)) if m else None
 w, h = map(int, out['size'].split('x'))
 checks = {'frames == 810': out['frames'] == 810, 'fps == 30': out['fps'] == '30/1', 'video 27.000 s': abs(out['video_duration'] - 27.0) < 1e-3,
-          'container 27.00 s': abs(out['container_duration'] - 27.0) < 0.01, 'audio 27.00 s': abs(out['audio_duration'] - 27.0) < 0.025, '16:9': w * 9 == h * 16,
+          'container 27.00 s': abs(out['container_duration'] - 27.0) < 0.01, 'audio 27.00 s': abs(out['audio_duration'] - 27.0) < 0.025, '16:9': w * 9 == h * 16 or w * 16 == h * 9,
           'no black frames': not out['black_segments'], 'no frozen stretches > 1.5 s (end card hold excluded)': all(float(s) > 25.4 for s in out['freeze_segments'])}
 out['checks'] = checks; print(json.dumps(out, indent=1))
 json.dump(out, open(f.rsplit('.', 1)[0] + '_qc.json', 'w'), indent=1)

@@ -21,6 +21,10 @@ async function openPage(browser, port) {
 }
 
 async function renderRange(page, a, b, file, id) {
+  // The scene carries state between frames (e.g. the fade-to-dark value). The original reel was rendered by two
+  // browser pages alternating 120-frame segments, so each segment started from the last frame of the segment
+  // two before it. Reproduce that start state so the plate matches output/offplan_abu_dhabi_reel_final_1080x1920.mp4.
+  if (a >= 2 * SEG) await page.evaluate((tt) => window.renderAt(tt), (a - SEG - 1) / FPS);
   const ff = spawn('ffmpeg', ['-y', '-v', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
     '-c:v', 'libx264', '-preset', 'medium', '-crf', '14', '-pix_fmt', 'yuv420p', '-r', String(FPS), file], { stdio: ['pipe', 'inherit', 'inherit'] });
   const anchors = {}; const t0 = Date.now();
@@ -48,9 +52,8 @@ async function renderRange(page, a, b, file, id) {
   }
   const W = +(args.workers || 3);
   await Promise.all(Array.from({ length: W }, async (_, i) => {
-    let page = null;
-    while (queue.length) { const [a, b, f] = queue.shift(); page = page || await openPage(browser, port);
-      await renderRange(page, a, b, f + '.tmp.mp4', i); fs.renameSync(f + '.tmp.mp4', f); }
+    while (queue.length) { const [a, b, f] = queue.shift(); const page = await openPage(browser, port); // fresh page per segment
+      await renderRange(page, a, b, f + '.tmp.mp4', i); fs.renameSync(f + '.tmp.mp4', f); await page.close(); }
   }));
   await browser.close(); srv.close(); console.log('plate done');
 })().catch((e) => { console.error(e); process.exit(1); });

@@ -1,0 +1,1456 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 3,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "timeline_track_too_dense",
+        "severity": "warning",
+        "message": "This HTML file has 20 timed elements. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/yazan/hyperframes-reel/compositions/captions.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate."
+      },
+      {
+        "code": "gsap_callback_dom_measurement",
+        "severity": "warning",
+        "message": "Timeline callback reaches DOM measurement (getBoundingClientRect/getTotalLength/getComputedStyle/...). The renderer seeks with suppressEvents=false, so callbacks re-fire on every seek, and a cold render worker runs them against whatever DOM state its own non-linear seek order produced. Measured geometry is seek-order-dependent, and values measured at build time (before the callback ran) are stale or zero.",
+        "selector": "onUpdate: () => place(clock.T)",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/yazan/hyperframes-reel/compositions/map.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Do all measurement and DOM setup synchronously at build time, before registering the timeline, or derive geometry from fixed composition coordinates instead of measuring."
+      },
+      {
+        "code": "timeline_track_too_dense",
+        "severity": "warning",
+        "message": "This HTML file has 7 timed elements. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "/home/user/yazan/hyperframes-reel/compositions/map.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate."
+      }
+    ],
+    "filesScanned": 9
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "gsap_tween_tail",
+        "severity": "warning",
+        "message": "In timeline \"main\", a tween on opacity, filter of #dd-note-in ends at 31.150 s, 0.200 s after a later tween on opacity, filter ends at 30.950 s. For that tail the earlier tween takes opacity, filter back and leaves its own end value on screen, so the later tween's end never shows. End the earlier tween by 30.650 s, or add overwrite: \"auto\" to the later tween.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "34.9",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-fps": "30"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 30.95
+      }
+    ]
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 22,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "container_overflow",
+        "severity": "warning",
+        "time": 9.694,
+        "selector": "#map-north-in > svg:nth-of-type(1) > text:nth-of-type(1)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 77.02,
+          "top": 595.05,
+          "right": 84.98,
+          "bottom": 611.2,
+          "width": 7.96,
+          "height": 16.15
+        },
+        "containerSelector": "#map-north-in > svg:nth-of-type(1)",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 64,
+          "top": 560,
+          "right": 98,
+          "bottom": 608,
+          "width": 34,
+          "height": 48
+        },
+        "overflow": {
+          "bottom": 3.2
+        },
+        "dataAttributes": {},
+        "sourceFile": "compositions/map.html",
+        "bbox": {
+          "x": 77.02,
+          "y": 595.05,
+          "width": 7.96,
+          "height": 16.15
+        },
+        "firstSeen": 9.694,
+        "lastSeen": 13.572,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          9.694,
+          13.572
+        ]
+      },
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 12.478,
+        "selector": "#map-attr-in",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 196.58,
+          "top": 1448,
+          "right": 803.41,
+          "bottom": 1477,
+          "width": 606.83,
+          "height": 29
+        },
+        "containerSelector": "#map-reem-in > div:nth-of-type(2)",
+        "text": "Map data © OpenStreetMap contributors · Overture Maps (ODbL)",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply. Decoration nobody needs to read can take data-layout-ignore.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/map.html",
+        "bbox": {
+          "x": 196.58,
+          "y": 1448,
+          "width": 606.83,
+          "height": 29
+        },
+        "firstSeen": 12.478,
+        "lastSeen": 12.868,
+        "occurrences": 3,
+        "heldMs": 390.00000000000057,
+        "times": [
+          12.478,
+          12.673,
+          12.868
+        ]
+      },
+      {
+        "selector": "div.r2-h",
+        "dataAttributes": {},
+        "sourceFile": "compositions/hook.html",
+        "bbox": {
+          "x": 162.47,
+          "y": 284,
+          "width": 659.86,
+          "height": 197.59
+        },
+        "time": 1.939,
+        "rect": {
+          "left": 162.47,
+          "top": 284,
+          "right": 822.33,
+          "bottom": 481.59,
+          "width": 659.86,
+          "height": 197.59
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Buying a home that isn't built yet?",
+        "message": "<div> \"Buying a home that isn't built yet?\" is outside the safe area: YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 1.939,
+        "lastSeen": 1.939,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          1.939
+        ]
+      },
+      {
+        "selector": "#captions",
+        "dataAttributes": {
+          "data-composition-file": "compositions/captions.html",
+          "data-composition-id": "captions",
+          "data-start": "0",
+          "data-track-index": "2",
+          "data-track-kind": "captions",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-hf-authored-duration": "34.9"
+        },
+        "sourceFile": "compositions/captions.html",
+        "bbox": {
+          "x": 362.98,
+          "y": 1297,
+          "width": 274.02,
+          "height": 63
+        },
+        "time": 1.939,
+        "rect": {
+          "left": 362.98,
+          "top": 1297,
+          "right": 637,
+          "bottom": 1360,
+          "width": 274.02,
+          "height": 63
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "isn't built yet?",
+        "message": "<div> \"isn't built yet?\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 1.939,
+        "lastSeen": 32.961,
+        "occurrences": 6,
+        "heldMs": 0,
+        "times": [
+          1.939,
+          5.817,
+          13.572,
+          21.328,
+          29.083,
+          32.961
+        ]
+      },
+      {
+        "selector": "div.r2-word",
+        "dataAttributes": {},
+        "sourceFile": "compositions/offplan.html",
+        "bbox": {
+          "x": 166.27,
+          "y": 270,
+          "width": 667.46,
+          "height": 140
+        },
+        "time": 5.817,
+        "rect": {
+          "left": 166.27,
+          "top": 270,
+          "right": 833.73,
+          "bottom": 410,
+          "width": 667.46,
+          "height": 140
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "OFF-PLAN",
+        "message": "<div> \"OFF-PLAN\" is outside the safe area: YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 5.817,
+        "lastSeen": 5.817,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          5.817
+        ]
+      },
+      {
+        "selector": "#map-title-in > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/map.html",
+        "bbox": {
+          "x": 393.91,
+          "y": 280.37,
+          "width": 212.18,
+          "height": 37
+        },
+        "time": 9.694,
+        "rect": {
+          "left": 393.91,
+          "top": 280.37,
+          "right": 606.09,
+          "bottom": 317.37,
+          "width": 212.18,
+          "height": 37
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Abu Dhabi",
+        "message": "<div> \"Abu Dhabi\" is outside the safe area: YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 9.694,
+        "lastSeen": 13.572,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          9.694,
+          13.572
+        ]
+      },
+      {
+        "selector": "#map-north-in > svg:nth-of-type(1) > text:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/map.html",
+        "bbox": {
+          "x": 77.02,
+          "y": 595.05,
+          "width": 7.96,
+          "height": 16.15
+        },
+        "time": 9.694,
+        "rect": {
+          "left": 77.02,
+          "top": 595.05,
+          "right": 84.98,
+          "bottom": 611.2,
+          "width": 7.96,
+          "height": 16.15
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "N",
+        "message": "<text> \"N\" is outside the safe area: TikTok (left edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 9.694,
+        "lastSeen": 13.572,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          9.694,
+          13.572
+        ]
+      },
+      {
+        "selector": "#map-attr-in",
+        "dataAttributes": {},
+        "sourceFile": "compositions/map.html",
+        "bbox": {
+          "x": 196.58,
+          "y": 1448,
+          "width": 606.83,
+          "height": 29
+        },
+        "time": 9.694,
+        "rect": {
+          "left": 196.58,
+          "top": 1448,
+          "right": 803.41,
+          "bottom": 1477,
+          "width": 606.83,
+          "height": 29
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Map data © OpenStreetMap contributors · Overture",
+        "message": "<div> \"Map data © OpenStreetMap contributors · Overture\" is outside the safe area: TikTok (bottom edge), Instagram Reels (bottom edge), YouTube Shorts (bottom edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 9.694,
+        "lastSeen": 13.572,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          9.694,
+          13.572
+        ]
+      },
+      {
+        "selector": "#map-abudhabi-in > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/map.html",
+        "bbox": {
+          "x": 89.23,
+          "y": 954.26,
+          "width": 261.54,
+          "height": 49.02
+        },
+        "time": 9.694,
+        "rect": {
+          "left": 89.23,
+          "top": 954.26,
+          "right": 350.77,
+          "bottom": 1003.28,
+          "width": 261.54,
+          "height": 49.02
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Abu Dhabi Island",
+        "message": "<div> \"Abu Dhabi Island\" is outside the safe area: TikTok (left edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 9.694,
+        "lastSeen": 9.694,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          9.694
+        ]
+      },
+      {
+        "selector": "#map-yas-in > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/map.html",
+        "bbox": {
+          "x": 685.1,
+          "y": 886.47,
+          "width": 166.8,
+          "height": 51.86
+        },
+        "time": 13.572,
+        "rect": {
+          "left": 685.1,
+          "top": 886.47,
+          "right": 851.9,
+          "bottom": 938.33,
+          "width": 166.8,
+          "height": 51.86
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Yas Island",
+        "message": "<div> \"Yas Island\" is outside the safe area: TikTok (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 13.572,
+        "lastSeen": 13.572,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          13.572
+        ]
+      },
+      {
+        "selector": "#map-yas-in > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/map.html",
+        "bbox": {
+          "x": 669.92,
+          "y": 941.97,
+          "width": 197.16,
+          "height": 27.29
+        },
+        "time": 13.572,
+        "rect": {
+          "left": 669.92,
+          "top": 941.97,
+          "right": 867.08,
+          "bottom": 969.26,
+          "width": 197.16,
+          "height": 27.29
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "24.49°N · 54.61°E",
+        "message": "<div> \"24.49°N · 54.61°E\" is outside the safe area: TikTok (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 13.572,
+        "lastSeen": 13.572,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          13.572
+        ]
+      },
+      {
+        "selector": "#map-yas-in > div:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/map.html",
+        "bbox": {
+          "x": 727.91,
+          "y": 971.08,
+          "width": 81.18,
+          "height": 30.03
+        },
+        "time": 13.572,
+        "rect": {
+          "left": 727.91,
+          "top": 971.08,
+          "right": 809.09,
+          "bottom": 1001.11,
+          "width": 81.18,
+          "height": 30.03
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "جزيرة ياس",
+        "message": "<div> \"جزيرة ياس\" is outside the safe area: TikTok (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 13.572,
+        "lastSeen": 13.572,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          13.572
+        ]
+      },
+      {
+        "selector": "#unit-title-in > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/unit.html",
+        "bbox": {
+          "x": 302.89,
+          "y": 270,
+          "width": 394.2,
+          "height": 37
+        },
+        "time": 17.45,
+        "rect": {
+          "left": 302.89,
+          "top": 270,
+          "right": 697.09,
+          "bottom": 307,
+          "width": 394.2,
+          "height": 37
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Project selection",
+        "message": "<div> \"Project selection\" is outside the safe area: YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 17.45,
+        "lastSeen": 17.45,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          17.45
+        ]
+      },
+      {
+        "selector": "#pay-title-in > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/payment.html",
+        "bbox": {
+          "x": 357.3,
+          "y": 270,
+          "width": 285.4,
+          "height": 37
+        },
+        "time": 21.328,
+        "rect": {
+          "left": 357.3,
+          "top": 270,
+          "right": 642.7,
+          "bottom": 307,
+          "width": 285.4,
+          "height": 37
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Payment plan",
+        "message": "<div> \"Payment plan\" is outside the safe area: YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 21.328,
+        "lastSeen": 25.206,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          21.328,
+          25.206
+        ]
+      },
+      {
+        "selector": "#pay-top0 > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/payment.html",
+        "bbox": {
+          "x": 84.66,
+          "y": 700.05,
+          "width": 170.68,
+          "height": 47
+        },
+        "time": 21.328,
+        "rect": {
+          "left": 84.66,
+          "top": 700.05,
+          "right": 255.34,
+          "bottom": 747.05,
+          "width": 170.68,
+          "height": 47
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "BOOKING",
+        "message": "<div> \"BOOKING\" is outside the safe area: TikTok (left edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 21.328,
+        "lastSeen": 25.206,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          21.328,
+          25.206
+        ]
+      },
+      {
+        "selector": "#pay-bot0 > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/payment.html",
+        "bbox": {
+          "x": 101.52,
+          "y": 904.05,
+          "width": 136.95,
+          "height": 57
+        },
+        "time": 21.328,
+        "rect": {
+          "left": 101.52,
+          "top": 904.05,
+          "right": 238.47,
+          "bottom": 961.05,
+          "width": 136.95,
+          "height": 57
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Deposit",
+        "message": "<div> \"Deposit\" is outside the safe area: TikTok (left edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 21.328,
+        "lastSeen": 25.206,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          21.328,
+          25.206
+        ]
+      },
+      {
+        "selector": "#pay-bot0 > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/payment.html",
+        "bbox": {
+          "x": 92.95,
+          "y": 967.05,
+          "width": 154.08,
+          "height": 39
+        },
+        "time": 21.328,
+        "rect": {
+          "left": 92.95,
+          "top": 967.05,
+          "right": 247.03,
+          "bottom": 1006.05,
+          "width": 154.08,
+          "height": 39
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "+ SPA signed",
+        "message": "<div> \"+ SPA signed\" is outside the safe area: TikTok (left edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 21.328,
+        "lastSeen": 25.206,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          21.328,
+          25.206
+        ]
+      },
+      {
+        "selector": "#pay-top2 > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/payment.html",
+        "bbox": {
+          "x": 730.73,
+          "y": 710,
+          "width": 198.54,
+          "height": 47
+        },
+        "time": 21.328,
+        "rect": {
+          "left": 730.73,
+          "top": 710,
+          "right": 929.27,
+          "bottom": 757,
+          "width": 198.54,
+          "height": 47
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "HANDOVER",
+        "message": "<div> \"HANDOVER\" is outside the safe area: YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 21.328,
+        "lastSeen": 25.206,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          21.328,
+          25.206
+        ]
+      },
+      {
+        "selector": "#pay-bot2 > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/payment.html",
+        "bbox": {
+          "x": 702.47,
+          "y": 914,
+          "width": 255.06,
+          "height": 57
+        },
+        "time": 21.328,
+        "rect": {
+          "left": 702.47,
+          "top": 914,
+          "right": 957.53,
+          "bottom": 971,
+          "width": 255.06,
+          "height": 57
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Final payment",
+        "message": "<div> \"Final payment\" is outside the safe area: TikTok (right edge), YouTube Shorts (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 21.328,
+        "lastSeen": 25.206,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          21.328,
+          25.206
+        ]
+      },
+      {
+        "selector": "#pay-bot2 > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/payment.html",
+        "bbox": {
+          "x": 792.11,
+          "y": 977,
+          "width": 75.77,
+          "height": 39
+        },
+        "time": 21.328,
+        "rect": {
+          "left": 792.11,
+          "top": 977,
+          "right": 867.88,
+          "bottom": 1016,
+          "width": 75.77,
+          "height": 39
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "+ keys",
+        "message": "<div> \"+ keys\" is outside the safe area: TikTok (right edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 21.328,
+        "lastSeen": 25.206,
+        "occurrences": 2,
+        "heldMs": 0,
+        "times": [
+          21.328,
+          25.206
+        ]
+      },
+      {
+        "selector": "#pay-note-in > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/payment.html",
+        "bbox": {
+          "x": 117.17,
+          "y": 1118,
+          "width": 758.63,
+          "height": 48
+        },
+        "time": 25.206,
+        "rect": {
+          "left": 117.17,
+          "top": 1118,
+          "right": 875.8,
+          "bottom": 1166,
+          "width": 758.63,
+          "height": 48
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Amounts & timing vary by project — check your SP",
+        "message": "<div> \"Amounts & timing vary by project — check your SP\" is outside the safe area: TikTok (left and right edges).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 25.206,
+        "lastSeen": 25.206,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          25.206
+        ]
+      },
+      {
+        "selector": "#dd-title-in > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/verify.html",
+        "bbox": {
+          "x": 350.44,
+          "y": 270,
+          "width": 299.11,
+          "height": 37
+        },
+        "time": 29.083,
+        "rect": {
+          "left": 350.44,
+          "top": 270,
+          "right": 649.55,
+          "bottom": 307,
+          "width": 299.11,
+          "height": 37
+        },
+        "code": "outside_safe_zone",
+        "severity": "warning",
+        "text": "Due diligence",
+        "message": "<div> \"Due diligence\" is outside the safe area: YouTube Shorts (top edge).",
+        "fixHint": "Move the text inside the safe area, or mark text meant to sit there with data-layout-allow-safe-zone.",
+        "firstSeen": 29.083,
+        "lastSeen": 29.083,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          29.083
+        ]
+      }
+    ],
+    "duration": 34.9,
+    "samples": [
+      1.939,
+      5.817,
+      9.694,
+      13.572,
+      17.45,
+      21.328,
+      25.206,
+      29.083,
+      32.961
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 22,
+    "truncated": false,
+    "faceCheck": {
+      "ran": false,
+      "reason": "could not download opencv.js (fetch failed)"
+    }
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 3,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.65:1; WCAG AA requires 3:1.",
+        "text": "a",
+        "fg": "rgb(230,213,184)",
+        "bg": "rgb(144,128,108)",
+        "ratio": 2.65,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(61,57,49)",
+        "large": true,
+        "selector": "div > div:nth-of-type(1) > div > div > div > div > span:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/hook.html",
+        "bbox": {
+          "x": 501.171875,
+          "y": 300,
+          "width": 42.109375,
+          "height": 83.59375
+        },
+        "time": 1.939,
+        "times": [
+          1.939
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.81:1; WCAG AA requires 3:1.",
+        "text": "home",
+        "fg": "rgb(230,213,184)",
+        "bg": "rgb(139,124,105)",
+        "ratio": 2.81,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(57,53,45)",
+        "large": true,
+        "selector": "div > div:nth-of-type(1) > div > div > div > div > span:nth-of-type(3)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/hook.html",
+        "bbox": {
+          "x": 560.078125,
+          "y": 300,
+          "width": 194.265625,
+          "height": 83.59375
+        },
+        "time": 1.939,
+        "times": [
+          1.939
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 2.67:1; WCAG AA requires 3:1.",
+        "text": "that",
+        "fg": "rgb(230,213,184)",
+        "bg": "rgb(147,127,101)",
+        "ratio": 2.67,
+        "requiredRatio": 3,
+        "suggestedColor": "rgb(60,56,48)",
+        "large": true,
+        "selector": "div > div:nth-of-type(1) > div > div > div > div > span:nth-of-type(4)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/hook.html",
+        "bbox": {
+          "x": 162.46875,
+          "y": 383.59375,
+          "width": 141.75,
+          "height": 83.59375
+        },
+        "time": 1.939,
+        "times": [
+          1.939
+        ]
+      }
+    ],
+    "enabled": true,
+    "samples": [
+      1.939,
+      9.694,
+      17.45,
+      25.206,
+      32.961
+    ],
+    "checked": 33,
+    "passed": 30
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 7,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 3 text elements stay under it for 0.5 s or more, the smallest \"BLUEPRINT\" at 24 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "BLUEPRINT",
+        "selector": "#offplan-s0",
+        "dataAttributes": {},
+        "sourceFile": "compositions/offplan.html",
+        "bbox": {
+          "x": 131.5,
+          "y": 451.3,
+          "width": 170.14,
+          "height": 36
+        },
+        "time": 4.736,
+        "times": [
+          4.736,
+          4.736,
+          4.736
+        ],
+        "fontPx": 24,
+        "floorPx": 28,
+        "seconds": 4.114,
+        "elements": [
+          {
+            "selector": "#offplan-s0",
+            "text": "BLUEPRINT",
+            "fontPx": 24,
+            "time": 4.736,
+            "seconds": 4.114
+          },
+          {
+            "selector": "#offplan-s1",
+            "text": "CONSTRUCTION",
+            "fontPx": 24,
+            "time": 4.736,
+            "seconds": 4.114
+          },
+          {
+            "selector": "#offplan-s2",
+            "text": "COMPLETION",
+            "fontPx": 24,
+            "time": 4.736,
+            "seconds": 4.114
+          }
+        ]
+      },
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 11 text elements stay under it for 0.5 s or more, the smallest \"N\" at 11 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "N",
+        "selector": "#map-north-in > svg:nth-of-type(1) > text:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/map.html",
+        "bbox": {
+          "x": 77.02,
+          "y": 595.05,
+          "width": 7.96,
+          "height": 12.95
+        },
+        "time": 9.598,
+        "times": [
+          9.473,
+          9.598,
+          9.598,
+          9.971,
+          9.971,
+          10.345,
+          10.345,
+          10.719,
+          10.719,
+          13.461,
+          13.461
+        ],
+        "fontPx": 11.05,
+        "floorPx": 28,
+        "seconds": 5.36,
+        "elements": [
+          {
+            "selector": "#map-north-in > svg:nth-of-type(1) > text:nth-of-type(1)",
+            "text": "N",
+            "fontPx": 11.05,
+            "time": 9.598,
+            "seconds": 5.36
+          },
+          {
+            "selector": "#map-abudhabi-in > div:nth-of-type(2)",
+            "text": "24.47°N · 54.37°E",
+            "fontPx": 17.2,
+            "time": 9.971,
+            "seconds": 2.12
+          },
+          {
+            "selector": "#map-reem-in > div:nth-of-type(2)",
+            "text": "24.49°N · 54.41°E",
+            "fontPx": 17.2,
+            "time": 10.345,
+            "seconds": 2.618
+          },
+          {
+            "selector": "#map-saadiyat-in > div:nth-of-type(2)",
+            "text": "24.55°N · 54.44°E",
+            "fontPx": 17.2,
+            "time": 10.719,
+            "seconds": 2.494
+          },
+          {
+            "selector": "#map-yas-in > div:nth-of-type(2)",
+            "text": "24.49°N · 54.61°E",
+            "fontPx": 17.2,
+            "time": 13.461,
+            "seconds": 1.621
+          },
+          {
+            "selector": "#map-abudhabi-in > div:nth-of-type(3)",
+            "text": "جزيرة أبوظبي",
+            "fontPx": 18.92,
+            "time": 9.971,
+            "seconds": 2.12
+          },
+          {
+            "selector": "#map-reem-in > div:nth-of-type(3)",
+            "text": "جزيرة الريم",
+            "fontPx": 18.92,
+            "time": 10.345,
+            "seconds": 2.618
+          },
+          {
+            "selector": "#map-saadiyat-in > div:nth-of-type(3)",
+            "text": "جزيرة السعديات",
+            "fontPx": 18.92,
+            "time": 10.719,
+            "seconds": 2.494
+          },
+          {
+            "selector": "#map-yas-in > div:nth-of-type(3)",
+            "text": "جزيرة ياس",
+            "fontPx": 18.92,
+            "time": 13.461,
+            "seconds": 1.621
+          },
+          {
+            "selector": "#map-attr-in",
+            "text": "Map data © OpenStreetMap contributors · Overture Maps (ODbL)",
+            "fontPx": 19,
+            "time": 9.598,
+            "seconds": 5.36
+          },
+          {
+            "selector": "#map-title-in > div:nth-of-type(1)",
+            "text": "Abu Dhabi",
+            "fontPx": 25,
+            "time": 9.473,
+            "seconds": 5.485
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"24.47°N · 54.37°E\" (4 words) is on screen 0.03 s (±0.01 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "24.47°N · 54.37°E",
+        "selector": "#map-abudhabi-in > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/map.html",
+        "bbox": {
+          "x": 218.14,
+          "y": 958,
+          "width": 216.7,
+          "height": 30
+        },
+        "time": 11.202,
+        "words": 4,
+        "seconds": 0.031,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 10.844,
+            "opacity": 0.8,
+            "heightPx": 28
+          },
+          {
+            "time": 10.969,
+            "opacity": 0.88,
+            "heightPx": 29
+          },
+          {
+            "time": 11.093,
+            "opacity": 0.93,
+            "heightPx": 29
+          },
+          {
+            "time": 11.218,
+            "opacity": 1,
+            "heightPx": 30
+          },
+          {
+            "time": 11.343,
+            "opacity": 0.93,
+            "heightPx": 29
+          },
+          {
+            "time": 11.467,
+            "opacity": 0.86,
+            "heightPx": 29
+          },
+          {
+            "time": 11.592,
+            "opacity": 0.8,
+            "heightPx": 28
+          }
+        ]
+      },
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 4 text elements stay under it for 0.5 s or more, the smallest \"01\" at 24 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "01",
+        "selector": "#unit-c0 > span:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/unit.html",
+        "bbox": {
+          "x": 218.16,
+          "y": 507.56,
+          "width": 38.4,
+          "height": 36
+        },
+        "time": 15.58,
+        "times": [
+          15.456,
+          15.58,
+          15.705,
+          15.954
+        ],
+        "fontPx": 24,
+        "floorPx": 28,
+        "seconds": 4.363,
+        "elements": [
+          {
+            "selector": "#unit-c0 > span:nth-of-type(1)",
+            "text": "01",
+            "fontPx": 24,
+            "time": 15.58,
+            "seconds": 4.363
+          },
+          {
+            "selector": "#unit-c1 > span:nth-of-type(1)",
+            "text": "02",
+            "fontPx": 24,
+            "time": 15.705,
+            "seconds": 4.238
+          },
+          {
+            "selector": "#unit-c2 > span:nth-of-type(1)",
+            "text": "03",
+            "fontPx": 24,
+            "time": 15.954,
+            "seconds": 3.989
+          },
+          {
+            "selector": "#unit-title-in > div:nth-of-type(1)",
+            "text": "Project selection",
+            "fontPx": 25,
+            "time": 15.456,
+            "seconds": 4.487
+          }
+        ]
+      },
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and 6 text elements stay under it for 0.5 s or more, the smallest \"CONSTRUCTION\" at 21 px: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "CONSTRUCTION",
+        "selector": "#pay-chart-in > div:nth-of-type(2)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/payment.html",
+        "bbox": {
+          "x": 379.42,
+          "y": 592.45,
+          "width": 241.16,
+          "height": 32
+        },
+        "time": 20.691,
+        "times": [
+          20.441,
+          20.691,
+          20.691,
+          20.691,
+          22.56,
+          23.807
+        ],
+        "fontPx": 21,
+        "floorPx": 28,
+        "seconds": 5.235,
+        "elements": [
+          {
+            "selector": "#pay-chart-in > div:nth-of-type(2)",
+            "text": "CONSTRUCTION",
+            "fontPx": 21,
+            "time": 20.691,
+            "seconds": 5.235
+          },
+          {
+            "selector": "#pay-chart-in > div:nth-of-type(3)",
+            "text": "PAYMENT",
+            "fontPx": 21,
+            "time": 20.691,
+            "seconds": 5.235
+          },
+          {
+            "selector": "#pay-title-in > div:nth-of-type(1)",
+            "text": "Payment plan",
+            "fontPx": 25,
+            "time": 20.441,
+            "seconds": 5.485
+          },
+          {
+            "selector": "#pay-bot0 > div:nth-of-type(2)",
+            "text": "+ SPA signed",
+            "fontPx": 26,
+            "time": 20.691,
+            "seconds": 5.235
+          },
+          {
+            "selector": "#pay-bot1 > div:nth-of-type(2)",
+            "text": "linked to milestones",
+            "fontPx": 26,
+            "time": 22.56,
+            "seconds": 3.366
+          },
+          {
+            "selector": "#pay-bot2 > div:nth-of-type(2)",
+            "text": "+ keys",
+            "fontPx": 26,
+            "time": 23.807,
+            "seconds": 1.994
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Amounts & timing vary by project — check your SPA\" (8 words) is on screen 1.80 s (±0.01 s), under its 2.17 s floor: hold it about 0.5 s + 0.3 s a word (2.90 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Amounts & timing vary by project — check your SPA",
+        "selector": "#pay-note-in > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/payment.html",
+        "bbox": {
+          "x": 117.17,
+          "y": 1123.22,
+          "width": 758.63,
+          "height": 48
+        },
+        "time": 24.04,
+        "words": 8,
+        "seconds": 1.8,
+        "floorSeconds": 2.175,
+        "measured": [
+          {
+            "time": 23.682,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 23.807,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 23.931,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 24.056,
+            "opacity": 0.57,
+            "heightPx": 48
+          },
+          {
+            "time": 24.181,
+            "opacity": 0.86,
+            "heightPx": 48
+          },
+          {
+            "time": 24.305,
+            "opacity": 0.98,
+            "heightPx": 48
+          },
+          {
+            "time": 24.43,
+            "opacity": 1,
+            "heightPx": 48
+          },
+          {
+            "time": 25.427,
+            "opacity": 1,
+            "heightPx": 48
+          },
+          {
+            "time": 25.552,
+            "opacity": 1,
+            "heightPx": 48
+          },
+          {
+            "time": 25.676,
+            "opacity": 1,
+            "heightPx": 48
+          },
+          {
+            "time": 25.801,
+            "opacity": 0.5,
+            "heightPx": 48
+          },
+          {
+            "time": 25.926,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 26.05,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 26.175,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "text_below_floor",
+        "severity": "warning",
+        "message": "Type floor is 28 px (2.6% of the 1080 px short side, what a phone can read) and \"Due diligence\" renders at 25 px for 4.49 s: set reading text to at least 28 px, or put data-layout-ignore on text that is texture rather than reading; see references/look.md.",
+        "text": "Due diligence",
+        "selector": "#dd-title-in > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "compositions/verify.html",
+        "bbox": {
+          "x": 350.44,
+          "y": 280,
+          "width": 299.11,
+          "height": 37
+        },
+        "time": 26.424,
+        "times": [
+          26.424
+        ],
+        "fontPx": 25,
+        "floorPx": 28,
+        "seconds": 4.488,
+        "elements": [
+          {
+            "selector": "#dd-title-in > div:nth-of-type(1)",
+            "text": "Due diligence",
+            "fontPx": 25,
+            "time": 26.424,
+            "seconds": 4.488
+          }
+        ]
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 280
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

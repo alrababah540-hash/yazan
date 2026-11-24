@@ -1,0 +1,11 @@
+{
+ "voice": "Kokoro-82M (Apache-2.0) bm_george, sid 9",
+ "sid": 9,
+ "lines": [
+  {"id": "v1", "start": 0.25, "text": "Forty-four million visits. One island.", "tts": "Forty-four million visits. One island.", "speed": 1.0},
+  {"id": "v2", "start": 3.2, "text": "Yas Island has become a major entertainment destination.", "tts": "Yas Island has become a major entertainment destination.", "speed": 1.0},
+  {"id": "v3", "start": 7.2, "text": "With eighty-four percent hotel occupancy, demand is already established.", "tts": "With eighty-four percent hotel occupancy, demand is already established.", "speed": 1.0},
+  {"id": "v4", "start": 12.2, "text": "And major developments could drive its next chapter.", "tts": "And major developments could drive its next chapter.", "speed": 1.0},
+  {"id": "v5", "start": 16.2, "text": "The real opportunity is understanding where it's heading.", "tts": "The real opportunity is understanding where it's heading.", "speed": 1.0}
+ ]
+}

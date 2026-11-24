@@ -1,2 +1,5 @@
 renders/
 *.log
+.hyperframes/cache/
+# background plate is being re-rendered; committed once final
+assets/plate.mp4

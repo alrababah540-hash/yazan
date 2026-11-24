@@ -1,0 +1,80 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;background:#0b1e2d;font-family:'DejaVu Sans',Arial,sans-serif}
+text{fill:#1d2b36}
+.st{fill:#fff;stroke:#c8102e;stroke-width:5}
+.lbl{font-size:19px;font-weight:600}
+.sub{font-size:14px;fill:#5a6b78}
+</style></head><body>
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="sea" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bfe3f2"/><stop offset="1" stop-color="#8fcbe6"/></linearGradient>
+<pattern id="w" width="40" height="20" patternUnits="userSpaceOnUse"><path d="M0 10 q10 -6 20 0 t20 0" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="1.5"/></pattern>
+</defs>
+<rect width="1600" height="1000" fill="url(#sea)"/><rect width="1600" height="1000" fill="url(#w)"/>
+<!-- mainland -->
+<path d="M0 640 C200 610 330 650 470 700 C560 735 640 800 700 1000 L0 1000Z" fill="#f3e6cc" stroke="#d9c49c" stroke-width="3"/>
+<!-- Yas Island -->
+<path d="M600 330 C700 210 900 170 1100 190 C1290 210 1430 300 1450 430 C1470 560 1380 690 1220 740 C1060 790 880 780 760 720 C640 660 560 560 560 460 C560 400 575 360 600 330Z" fill="#f7ecd6" stroke="#d9c49c" stroke-width="3"/>
+<!-- green areas -->
+<ellipse cx="1180" cy="560" rx="120" ry="60" fill="#cfe5b8" opacity=".8"/>
+<ellipse cx="700" cy="470" rx="70" ry="50" fill="#cfe5b8" opacity=".8"/>
+<!-- circuit icon -->
+<path d="M960 560 q40 -50 90 -20 q40 25 10 60 q-30 30 -70 10 q-40 -20 -30 -50Z" fill="none" stroke="#9aa7b0" stroke-width="6"/>
+<text x="1600" y="0"/>
+<text x="40" y="985" style="font-size:22px;font-weight:700;fill:#a08550;letter-spacing:3px">ABU DHABI MAINLAND</text>
+<text x="1030" y="250" style="font-size:26px;font-weight:700;fill:#a08550;letter-spacing:6px">YAS ISLAND</text>
+<!-- airport runway -->
+<g transform="rotate(-18 220 880)"><rect x="80" y="860" width="320" height="30" rx="4" fill="#cdbf9f"/><path d="M95 875 H385" stroke="#fff" stroke-width="3" stroke-dasharray="18 12"/></g>
+
+<!-- future phases (dashed) -->
+<path d="M1300 380 C1380 330 1470 300 1560 250" fill="none" stroke="#c8102e" stroke-width="10" stroke-dasharray="4 16" stroke-linecap="round" opacity=".7"/>
+<path d="M300 700 C220 640 120 600 20 580" fill="none" stroke="#c8102e" stroke-width="10" stroke-dasharray="4 16" stroke-linecap="round" opacity=".7"/>
+<text x="1390" y="245" class="sub" style="font-style:italic">Later phases →</text>
+<text x="30" y="560" class="sub" style="font-style:italic">← Later phases (Al Raha / city)</text>
+
+<!-- Etihad Plaza branch -->
+<path d="M330 850 L200 760" stroke="#e87722" stroke-width="12" stroke-linecap="round" fill="none"/>
+<!-- tunnel -->
+<path d="M420 800 C480 720 540 640 610 560" stroke="#c8102e" stroke-width="12" stroke-dasharray="14 10" fill="none"/>
+<!-- main line -->
+<path id="ml" d="M330 850 L420 800 M610 560 C640 520 650 470 690 430 C740 380 800 360 860 360 C930 360 990 400 1040 380 C1100 355 1160 330 1230 345 C1300 360 1320 420 1300 470 C1280 520 1230 540 1180 560 C1120 585 1080 640 1010 650 C930 660 880 620 830 600 C780 580 740 560 700 600" stroke="#c8102e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+<!-- stations -->
+<g>
+<circle class="st" cx="330" cy="850" r="13"/><text class="lbl" x="350" y="885">AUH Terminal A</text><text class="sub" x="350" y="905">Zayed International Airport</text>
+<circle class="st" cx="200" cy="760" r="11" style="stroke:#e87722"/><text class="lbl" x="60" y="735">Etihad Plaza</text><text class="sub" x="60" y="715">Depot · Training Centre</text>
+<rect x="245" y="775" width="30" height="20" rx="3" fill="#e87722"/><text x="252" y="790" style="font-size:12px;fill:#fff;font-weight:700">D</text>
+<circle class="st" cx="420" cy="800" r="11"/><text class="sub" x="440" y="795">Tunnel portal</text>
+<text x="440" y="720" class="sub" style="font-style:italic" transform="rotate(-50 440 720)">Yas tunnel (underground)</text>
+<circle class="st" cx="610" cy="560" r="13"/><text class="lbl" x="415" y="548">Yas Gateway Park</text>
+<circle class="st" cx="690" cy="430" r="11"/><text class="lbl" x="530" y="415">Water's Edge</text>
+<circle class="st" cx="860" cy="360" r="11"/><text class="lbl" x="800" y="330">SeaWorld</text>
+<circle class="st" cx="1040" cy="380" r="11"/><text class="lbl" x="990" y="420">Yas Mall</text>
+<circle class="st" cx="1230" cy="345" r="11"/><text class="lbl" x="1170" y="315">Ferrari World</text>
+<circle class="st" cx="1300" cy="470" r="11"/><text class="lbl" x="1325" y="476">Yas Drive</text>
+<circle class="st" cx="1180" cy="560" r="11"/><text class="lbl" x="1200" y="600">Yas Plaza</text>
+<circle class="st" cx="1010" cy="650" r="13"/><text class="lbl" x="930" y="695">Yas Marina Circuit</text>
+<circle class="st" cx="830" cy="600" r="11"/><text class="lbl" x="770" y="645">Media Zone</text>
+<circle class="st" cx="700" cy="600" r="13"/><text class="lbl" x="600" y="650">Yas Bay</text><text class="sub" x="600" y="670">Etihad Arena</text>
+</g>
+
+<!-- title card -->
+<rect x="40" y="36" width="560" height="250" rx="18" fill="#fff" opacity=".95"/>
+<rect x="40" y="36" width="12" height="250" rx="6" fill="#c8102e"/>
+<text x="76" y="92" style="font-size:40px;font-weight:800">Abu Dhabi Tram</text>
+<text x="76" y="132" style="font-size:24px;font-weight:600;fill:#c8102e">Yas Island · Phase 1 (planned)</text>
+<text x="76" y="176" style="font-size:18px">~19 km · 23 stations · target opening ~2030</text>
+<text x="76" y="206" style="font-size:18px">Airport ⇄ Yas tunnel ⇄ Yas Island loop</text>
+<text x="76" y="252" class="sub">Illustrative concept map — not to scale. Station names and</text>
+<text x="76" y="270" class="sub">positions are indicative; check Abu Dhabi Transport Co.</text>
+
+<!-- legend -->
+<rect x="1180" y="790" width="380" height="170" rx="16" fill="#fff" opacity=".95"/>
+<text x="1205" y="828" style="font-size:18px;font-weight:700">Legend</text>
+<line x1="1205" y1="858" x2="1265" y2="858" stroke="#c8102e" stroke-width="10" stroke-linecap="round"/><text x="1280" y="864" style="font-size:16px">Main line (at grade)</text>
+<line x1="1205" y1="888" x2="1265" y2="888" stroke="#c8102e" stroke-width="10" stroke-dasharray="12 8"/><text x="1280" y="894" style="font-size:16px">Underground (tunnel)</text>
+<line x1="1205" y1="918" x2="1265" y2="918" stroke="#e87722" stroke-width="10" stroke-linecap="round"/><text x="1280" y="924" style="font-size:16px">Etihad Plaza branch</text>
+<line x1="1205" y1="946" x2="1265" y2="946" stroke="#c8102e" stroke-width="8" stroke-dasharray="3 12" stroke-linecap="round"/><text x="1280" y="952" style="font-size:16px">Future phases</text>
+<!-- compass -->
+<g transform="translate(1500 90)"><circle r="34" fill="#fff" opacity=".9"/><path d="M0 -26 L9 6 L0 0 L-9 6Z" fill="#c8102e"/><text x="-6" y="24" style="font-size:16px;font-weight:700">N</text></g>
+</svg></body></html>

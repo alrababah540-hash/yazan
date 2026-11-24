@@ -1,0 +1,37 @@
+{
+ "y1": {
+  "dur": 2.5,
+  "speed": 1.0,
+  "start": 0.25,
+  "end": 2.75,
+  "fits": true
+ },
+ "y2": {
+  "dur": 3.62,
+  "speed": 1.0,
+  "start": 3.15,
+  "end": 6.77,
+  "fits": true
+ },
+ "y3": {
+  "dur": 4.381,
+  "speed": 1.0,
+  "start": 7.15,
+  "end": 11.531,
+  "fits": true
+ },
+ "y4": {
+  "dur": 3.053,
+  "speed": 1.0,
+  "start": 12.15,
+  "end": 15.203,
+  "fits": true
+ },
+ "y5": {
+  "dur": 3.23,
+  "speed": 1.0,
+  "start": 16.2,
+  "end": 19.43,
+  "fits": true
+ }
+}

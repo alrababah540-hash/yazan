@@ -1,7 +1,0 @@
-file '/home/user/yazan/yas_ep1/frames_1440/seg_0000.mp4'
-file '/home/user/yazan/yas_ep1/frames_1440/seg_0090.mp4'
-file '/home/user/yazan/yas_ep1/frames_1440/seg_0180.mp4'
-file '/home/user/yazan/yas_ep1/frames_1440/seg_0270.mp4'
-file '/home/user/yazan/yas_ep1/frames_1440/seg_0360.mp4'
-file '/home/user/yazan/yas_ep1/frames_1440/seg_0450.mp4'
-file '/home/user/yazan/yas_ep1/frames_1440/seg_0540.mp4'

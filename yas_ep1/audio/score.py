@@ -66,13 +66,16 @@ for c in (4.0, 5.0, 6.0, 8.7, 10.4, 13.45, 14.75): place(sfx, whoosh(0.35, 7000)
 for i, c in enumerate((12.15, 12.25, 12.35, 12.45, 12.6)): place(sfx, tick(2200 + 150 * i), c, pan=-0.4 + 0.2 * i, gain=0.1)
 place(sfx, impact(0.5), 7.15, gain=0.22); place(sfx, riser(0.9), 11.1, gain=0.18); place(sfx, riser(0.9), 15.1, gain=0.18)
 sfx = reverb(sfx, 1.2, 0.16, 5)
+import subprocess   # client ElevenLabs VO, placed per audio/vo_user_edit.json
+ED = json.load(open(os.path.join(ROOT, 'vo_user_edit.json')))
+raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', os.path.join(ROOT, '..', ED['source']), '-ac', '1', '-ar', str(SR), '-f', 's16le', '-'], capture_output=True, check=True).stdout
+SRC = np.frombuffer(raw, np.int16).astype(float) / 32768
 vo = np.zeros((2, N)); env = np.zeros(N)
-for L in NAR['lines']:
-    with wave.open(os.path.join(ROOT, 'vo', L['id'] + '.wav')) as w:
-        sr = w.getframerate(); a = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(float) / 32768
-    a = np.interp(np.linspace(0, len(a) - 1, int(len(a) * SR / sr)), np.arange(len(a)), a)
-    a = filt(a, 85, 12000, 2); a = a + 0.22 * filt(a, 2200, 5000, 2); a = a / np.max(np.abs(a)) * 0.74
-    place(vo, a, L['start']); i = int(L['start'] * SR); env[i:i + len(a)] = 1
+for c in ED['clips']:
+    i0, i1 = int(max(0, c['src'][0] - 0.03) * SR), int((c['src'][1] + 0.05) * SR); a = SRC[i0:i1].copy()
+    f = int(0.02 * SR); a[:f] *= np.linspace(0, 1, f); a[-f:] *= np.linspace(1, 0, f)
+    place(vo, a, max(0, c['at'] - 0.03)); j = int(c['at'] * SR); env[j:j + len(a)] = 1
+vo = np.vstack([filt(vo[0], 80, 14000, 2), filt(vo[1], 80, 14000, 2)]); vo = vo / np.max(np.abs(vo)) * 0.75
 vo = reverb(vo, 0.4, 0.05, 9)
 k = int(0.25 * SR); cs = np.concatenate([[0.0], np.cumsum(env)]); idx = np.arange(N)
 duck = 1 - 0.55 * (cs[np.clip(idx + k // 2, 0, N)] - cs[np.clip(idx - k // 2, 0, N)]) / k

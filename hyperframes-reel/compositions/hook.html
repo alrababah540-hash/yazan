@@ -1,0 +1,107 @@
+<template>
+  <style>
+      @font-face { font-family: 'Plex Latin'; font-weight: 500; src: url('assets/fonts/ibm-plex-sans-arabic-latin-500-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Plex Latin'; font-weight: 600; src: url('assets/fonts/ibm-plex-sans-arabic-latin-600-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Plex Latin'; font-weight: 700; src: url('assets/fonts/ibm-plex-sans-arabic-latin-700-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Cormorant'; font-weight: 500; src: url('assets/fonts/cormorant-garamond-latin-500-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'IBM Plex Sans Arabic'; font-weight: 500; src: url('assets/fonts/ibm-plex-sans-arabic-arabic-500-normal.woff2') format('woff2'); }
+      #root { position: absolute; inset: 0; font-family: 'Plex Latin'; }
+      #root .lay { position: absolute; inset: 0; }
+
+.r2 { position:absolute; left:50px; right:130px; text-align:center; pointer-events:none; color:var(--dark); font-family:'Plex Latin'; }
+.r2 .w { display:inline-block; }
+.r2-eb { font:600 25px 'Plex Latin'; letter-spacing:.34em; color:var(--sand); text-transform:uppercase; }
+.r2-rule { width:90px; height:2px; margin:16px auto 18px; background:linear-gradient(90deg,transparent,var(--sand),transparent); }
+.r2-h { font:700 76px/1.1 'Plex Latin'; letter-spacing:-0.015em; text-shadow:0 6px 36px rgba(0,0,0,.55); }
+.r2-h2 { font:700 62px/1.12 'Plex Latin'; letter-spacing:-0.01em; text-shadow:0 5px 30px rgba(0,0,0,.55); }
+.r2 .g, .r2 .gg { color:var(--sand); }
+.r2-word { font:500 116px 'Cormorant'; letter-spacing:.14em; color:var(--sand); text-shadow:0 6px 36px rgba(0,0,0,.55); }
+.r2-steps { display:flex; justify-content:center; gap:14px; align-items:center; font:600 24px 'Plex Latin'; letter-spacing:.18em; }
+.r2-steps .s { color:color-mix(in srgb, var(--dark) 35.0%, transparent); } .r2-steps .s.on { color:var(--dark); } .r2-steps .d { width:40px; height:2px; background:color-mix(in srgb, var(--sand) 35.0%, transparent); }
+.r2-isl { position:absolute; left:0; top:0; text-align:center; white-space:nowrap; }
+.r2-isl .n { font:600 38px 'Plex Latin'; text-shadow:0 2px 14px rgba(0,0,0,.9); }
+.r2-isl .c { font:500 20px 'Plex Latin'; letter-spacing:.14em; color:var(--sand); margin-top:4px; text-shadow:0 2px 10px rgba(0,0,0,.9); }
+.r2-isl .ar { font:500 22px 'IBM Plex Sans Arabic'; color:color-mix(in srgb, var(--dark) 62.0%, transparent); margin-top:2px; }
+.r2-north { position:absolute; left:64px; top:560px; }
+.r2-attr { position:absolute; left:50px; right:130px; top:1448px; text-align:center; font:500 19px 'Plex Latin'; color:color-mix(in srgb, var(--dark) 55.0%, transparent); letter-spacing:.04em; }
+.r2-room { position:absolute; transform:translate(-50%,-100%); font:600 22px 'Plex Latin'; letter-spacing:.16em; color:var(--slate); background:color-mix(in srgb, var(--sand) 94.0%, transparent); padding:7px 14px; border-radius:20px; white-space:nowrap; box-shadow:0 4px 18px rgba(0,0,0,.35); }
+.r2-room:after { content:''; position:absolute; left:50%; bottom:-9px; width:2px; height:9px; background:color-mix(in srgb, var(--sand) 94.0%, transparent); }
+.r2-tl { position:absolute; left:50px; width:900px; top:560px; height:520px; }
+.r2-tl .card { position:absolute; inset:0; border-radius:28px; background:color-mix(in srgb, color-mix(in srgb, var(--slate) 62%, black) 72.0%, transparent); border:1.5px solid color-mix(in srgb, var(--sand) 28.0%, transparent); }
+.r2-tl .rail { position:absolute; left:120px; right:120px; top:236px; height:4px; border-radius:2px; background:color-mix(in srgb, var(--dark) 16.0%, transparent); }
+.r2-tl .fill { position:absolute; left:0; top:0; bottom:0; border-radius:2px; background:linear-gradient(90deg,color-mix(in srgb, var(--sand) 89%, black),var(--sand)); box-shadow:0 0 14px color-mix(in srgb, var(--sand) 55.0%, transparent); }
+.r2-tl .node { position:absolute; top:220px; width:36px; height:36px; margin-left:-18px; border-radius:50%; border:3px solid color-mix(in srgb, var(--sand) 45.0%, transparent); background:var(--slate); }
+.r2-tl .node.on { background:var(--sand); border-color:var(--sand); box-shadow:0 0 0 8px color-mix(in srgb, var(--sand) 16.0%, transparent); }
+.r2-tl .tick { position:absolute; top:230px; width:2px; height:16px; margin-left:-1px; background:var(--sand); }
+.r2-tl .col { position:absolute; width:260px; margin-left:-130px; text-align:center; }
+.r2-tl .col .ic { height:58px; }
+.r2-tl .col .st { font:700 31px 'Plex Latin'; letter-spacing:.12em; margin-top:10px; }
+.r2-tl .col .pay { font:700 38px 'Plex Latin'; color:var(--sand); }
+.r2-tl .col .when { font:500 26px 'Plex Latin'; color:color-mix(in srgb, var(--dark) 62.0%, transparent); margin-top:6px; }
+.r2-tl .hdr { position:absolute; left:0; right:0; font:600 21px 'Plex Latin'; letter-spacing:.32em; color:color-mix(in srgb, var(--dark) 45.0%, transparent); text-align:center; }
+.r2-note { font:500 32px 'Plex Latin'; color:var(--dark); }
+.r2-sel { display:flex; flex-direction:column; gap:18px; align-items:stretch; width:620px; margin:0 auto; }
+.r2-sel .c { display:flex; align-items:center; gap:22px; padding:18px 28px; border-radius:22px; background:color-mix(in srgb, color-mix(in srgb, var(--slate) 62%, black) 74.0%, transparent); border:1.5px solid color-mix(in srgb, var(--sand) 25.0%, transparent); font:700 44px 'Plex Latin'; color:color-mix(in srgb, var(--dark) 40.0%, transparent); }
+.r2-sel .c.on { color:var(--dark); border-color:color-mix(in srgb, var(--sand) 80.0%, transparent); box-shadow:0 0 24px color-mix(in srgb, var(--sand) 18.0%, transparent); }
+.r2-sel .c .num { font:600 24px 'Plex Latin'; color:var(--sand); letter-spacing:.2em; width:44px; }
+.r2-sel .c .ic2 { width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:color-mix(in srgb, var(--sand) 10.0%, transparent); }
+.r2-dd { position:absolute; left:50px; width:900px; }
+.r2-dd .row { display:flex; align-items:center; gap:26px; padding:24px 30px; margin-bottom:20px; border-radius:24px; background:color-mix(in srgb, color-mix(in srgb, var(--slate) 62%, black) 74.0%, transparent); border:1.5px solid color-mix(in srgb, var(--sand) 26.0%, transparent); }
+.r2-dd .row.on { border-color:color-mix(in srgb, var(--sand) 75.0%, transparent); }
+.r2-dd .ic { width:76px; height:76px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:color-mix(in srgb, var(--sand) 10.0%, transparent); flex:none; }
+.r2-dd .tx { flex:1; text-align:left; } .r2-dd .t1 { font:700 44px 'Plex Latin'; } .r2-dd .t2 { font:500 28px 'Plex Latin'; color:color-mix(in srgb, var(--dark) 62.0%, transparent); margin-top:4px; }
+.r2-dd .ok { flex:none; width:40px; height:40px; }
+.r2-save { display:flex; flex-direction:column; align-items:center; gap:12px; } .r2-save .lbl { font:700 62px 'Plex Latin'; letter-spacing:.04em; text-transform:uppercase; }
+.r2-send { display:flex; align-items:center; justify-content:center; gap:14px; font:500 32px 'Plex Latin'; color:color-mix(in srgb, var(--dark) 62.0%, transparent); }
+.r2-cap { position:absolute; left:50px; right:130px; top:1290px; text-align:center; }
+.r2-cap .box { display:inline-block; padding:12px 24px; border-radius:14px; background:color-mix(in srgb, color-mix(in srgb, var(--slate) 62%, black) 70.0%, transparent); font:600 42px/1.3 'Plex Latin'; color:var(--dark); }
+.r2-cap .cw { color:var(--sand); }
+
+
+    .r2-h,.r2-h2,.r2-word,.r2-eb,.r2-save .lbl,.r2-note{color:var(--sand)!important}
+    .r2-h .gg{color:var(--dark)!important;background:var(--sand);padding:0 .2em;border-radius:.16em}
+    .r2-h .gg .w{color:var(--dark)!important}
+    .r2-h .g,.r2-h2 .g,.r2-note .g{color:var(--dark)!important;background:var(--sand);padding:0 .22em;border-radius:.18em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+    .r2-rule{background:linear-gradient(90deg,transparent,var(--sand),transparent)!important}
+    .r2-steps .s{color:color-mix(in srgb, var(--sand) 38.0%, transparent)!important} .r2-steps .s.on{color:var(--sand)!important} .r2-steps .d{background:color-mix(in srgb, var(--sand) 40.0%, transparent)!important}
+    .r2-isl{background:color-mix(in srgb, var(--dark) 84.0%, transparent);padding:8px 18px 10px;border-radius:14px} .r2-isl .n{color:var(--sand)!important;text-shadow:none!important} .r2-isl .c,.r2-isl .ar{text-shadow:none!important} .r2-isl .c{color:color-mix(in srgb, var(--sand) 85.0%, transparent)!important} .r2-isl .ar{color:color-mix(in srgb, var(--sand) 70.0%, transparent)!important} .r2-attr{color:color-mix(in srgb, var(--sand) 70.0%, transparent)!important}
+    .r2-send{color:var(--sand)!important}
+    .r2-sel .c{background:color-mix(in srgb, var(--sand) 96.0%, transparent)!important;border-color:transparent!important;color:color-mix(in srgb, var(--dark) 42.0%, transparent)!important}
+    .r2-sel .c.on{color:var(--dark)!important;box-shadow:0 10px 30px color-mix(in srgb, var(--dark) 35.0%, transparent)!important} .r2-sel .c .num{color:var(--slate)!important} .r2-sel .ic2{background:color-mix(in srgb, var(--dark) 8.0%, transparent)!important}
+    .r2-tl .card{background:color-mix(in srgb, var(--sand) 96.0%, transparent)!important;border-color:transparent!important} .r2-tl .hdr{color:color-mix(in srgb, var(--dark) 55.0%, transparent)!important}
+    .r2-tl .rail{background:color-mix(in srgb, var(--dark) 15.0%, transparent)!important} .r2-tl .fill{background:var(--dark)!important;box-shadow:none!important}
+    .r2-tl .node{background:var(--sand)!important;border-color:color-mix(in srgb, var(--dark) 35.0%, transparent)!important} .r2-tl .node.on{background:var(--dark)!important;border-color:var(--dark)!important;box-shadow:0 0 0 8px color-mix(in srgb, var(--dark) 12.0%, transparent)!important}
+    .r2-tl .tick{background:var(--dark)!important} .r2-tl .col .st{color:var(--slate)!important} .r2-tl .col .pay{color:var(--dark)!important} .r2-tl .col .when{color:color-mix(in srgb, var(--dark) 70.0%, transparent)!important}
+    .r2-dd .row{background:color-mix(in srgb, var(--sand) 96.0%, transparent)!important;border-color:transparent!important} .r2-dd .row.on{box-shadow:0 10px 30px color-mix(in srgb, var(--dark) 35.0%, transparent)!important}
+    .r2-dd .t1{color:var(--dark)!important} .r2-dd .t2{color:color-mix(in srgb, var(--dark) 70.0%, transparent)!important} .r2-dd .ic{background:color-mix(in srgb, var(--dark) 8.0%, transparent)!important}
+    .r2-sel svg *,.r2-tl svg *,.r2-dd .ic svg *{stroke:var(--dark)!important}
+    .r2-dd .ok svg circle{fill:var(--dark)!important;stroke:none!important} .r2-dd .ok svg path{stroke:var(--sand)!important}
+    .r2-cap .box{background:color-mix(in srgb, var(--sand) 96.0%, transparent)!important;color:color-mix(in srgb, var(--dark) 62.0%, transparent)!important} .r2-cap .cw{color:var(--dark)!important}
+    .r2-room{background:var(--sand)!important;color:var(--dark)!important}
+
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920" data-duration="4">
+    <div id="hook-title" class="clip lay" data-start="0" data-duration="3.95" data-track-index="1"><div id="hook-title-in" class="r2" style="top:300px"><div class="r2-h"><span class="w">Buying</span> <span class="w">a</span> <span class="w">home</span><br><span class="w">that</span> <span class="gg"><span class="w">isn't</span> <span class="w">built</span> <span class="w">yet?</span></span></div></div></div>
+  </div>
+  <script>
+    (() => {
+      const tl = gsap.timeline({ paused: true });
+      const EO = (p) => 1 - Math.pow(1 - p, 3);
+      const EIO = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+      // a tween that started before this scene: keep only its visible remainder, on the same curve
+      const trim = (a, dur, ease) => (a >= 0 ? [a, dur, ease] : [0, dur + a, (p) => ease(-a / dur + (1 + a / dur) * p)]);
+      function show(sel, a, b, { rise = 26, blur = 8, fi = 0.55, fo = 0.3, slot = Infinity } = {}) {
+        const [p, d, e] = trim(a, fi, EO);
+        tl.fromTo(sel, { opacity: 0, y: rise, filter: blur ? `blur(${blur}px)` : 'none' }, { opacity: 1, y: 0, filter: blur ? 'blur(0px)' : 'none', duration: d, ease: e }, p);
+        if (b <= slot) tl.to(sel, { opacity: 0, filter: blur ? `blur(${blur}px)` : 'none', duration: fo, ease: EIO }, b - fo);
+      }
+      show('#hook-title-in', -0.2, 3.95, { rise: 0, blur: 0, slot: 4 });
+      // word-by-word reveal, readable from frame 1
+      document.querySelectorAll('#hook-title-in .w').forEach((w, k) => {
+        const [p, d, e] = trim(-0.45 + k * 0.13, 0.45, EO);
+        tl.fromTo(w, { opacity: 0, y: 22, filter: 'blur(6px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: d, ease: e }, p);
+      });
+      window.__timelines["hook"] = tl;
+    })();
+  </script>
+</template>

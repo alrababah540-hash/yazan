@@ -1,0 +1,175 @@
+<template>
+  <style>
+      @font-face { font-family: 'Plex Latin'; font-weight: 500; src: url('assets/fonts/ibm-plex-sans-arabic-latin-500-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Plex Latin'; font-weight: 600; src: url('assets/fonts/ibm-plex-sans-arabic-latin-600-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Plex Latin'; font-weight: 700; src: url('assets/fonts/ibm-plex-sans-arabic-latin-700-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'Cormorant'; font-weight: 500; src: url('assets/fonts/cormorant-garamond-latin-500-normal.woff2') format('woff2'); }
+      @font-face { font-family: 'IBM Plex Sans Arabic'; font-weight: 500; src: url('assets/fonts/ibm-plex-sans-arabic-arabic-500-normal.woff2') format('woff2'); }
+      #root { position: absolute; inset: 0; font-family: 'Plex Latin'; }
+      #root .lay { position: absolute; inset: 0; }
+
+.r2 { position:absolute; left:50px; right:130px; text-align:center; pointer-events:none; color:var(--dark); font-family:'Plex Latin'; }
+.r2 .w { display:inline-block; }
+.r2-eb { font:600 25px 'Plex Latin'; letter-spacing:.34em; color:var(--sand); text-transform:uppercase; }
+.r2-rule { width:90px; height:2px; margin:16px auto 18px; background:linear-gradient(90deg,transparent,var(--sand),transparent); }
+.r2-h { font:700 76px/1.1 'Plex Latin'; letter-spacing:-0.015em; text-shadow:0 6px 36px rgba(0,0,0,.55); }
+.r2-h2 { font:700 62px/1.12 'Plex Latin'; letter-spacing:-0.01em; text-shadow:0 5px 30px rgba(0,0,0,.55); }
+.r2 .g, .r2 .gg { color:var(--sand); }
+.r2-word { font:500 116px 'Cormorant'; letter-spacing:.14em; color:var(--sand); text-shadow:0 6px 36px rgba(0,0,0,.55); }
+.r2-steps { display:flex; justify-content:center; gap:14px; align-items:center; font:600 24px 'Plex Latin'; letter-spacing:.18em; }
+.r2-steps .s { color:color-mix(in srgb, var(--dark) 35.0%, transparent); } .r2-steps .s.on { color:var(--dark); } .r2-steps .d { width:40px; height:2px; background:color-mix(in srgb, var(--sand) 35.0%, transparent); }
+.r2-isl { position:absolute; left:0; top:0; text-align:center; white-space:nowrap; }
+.r2-isl .n { font:600 38px 'Plex Latin'; text-shadow:0 2px 14px rgba(0,0,0,.9); }
+.r2-isl .c { font:500 20px 'Plex Latin'; letter-spacing:.14em; color:var(--sand); margin-top:4px; text-shadow:0 2px 10px rgba(0,0,0,.9); }
+.r2-isl .ar { font:500 22px 'IBM Plex Sans Arabic'; color:color-mix(in srgb, var(--dark) 62.0%, transparent); margin-top:2px; }
+.r2-north { position:absolute; left:64px; top:560px; }
+.r2-attr { position:absolute; left:50px; right:130px; top:1448px; text-align:center; font:500 19px 'Plex Latin'; color:color-mix(in srgb, var(--dark) 55.0%, transparent); letter-spacing:.04em; }
+.r2-room { position:absolute; transform:translate(-50%,-100%); font:600 22px 'Plex Latin'; letter-spacing:.16em; color:var(--slate); background:color-mix(in srgb, var(--sand) 94.0%, transparent); padding:7px 14px; border-radius:20px; white-space:nowrap; box-shadow:0 4px 18px rgba(0,0,0,.35); }
+.r2-room:after { content:''; position:absolute; left:50%; bottom:-9px; width:2px; height:9px; background:color-mix(in srgb, var(--sand) 94.0%, transparent); }
+.r2-tl { position:absolute; left:50px; width:900px; top:560px; height:520px; }
+.r2-tl .card { position:absolute; inset:0; border-radius:28px; background:color-mix(in srgb, color-mix(in srgb, var(--slate) 62%, black) 72.0%, transparent); border:1.5px solid color-mix(in srgb, var(--sand) 28.0%, transparent); }
+.r2-tl .rail { position:absolute; left:120px; right:120px; top:236px; height:4px; border-radius:2px; background:color-mix(in srgb, var(--dark) 16.0%, transparent); }
+.r2-tl .fill { position:absolute; left:0; top:0; bottom:0; border-radius:2px; background:linear-gradient(90deg,color-mix(in srgb, var(--sand) 89%, black),var(--sand)); box-shadow:0 0 14px color-mix(in srgb, var(--sand) 55.0%, transparent); }
+.r2-tl .node { position:absolute; top:220px; width:36px; height:36px; margin-left:-18px; border-radius:50%; border:3px solid color-mix(in srgb, var(--sand) 45.0%, transparent); background:var(--slate); }
+.r2-tl .node.on { background:var(--sand); border-color:var(--sand); box-shadow:0 0 0 8px color-mix(in srgb, var(--sand) 16.0%, transparent); }
+.r2-tl .tick { position:absolute; top:230px; width:2px; height:16px; margin-left:-1px; background:var(--sand); }
+.r2-tl .col { position:absolute; width:260px; margin-left:-130px; text-align:center; }
+.r2-tl .col .ic { height:58px; }
+.r2-tl .col .st { font:700 31px 'Plex Latin'; letter-spacing:.12em; margin-top:10px; }
+.r2-tl .col .pay { font:700 38px 'Plex Latin'; color:var(--sand); }
+.r2-tl .col .when { font:500 26px 'Plex Latin'; color:color-mix(in srgb, var(--dark) 62.0%, transparent); margin-top:6px; }
+.r2-tl .hdr { position:absolute; left:0; right:0; font:600 21px 'Plex Latin'; letter-spacing:.32em; color:color-mix(in srgb, var(--dark) 45.0%, transparent); text-align:center; }
+.r2-note { font:500 32px 'Plex Latin'; color:var(--dark); }
+.r2-sel { display:flex; flex-direction:column; gap:18px; align-items:stretch; width:620px; margin:0 auto; }
+.r2-sel .c { display:flex; align-items:center; gap:22px; padding:18px 28px; border-radius:22px; background:color-mix(in srgb, color-mix(in srgb, var(--slate) 62%, black) 74.0%, transparent); border:1.5px solid color-mix(in srgb, var(--sand) 25.0%, transparent); font:700 44px 'Plex Latin'; color:color-mix(in srgb, var(--dark) 40.0%, transparent); }
+.r2-sel .c.on { color:var(--dark); border-color:color-mix(in srgb, var(--sand) 80.0%, transparent); box-shadow:0 0 24px color-mix(in srgb, var(--sand) 18.0%, transparent); }
+.r2-sel .c .num { font:600 24px 'Plex Latin'; color:var(--sand); letter-spacing:.2em; width:44px; }
+.r2-sel .c .ic2 { width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:color-mix(in srgb, var(--sand) 10.0%, transparent); }
+.r2-dd { position:absolute; left:50px; width:900px; }
+.r2-dd .row { display:flex; align-items:center; gap:26px; padding:24px 30px; margin-bottom:20px; border-radius:24px; background:color-mix(in srgb, color-mix(in srgb, var(--slate) 62%, black) 74.0%, transparent); border:1.5px solid color-mix(in srgb, var(--sand) 26.0%, transparent); }
+.r2-dd .row.on { border-color:color-mix(in srgb, var(--sand) 75.0%, transparent); }
+.r2-dd .ic { width:76px; height:76px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:color-mix(in srgb, var(--sand) 10.0%, transparent); flex:none; }
+.r2-dd .tx { flex:1; text-align:left; } .r2-dd .t1 { font:700 44px 'Plex Latin'; } .r2-dd .t2 { font:500 28px 'Plex Latin'; color:color-mix(in srgb, var(--dark) 62.0%, transparent); margin-top:4px; }
+.r2-dd .ok { flex:none; width:40px; height:40px; }
+.r2-save { display:flex; flex-direction:column; align-items:center; gap:12px; } .r2-save .lbl { font:700 62px 'Plex Latin'; letter-spacing:.04em; text-transform:uppercase; }
+.r2-send { display:flex; align-items:center; justify-content:center; gap:14px; font:500 32px 'Plex Latin'; color:color-mix(in srgb, var(--dark) 62.0%, transparent); }
+.r2-cap { position:absolute; left:50px; right:130px; top:1290px; text-align:center; }
+.r2-cap .box { display:inline-block; padding:12px 24px; border-radius:14px; background:color-mix(in srgb, color-mix(in srgb, var(--slate) 62%, black) 70.0%, transparent); font:600 42px/1.3 'Plex Latin'; color:var(--dark); }
+.r2-cap .cw { color:var(--sand); }
+
+
+    .r2-h,.r2-h2,.r2-word,.r2-eb,.r2-save .lbl,.r2-note{color:var(--sand)!important}
+    .r2-h .gg{color:var(--dark)!important;background:var(--sand);padding:0 .2em;border-radius:.16em}
+    .r2-h .gg .w{color:var(--dark)!important}
+    .r2-h .g,.r2-h2 .g,.r2-note .g{color:var(--dark)!important;background:var(--sand);padding:0 .22em;border-radius:.18em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+    .r2-rule{background:linear-gradient(90deg,transparent,var(--sand),transparent)!important}
+    .r2-steps .s{color:color-mix(in srgb, var(--sand) 38.0%, transparent)!important} .r2-steps .s.on{color:var(--sand)!important} .r2-steps .d{background:color-mix(in srgb, var(--sand) 40.0%, transparent)!important}
+    .r2-isl{background:color-mix(in srgb, var(--dark) 84.0%, transparent);padding:8px 18px 10px;border-radius:14px} .r2-isl .n{color:var(--sand)!important;text-shadow:none!important} .r2-isl .c,.r2-isl .ar{text-shadow:none!important} .r2-isl .c{color:color-mix(in srgb, var(--sand) 85.0%, transparent)!important} .r2-isl .ar{color:color-mix(in srgb, var(--sand) 70.0%, transparent)!important} .r2-attr{color:color-mix(in srgb, var(--sand) 70.0%, transparent)!important}
+    .r2-send{color:var(--sand)!important}
+    .r2-sel .c{background:color-mix(in srgb, var(--sand) 96.0%, transparent)!important;border-color:transparent!important;color:color-mix(in srgb, var(--dark) 42.0%, transparent)!important}
+    .r2-sel .c.on{color:var(--dark)!important;box-shadow:0 10px 30px color-mix(in srgb, var(--dark) 35.0%, transparent)!important} .r2-sel .c .num{color:var(--slate)!important} .r2-sel .ic2{background:color-mix(in srgb, var(--dark) 8.0%, transparent)!important}
+    .r2-tl .card{background:color-mix(in srgb, var(--sand) 96.0%, transparent)!important;border-color:transparent!important} .r2-tl .hdr{color:color-mix(in srgb, var(--dark) 55.0%, transparent)!important}
+    .r2-tl .rail{background:color-mix(in srgb, var(--dark) 15.0%, transparent)!important} .r2-tl .fill{background:var(--dark)!important;box-shadow:none!important}
+    .r2-tl .node{background:var(--sand)!important;border-color:color-mix(in srgb, var(--dark) 35.0%, transparent)!important} .r2-tl .node.on{background:var(--dark)!important;border-color:var(--dark)!important;box-shadow:0 0 0 8px color-mix(in srgb, var(--dark) 12.0%, transparent)!important}
+    .r2-tl .tick{background:var(--dark)!important} .r2-tl .col .st{color:var(--slate)!important} .r2-tl .col .pay{color:var(--dark)!important} .r2-tl .col .when{color:color-mix(in srgb, var(--dark) 70.0%, transparent)!important}
+    .r2-dd .row{background:color-mix(in srgb, var(--sand) 96.0%, transparent)!important;border-color:transparent!important} .r2-dd .row.on{box-shadow:0 10px 30px color-mix(in srgb, var(--dark) 35.0%, transparent)!important}
+    .r2-dd .t1{color:var(--dark)!important} .r2-dd .t2{color:color-mix(in srgb, var(--dark) 70.0%, transparent)!important} .r2-dd .ic{background:color-mix(in srgb, var(--dark) 8.0%, transparent)!important}
+    .r2-sel svg *,.r2-tl svg *,.r2-dd .ic svg *{stroke:var(--dark)!important}
+    .r2-dd .ok svg circle{fill:var(--dark)!important;stroke:none!important} .r2-dd .ok svg path{stroke:var(--sand)!important}
+    .r2-cap .box{background:color-mix(in srgb, var(--sand) 96.0%, transparent)!important;color:color-mix(in srgb, var(--dark) 62.0%, transparent)!important} .r2-cap .cw{color:var(--dark)!important}
+    .r2-room{background:var(--sand)!important;color:var(--dark)!important}
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1080" data-height="1920" data-duration="34.9">
+    <div id="cap0" class="clip lay" data-start="0.1" data-duration="1.425" data-track-index="1"><div id="cap0-in" class="r2-cap"><span class="box"><span id="cap0-w0">Buying</span> <span id="cap0-w1">a</span> <span id="cap0-w2">home</span> <span id="cap0-w3">that</span></span></div></div>
+    <div id="cap1" class="clip lay" data-start="1.525" data-duration="1.096" data-track-index="1"><div id="cap1-in" class="r2-cap"><span class="box"><span id="cap1-w0">isn't</span> <span id="cap1-w1">built</span> <span id="cap1-w2">yet?</span></span></div></div>
+    <div id="cap2" class="clip lay" data-start="2.621" data-duration="1.096" data-track-index="1"><div id="cap2-in" class="r2-cap"><span class="box"><span id="cap2-w0">That's</span> <span id="cap2-w1">off-plan.</span></span></div></div>
+    <div id="cap3" class="clip lay" data-start="4.3" data-duration="1.782" data-track-index="1"><div id="cap3-in" class="r2-cap"><span class="box"><span id="cap3-w0">You're</span> <span id="cap3-w1">purchasing</span> <span id="cap3-w2">a</span> <span id="cap3-w3">property</span></span></div></div>
+    <div id="cap4" class="clip lay" data-start="6.082" data-duration="1.418" data-track-index="1"><div id="cap4-in" class="r2-cap"><span class="box"><span id="cap4-w0">directly</span> <span id="cap4-w1">from</span> <span id="cap4-w2">a</span> <span id="cap4-w3">developer</span></span></div></div>
+    <div id="cap5" class="clip lay" data-start="7.5" data-duration="1.036" data-track-index="1"><div id="cap5-in" class="r2-cap"><span class="box"><span id="cap5-w0">before</span> <span id="cap5-w1">completion.</span></span></div></div>
+    <div id="cap6" class="clip lay" data-start="13.35" data-duration="1.5" data-track-index="1"><div id="cap6-in" class="r2-cap"><span class="box"><span id="cap6-w0">Start</span> <span id="cap6-w1">with</span> <span id="cap6-w2">the</span> <span id="cap6-w3">right</span></span></div></div>
+    <div id="cap7" class="clip lay" data-start="14.85" data-duration="0.619" data-track-index="1"><div id="cap7-in" class="r2-cap"><span class="box"><span id="cap7-w0">location,</span></span></div></div>
+    <div id="cap8" class="clip lay" data-start="15.469" data-duration="0.681" data-track-index="1"><div id="cap8-in" class="r2-cap"><span class="box"><span id="cap8-w0">developer,</span></span></div></div>
+    <div id="cap9" class="clip lay" data-start="16.15" data-duration="0.619" data-track-index="1"><div id="cap9-in" class="r2-cap"><span class="box"><span id="cap9-w0">and</span> <span id="cap9-w1">unit.</span></span></div></div>
+    <div id="cap10" class="clip lay" data-start="20.45" data-duration="1.715" data-track-index="1"><div id="cap10-in" class="r2-cap"><span class="box"><span id="cap10-w0">Understand</span> <span id="cap10-w1">the</span> <span id="cap10-w2">payment</span> <span id="cap10-w3">plan</span></span></div></div>
+    <div id="cap11" class="clip lay" data-start="22.165" data-duration="0.108" data-track-index="1"><div id="cap11-in" class="r2-cap"><span class="box"><span id="cap11-w0">—</span></span></div></div>
+    <div id="cap12" class="clip lay" data-start="22.273" data-duration="0.92" data-track-index="1"><div id="cap12-in" class="r2-cap"><span class="box"><span id="cap12-w0">but</span> <span id="cap12-w1">never</span> <span id="cap12-w2">buy</span> <span id="cap12-w3">on</span></span></div></div>
+    <div id="cap13" class="clip lay" data-start="23.193" data-duration="1.299" data-track-index="1"><div id="cap13-in" class="r2-cap"><span class="box"><span id="cap13-w0">the</span> <span id="cap13-w1">payment</span> <span id="cap13-w2">plan</span> <span id="cap13-w3">alone.</span></span></div></div>
+    <div id="cap14" class="clip lay" data-start="26.25" data-duration="1.329" data-track-index="1"><div id="cap14-in" class="r2-cap"><span class="box"><span id="cap14-w0">Before</span> <span id="cap14-w1">committing,</span></span></div></div>
+    <div id="cap15" class="clip lay" data-start="27.579" data-duration="1.307" data-track-index="1"><div id="cap15-in" class="r2-cap"><span class="box"><span id="cap15-w0">verify</span> <span id="cap15-w1">the</span> <span id="cap15-w2">developer,</span></span></div></div>
+    <div id="cap16" class="clip lay" data-start="28.886" data-duration="1.188" data-track-index="1"><div id="cap16-in" class="r2-cap"><span class="box"><span id="cap16-w0">the</span> <span id="cap16-w1">escrow</span> <span id="cap16-w2">account,</span></span></div></div>
+    <div id="cap17" class="clip lay" data-start="30.075" data-duration="0.772" data-track-index="1"><div id="cap17-in" class="r2-cap"><span class="box"><span id="cap17-w0">and</span> <span id="cap17-w1">the</span> <span id="cap17-w2">SPA.</span></span></div></div>
+    <div id="cap18" class="clip lay" data-start="31.3" data-duration="1.558" data-track-index="1"><div id="cap18-in" class="r2-cap"><span class="box"><span id="cap18-w0">Save</span> <span id="cap18-w1">this</span> <span id="cap18-w2">guide</span> <span id="cap18-w3">before</span></span></div></div>
+    <div id="cap19" class="clip lay" data-start="32.858" data-duration="1.83" data-track-index="1"><div id="cap19-in" class="r2-cap"><span class="box"><span id="cap19-w0">your</span> <span id="cap19-w1">next</span> <span id="cap19-w2">property</span> <span id="cap19-w3">investment.</span></span></div></div>
+  </div>
+  <script>
+    (() => {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo('#cap0-in', { opacity: 0 }, { opacity: 1, duration: 0.15, ease: 'none' }, 0.1);
+      tl.set('#cap0-w0', { attr: { class: 'cw' } }, 0.15).set('#cap0-w0', { attr: { class: '' } }, 0.651);
+      tl.set('#cap0-w1', { attr: { class: 'cw' } }, 0.601).set('#cap0-w1', { attr: { class: '' } }, 0.78);
+      tl.set('#cap0-w2', { attr: { class: 'cw' } }, 0.73).set('#cap0-w2', { attr: { class: '' } }, 1.103);
+      tl.set('#cap0-w3', { attr: { class: 'cw' } }, 1.053).set('#cap0-w3', { attr: { class: '' } }, 1.425);
+      tl.set('#cap1-w0', { attr: { class: 'cw' } }, 1.525).set('#cap1-w0', { attr: { class: '' } }, 1.812);
+      tl.set('#cap1-w1', { attr: { class: 'cw' } }, 1.762).set('#cap1-w1', { attr: { class: '' } }, 2.199);
+      tl.set('#cap1-w2', { attr: { class: 'cw' } }, 2.149).set('#cap1-w2', { attr: { class: '' } }, 2.521);
+      tl.set('#cap2-w0', { attr: { class: 'cw' } }, 2.621).set('#cap2-w0', { attr: { class: '' } }, 2.972);
+      tl.set('#cap2-w1', { attr: { class: 'cw' } }, 2.922).set('#cap2-w1', { attr: { class: '' } }, 3.617);
+      tl.fromTo('#cap3-in', { opacity: 0 }, { opacity: 1, duration: 0.15, ease: 'none' }, 4.3);
+      tl.set('#cap3-w0', { attr: { class: 'cw' } }, 4.35).set('#cap3-w0', { attr: { class: '' } }, 4.782);
+      tl.set('#cap3-w1', { attr: { class: 'cw' } }, 4.732).set('#cap3-w1', { attr: { class: '' } }, 5.382);
+      tl.set('#cap3-w2', { attr: { class: 'cw' } }, 5.332).set('#cap3-w2', { attr: { class: '' } }, 5.491);
+      tl.set('#cap3-w3', { attr: { class: 'cw' } }, 5.441).set('#cap3-w3', { attr: { class: '' } }, 5.982);
+      tl.set('#cap4-w0', { attr: { class: 'cw' } }, 6.082).set('#cap4-w0', { attr: { class: '' } }, 6.473);
+      tl.set('#cap4-w1', { attr: { class: 'cw' } }, 6.423).set('#cap4-w1', { attr: { class: '' } }, 6.745);
+      tl.set('#cap4-w2', { attr: { class: 'cw' } }, 6.695).set('#cap4-w2', { attr: { class: '' } }, 6.854);
+      tl.set('#cap4-w3', { attr: { class: 'cw' } }, 6.804).set('#cap4-w3', { attr: { class: '' } }, 7.4);
+      tl.set('#cap5-w0', { attr: { class: 'cw' } }, 7.5).set('#cap5-w0', { attr: { class: '' } }, 7.782);
+      tl.set('#cap5-w1', { attr: { class: 'cw' } }, 7.732).set('#cap5-w1', { attr: { class: '' } }, 8.436);
+      tl.fromTo('#cap6-in', { opacity: 0 }, { opacity: 1, duration: 0.15, ease: 'none' }, 13.35);
+      tl.set('#cap6-w0', { attr: { class: 'cw' } }, 13.4).set('#cap6-w0', { attr: { class: '' } }, 13.821);
+      tl.set('#cap6-w1', { attr: { class: 'cw' } }, 13.771).set('#cap6-w1', { attr: { class: '' } }, 14.131);
+      tl.set('#cap6-w2', { attr: { class: 'cw' } }, 14.081).set('#cap6-w2', { attr: { class: '' } }, 14.379);
+      tl.set('#cap6-w3', { attr: { class: 'cw' } }, 14.329).set('#cap6-w3', { attr: { class: '' } }, 14.75);
+      tl.set('#cap7-w0', { attr: { class: 'cw' } }, 14.85).set('#cap7-w0', { attr: { class: '' } }, 15.369);
+      tl.set('#cap8-w0', { attr: { class: 'cw' } }, 15.469).set('#cap8-w0', { attr: { class: '' } }, 16.05);
+      tl.set('#cap9-w0', { attr: { class: 'cw' } }, 16.15).set('#cap9-w0', { attr: { class: '' } }, 16.298);
+      tl.set('#cap9-w1', { attr: { class: 'cw' } }, 16.248).set('#cap9-w1', { attr: { class: '' } }, 16.669);
+      tl.fromTo('#cap10-in', { opacity: 0 }, { opacity: 1, duration: 0.15, ease: 'none' }, 20.45);
+      tl.set('#cap10-w0', { attr: { class: 'cw' } }, 20.5).set('#cap10-w0', { attr: { class: '' } }, 21.145);
+      tl.set('#cap10-w1', { attr: { class: 'cw' } }, 21.095).set('#cap10-w1', { attr: { class: '' } }, 21.362);
+      tl.set('#cap10-w2', { attr: { class: 'cw' } }, 21.312).set('#cap10-w2', { attr: { class: '' } }, 21.795);
+      tl.set('#cap10-w3', { attr: { class: 'cw' } }, 21.745).set('#cap10-w3', { attr: { class: '' } }, 22.065);
+      tl.set('#cap11-w0', { attr: { class: 'cw' } }, 22.165).set('#cap11-w0', { attr: { class: '' } }, 22.173);
+      tl.set('#cap12-w0', { attr: { class: 'cw' } }, 22.273).set('#cap12-w0', { attr: { class: '' } }, 22.39);
+      tl.set('#cap12-w1', { attr: { class: 'cw' } }, 22.34).set('#cap12-w1', { attr: { class: '' } }, 22.715);
+      tl.set('#cap12-w2', { attr: { class: 'cw' } }, 22.665).set('#cap12-w2', { attr: { class: '' } }, 22.931);
+      tl.set('#cap12-w3', { attr: { class: 'cw' } }, 22.881).set('#cap12-w3', { attr: { class: '' } }, 23.093);
+      tl.set('#cap13-w0', { attr: { class: 'cw' } }, 23.193).set('#cap13-w0', { attr: { class: '' } }, 23.31);
+      tl.set('#cap13-w1', { attr: { class: 'cw' } }, 23.26).set('#cap13-w1', { attr: { class: '' } }, 23.743);
+      tl.set('#cap13-w2', { attr: { class: 'cw' } }, 23.693).set('#cap13-w2', { attr: { class: '' } }, 24.013);
+      tl.set('#cap13-w3', { attr: { class: 'cw' } }, 23.963).set('#cap13-w3', { attr: { class: '' } }, 24.392);
+      tl.fromTo('#cap14-in', { opacity: 0 }, { opacity: 1, duration: 0.15, ease: 'none' }, 26.25);
+      tl.set('#cap14-w0', { attr: { class: 'cw' } }, 26.3).set('#cap14-w0', { attr: { class: '' } }, 26.766);
+      tl.set('#cap14-w1', { attr: { class: 'cw' } }, 26.716).set('#cap14-w1', { attr: { class: '' } }, 27.479);
+      tl.set('#cap15-w0', { attr: { class: 'cw' } }, 27.579).set('#cap15-w0', { attr: { class: '' } }, 27.895);
+      tl.set('#cap15-w1', { attr: { class: 'cw' } }, 27.845).set('#cap15-w1', { attr: { class: '' } }, 28.133);
+      tl.set('#cap15-w2', { attr: { class: 'cw' } }, 28.083).set('#cap15-w2', { attr: { class: '' } }, 28.786);
+      tl.set('#cap16-w0', { attr: { class: 'cw' } }, 28.886).set('#cap16-w0', { attr: { class: '' } }, 29.024);
+      tl.set('#cap16-w1', { attr: { class: 'cw' } }, 28.974).set('#cap16-w1', { attr: { class: '' } }, 29.44);
+      tl.set('#cap16-w2', { attr: { class: 'cw' } }, 29.39).set('#cap16-w2', { attr: { class: '' } }, 29.975);
+      tl.set('#cap17-w0', { attr: { class: 'cw' } }, 30.075).set('#cap17-w0', { attr: { class: '' } }, 30.212);
+      tl.set('#cap17-w1', { attr: { class: 'cw' } }, 30.162).set('#cap17-w1', { attr: { class: '' } }, 30.45);
+      tl.set('#cap17-w2', { attr: { class: 'cw' } }, 30.4).set('#cap17-w2', { attr: { class: '' } }, 30.747);
+      tl.fromTo('#cap18-in', { opacity: 0 }, { opacity: 1, duration: 0.15, ease: 'none' }, 31.3);
+      tl.set('#cap18-w0', { attr: { class: 'cw' } }, 31.35).set('#cap18-w0', { attr: { class: '' } }, 31.695);
+      tl.set('#cap18-w1', { attr: { class: 'cw' } }, 31.645).set('#cap18-w1', { attr: { class: '' } }, 31.99);
+      tl.set('#cap18-w2', { attr: { class: 'cw' } }, 31.94).set('#cap18-w2', { attr: { class: '' } }, 32.345);
+      tl.set('#cap18-w3', { attr: { class: 'cw' } }, 32.295).set('#cap18-w3', { attr: { class: '' } }, 32.758);
+      tl.set('#cap19-w0', { attr: { class: 'cw' } }, 32.858).set('#cap19-w0', { attr: { class: '' } }, 33.053);
+      tl.set('#cap19-w1', { attr: { class: 'cw' } }, 33.003).set('#cap19-w1', { attr: { class: '' } }, 33.348);
+      tl.set('#cap19-w2', { attr: { class: 'cw' } }, 33.298).set('#cap19-w2', { attr: { class: '' } }, 33.88);
+      tl.set('#cap19-w3', { attr: { class: 'cw' } }, 33.83).set('#cap19-w3', { attr: { class: '' } }, 34.588);
+      window.__timelines["captions"] = tl;
+    })();
+  </script>
+</template>

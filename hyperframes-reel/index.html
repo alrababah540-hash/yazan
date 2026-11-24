@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[{"id": "sand", "type": "color", "label": "Brand sand (panels, highlights)", "default": "#E6D5B8"}, {"id": "slate", "type": "color", "label": "Brand slate (backgrounds)", "default": "#4B5563"}, {"id": "dark", "type": "color", "label": "Brand dark (text on sand)", "default": "#1F2937"}]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Off-plan in Abu Dhabi — final reel</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      :root { --sand: #E6D5B8; --slate: #4B5563; --dark: #1F2937; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #070e19; }
+      #plate { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: contain; z-index: 1; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="34.9" data-width="1080" data-height="1920" data-fps="30">
+      <!-- 3D world (three.js, rendered from scene/ with the text layer off) -->
+      <video id="plate" class="clip" src="assets/plate.mp4" data-start="0" data-duration="34.9" data-track-index="0" muted playsinline></video>
+      <!-- titles and infographics, one scene per shot -->
+      <div id="hook" data-composition-id="hook" data-composition-src="compositions/hook.html" data-start="0" data-duration="4" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:2"></div>
+      <div id="offplan" data-composition-id="offplan" data-composition-src="compositions/offplan.html" data-start="4" data-duration="5" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:3"></div>
+      <div id="map" data-composition-id="map" data-composition-src="compositions/map.html" data-start="9" data-duration="6" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:4"></div>
+      <div id="unit" data-composition-id="unit" data-composition-src="compositions/unit.html" data-start="15" data-duration="5" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:5"></div>
+      <div id="payment" data-composition-id="payment" data-composition-src="compositions/payment.html" data-start="20" data-duration="6" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:6"></div>
+      <div id="verify" data-composition-id="verify" data-composition-src="compositions/verify.html" data-start="26" data-duration="5" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:7"></div>
+      <div id="end" data-composition-id="end" data-composition-src="compositions/end.html" data-start="31" data-duration="3.9" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920" style="z-index:8"></div>
+      <!-- word-level subtitles -->
+      <div id="captions" data-composition-id="captions" data-composition-src="compositions/captions.html" data-start="0" data-duration="34.9" data-track-index="2" data-track-kind="captions" data-width="1080" data-height="1920" style="z-index:20"></div>
+      <!-- sound: narrator (Kokoro bm_george), original score, effects -->
+      <audio id="voice" class="clip" src="assets/audio/vo.wav" data-start="0" data-duration="34.9" data-track-index="3" data-volume="1"></audio>
+      <audio id="music" class="clip" src="assets/audio/music.wav" data-start="0" data-duration="34.9" data-track-index="4" data-volume="1"></audio>
+      <audio id="sfx" class="clip" src="assets/audio/sfx.wav" data-start="0" data-duration="34.9" data-track-index="5" data-volume="1"></audio>
+    </div>
+    <script>
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

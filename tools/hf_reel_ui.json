@@ -1,0 +1,630 @@
+{
+ "styles": [
+  "\n  @font-face { font-family: 'IBM Plex Sans Arabic'; font-weight: 300; src: url(/node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-300-normal.woff2) format('woff2'); }\n  @font-face { font-family: 'IBM Plex Sans Arabic'; font-weight: 500; src: url(/node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-500-normal.woff2) format('woff2'); }\n  @font-face { font-family: 'IBM Plex Sans Arabic'; font-weight: 600; src: url(/node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-600-normal.woff2) format('woff2'); }\n  @font-face { font-family: 'IBM Plex Sans Arabic'; font-weight: 700; src: url(/node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-700-normal.woff2) format('woff2'); }\n  @font-face { font-family: 'Plex Latin'; font-weight: 300; src: url(/node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-latin-300-normal.woff2) format('woff2'); }\n  @font-face { font-family: 'Plex Latin'; font-weight: 500; src: url(/node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-latin-500-normal.woff2) format('woff2'); }\n  @font-face { font-family: 'Plex Latin'; font-weight: 600; src: url(/node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-latin-600-normal.woff2) format('woff2'); }\n  @font-face { font-family: 'Plex Latin'; font-weight: 700; src: url(/node_modules/@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-latin-700-normal.woff2) format('woff2'); }\n  @font-face { font-family: 'Cormorant'; font-weight: 300; src: url(/node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-300-normal.woff2) format('woff2'); }\n  @font-face { font-family: 'Cormorant'; font-weight: 500; src: url(/node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2) format('woff2'); }\n  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #070e19; }\n  canvas#gl { position: absolute; inset: 0; width: 1080px; height: 1920px; }\n  #ui { position: absolute; inset: 0; pointer-events: none; font-family: 'Plex Latin', 'IBM Plex Sans Arabic', sans-serif; color: #f3eee4; }\n  .layer { position: absolute; left: 0; right: 0; text-align: center; will-change: transform, opacity; }\n  .eyebrow { font: 500 30px 'Plex Latin', 'IBM Plex Sans Arabic'; letter-spacing: 0.32em; color: #e2c78f; text-transform: uppercase; }\n  .rule { height: 2px; width: 120px; margin: 22px auto; background: linear-gradient(90deg, transparent, #c9a96a, transparent); }\n  .h1 { font-weight: 600; font-size: 74px; line-height: 1.3; text-shadow: 0 4px 30px rgba(0,0,0,.55); }\n  .h2 { font-weight: 500; font-size: 58px; line-height: 1.35; text-shadow: 0 3px 24px rgba(0,0,0,.6); }\n  .latin { font-family: 'Cormorant', serif; font-weight: 500; letter-spacing: 0.18em; }\n  .gold { color: #e2c78f; }\n  html[lang=en] .h1 { font-size: 70px; letter-spacing: -0.01em; }\n  html[lang=en] .label .en { text-transform: none; letter-spacing: 0; font: 500 26px 'IBM Plex Sans Arabic'; }\n  html[lang=en] .cap { font-size: 38px; }\n  .cap { position: absolute; left: 70px; right: 70px; bottom: 330px; text-align: center; font-weight: 500; font-size: 40px; line-height: 1.55; color: #f3eee4; text-shadow: 0 2px 14px rgba(0,0,0,.85), 0 0 2px rgba(0,0,0,.9); }\n  .cap span { background: rgba(7,14,25,.58); padding: 6px 18px; border-radius: 10px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }\n  .label { position: absolute; transform: translate(-50%, -100%); text-align: center; white-space: nowrap; }\n  .label .ar { font-weight: 600; font-size: 42px; text-shadow: 0 2px 16px rgba(0,0,0,.8); }\n  .label .en { font: 500 22px 'Plex Latin'; letter-spacing: .28em; color: #e2c78f; text-transform: uppercase; margin-top: 4px; }\n  .label .stem { width: 2px; height: 70px; margin: 10px auto 0; background: linear-gradient(#e2c78f, rgba(226,199,143,0)); }\n  .chip { display: inline-block; padding: 14px 30px; margin: 0 8px; border: 1.5px solid rgba(226,199,143,.55); border-radius: 60px; font-weight: 500; font-size: 40px; background: rgba(7,14,25,.35); }\n  .chip.on { background: rgba(201,169,106,.92); color: #0b1626; border-color: #e2c78f; }\n  .check { display: flex; align-items: center; gap: 22px; justify-content: flex-start; font-weight: 500; font-size: 44px; margin: 22px 0; }\n  .check i { width: 54px; height: 54px; border-radius: 50%; border: 2px solid #c9a96a; display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-size: 32px; color: #0b1626; }\n  .check.on i { background: #c9a96a; }\n  .ms { position: absolute; transform: translate(-50%, -50%); text-align: center; font-weight: 600; font-size: 36px; white-space: nowrap; text-shadow: 0 2px 16px rgba(0,0,0,.85); }\n  .ms small { display: block; font: 500 20px 'Plex Latin'; letter-spacing: .3em; color: #e2c78f; }\n  .foot { position: absolute; left: 0; right: 0; bottom: 250px; text-align: center; font-weight: 300; font-size: 26px; color: rgba(243,238,228,.75); }\n",
+  "\n    .r2-h,.r2-h2,.r2-word,.r2-eb,.r2-save .lbl,.r2-note{color:#E6D5B8!important}\n    .r2-h .gg{color:#1F2937!important;background:#E6D5B8;padding:0 .2em;border-radius:.16em}\n    .r2-h .gg .w{color:#1F2937!important}\n    .r2-h .g,.r2-h2 .g,.r2-note .g{color:#1F2937!important;background:#E6D5B8;padding:0 .22em;border-radius:.18em;box-decoration-break:clone;-webkit-box-decoration-break:clone}\n    .r2-rule{background:linear-gradient(90deg,transparent,#E6D5B8,transparent)!important}\n    .r2-steps .s{color:rgba(230,213,184,0.38)!important} .r2-steps .s.on{color:#E6D5B8!important} .r2-steps .d{background:rgba(230,213,184,0.4)!important}\n    .r2-isl{background:rgba(31,41,55,0.84);padding:8px 18px 10px;border-radius:14px} .r2-isl .n{color:#E6D5B8!important;text-shadow:none!important} .r2-isl .c,.r2-isl .ar{text-shadow:none!important} .r2-isl .c{color:rgba(230,213,184,0.85)!important} .r2-isl .ar{color:rgba(230,213,184,0.7)!important} .r2-attr{color:rgba(230,213,184,0.7)!important}\n    .r2-send{color:#E6D5B8!important}\n    .r2-sel .c{background:rgba(230,213,184,0.96)!important;border-color:transparent!important;color:rgba(31,41,55,0.42)!important}\n    .r2-sel .c.on{color:#1F2937!important;box-shadow:0 10px 30px rgba(31,41,55,0.35)!important} .r2-sel .c .num{color:#4B5563!important} .r2-sel .ic2{background:rgba(31,41,55,0.08)!important}\n    .r2-tl .card{background:rgba(230,213,184,0.96)!important;border-color:transparent!important} .r2-tl .hdr{color:rgba(31,41,55,0.55)!important}\n    .r2-tl .rail{background:rgba(31,41,55,0.15)!important} .r2-tl .fill{background:#1F2937!important;box-shadow:none!important}\n    .r2-tl .node{background:#E6D5B8!important;border-color:rgba(31,41,55,0.35)!important} .r2-tl .node.on{background:#1F2937!important;border-color:#1F2937!important;box-shadow:0 0 0 8px rgba(31,41,55,0.12)!important}\n    .r2-tl .tick{background:#1F2937!important} .r2-tl .col .st{color:#4B5563!important} .r2-tl .col .pay{color:#1F2937!important} .r2-tl .col .when{color:rgba(31,41,55,0.7)!important}\n    .r2-dd .row{background:rgba(230,213,184,0.96)!important;border-color:transparent!important} .r2-dd .row.on{box-shadow:0 10px 30px rgba(31,41,55,0.35)!important}\n    .r2-dd .t1{color:#1F2937!important} .r2-dd .t2{color:rgba(31,41,55,0.7)!important} .r2-dd .ic{background:rgba(31,41,55,0.08)!important}\n    .r2-sel svg *,.r2-tl svg *,.r2-dd .ic svg *{stroke:#1F2937!important}\n    .r2-dd .ok svg circle{fill:#1F2937!important;stroke:none!important} .r2-dd .ok svg path{stroke:#E6D5B8!important}\n    .r2-cap .box{background:rgba(230,213,184,0.96)!important;color:rgba(31,41,55,0.62)!important} .r2-cap .cw{color:#1F2937!important}\n    .r2-room{background:#E6D5B8!important;color:#1F2937!important}",
+  "\n.r2 { position:absolute; left:50px; right:130px; text-align:center; pointer-events:none; color:#1F2937; font-family:'Plex Latin'; }\n.r2 .w { display:inline-block; }\n.r2-eb { font:600 25px 'Plex Latin'; letter-spacing:.34em; color:#E6D5B8; text-transform:uppercase; }\n.r2-rule { width:90px; height:2px; margin:16px auto 18px; background:linear-gradient(90deg,transparent,#E6D5B8,transparent); }\n.r2-h { font:700 76px/1.1 'Plex Latin'; letter-spacing:-0.015em; text-shadow:0 6px 36px rgba(0,0,0,.55); }\n.r2-h2 { font:700 62px/1.12 'Plex Latin'; letter-spacing:-0.01em; text-shadow:0 5px 30px rgba(0,0,0,.55); }\n.r2 .g, .r2 .gg { color:#E6D5B8; }\n.r2-word { font:500 116px 'Cormorant'; letter-spacing:.14em; color:#E6D5B8; text-shadow:0 6px 36px rgba(0,0,0,.55); }\n.r2-steps { display:flex; justify-content:center; gap:14px; align-items:center; font:600 24px 'Plex Latin'; letter-spacing:.18em; }\n.r2-steps .s { color:rgba(31,41,55,.35); } .r2-steps .s.on { color:#1F2937; } .r2-steps .d { width:40px; height:2px; background:rgba(230,213,184,.35); }\n.r2-isl { position:absolute; transform:translate(-50%,-100%); text-align:center; white-space:nowrap; }\n.r2-isl .n { font:600 38px 'Plex Latin'; text-shadow:0 2px 14px rgba(0,0,0,.9); }\n.r2-isl .c { font:500 20px 'Plex Latin'; letter-spacing:.14em; color:#E6D5B8; margin-top:4px; text-shadow:0 2px 10px rgba(0,0,0,.9); }\n.r2-isl .ar { font:500 22px 'IBM Plex Sans Arabic'; color:rgba(31,41,55,0.62); margin-top:2px; }\n.r2-north { position:absolute; left:64px; top:560px; }\n.r2-attr { position:absolute; left:50px; right:130px; top:1448px; text-align:center; font:500 19px 'Plex Latin'; color:rgba(31,41,55,.55); letter-spacing:.04em; }\n.r2-room { position:absolute; transform:translate(-50%,-100%); font:600 22px 'Plex Latin'; letter-spacing:.16em; color:#4B5563; background:rgba(230,213,184,.94); padding:7px 14px; border-radius:20px; white-space:nowrap; box-shadow:0 4px 18px rgba(0,0,0,.35); }\n.r2-room:after { content:''; position:absolute; left:50%; bottom:-9px; width:2px; height:9px; background:rgba(230,213,184,.94); }\n.r2-tl { position:absolute; left:50px; width:900px; top:560px; height:520px; }\n.r2-tl .card { position:absolute; inset:0; border-radius:28px; background:rgba(47,53,61,.72); border:1.5px solid rgba(230,213,184,.28); }\n.r2-tl .rail { position:absolute; left:120px; right:120px; top:236px; height:4px; border-radius:2px; background:rgba(31,41,55,.16); }\n.r2-tl .fill { position:absolute; left:0; top:0; bottom:0; border-radius:2px; background:linear-gradient(90deg,#cdbea4,#E6D5B8); box-shadow:0 0 14px rgba(230,213,184,.55); }\n.r2-tl .node { position:absolute; top:220px; width:36px; height:36px; margin-left:-18px; border-radius:50%; border:3px solid rgba(230,213,184,.45); background:#4B5563; }\n.r2-tl .node.on { background:#E6D5B8; border-color:#E6D5B8; box-shadow:0 0 0 8px rgba(230,213,184,.16); }\n.r2-tl .tick { position:absolute; top:230px; width:2px; height:16px; margin-left:-1px; background:#E6D5B8; }\n.r2-tl .col { position:absolute; width:260px; margin-left:-130px; text-align:center; }\n.r2-tl .col .ic { height:58px; }\n.r2-tl .col .st { font:700 31px 'Plex Latin'; letter-spacing:.12em; margin-top:10px; }\n.r2-tl .col .pay { font:700 38px 'Plex Latin'; color:#E6D5B8; }\n.r2-tl .col .when { font:500 26px 'Plex Latin'; color:rgba(31,41,55,0.62); margin-top:6px; }\n.r2-tl .hdr { position:absolute; left:0; right:0; font:600 21px 'Plex Latin'; letter-spacing:.32em; color:rgba(31,41,55,.45); text-align:center; }\n.r2-note { font:500 32px 'Plex Latin'; color:#1F2937; }\n.r2-sel { display:flex; flex-direction:column; gap:18px; align-items:stretch; width:620px; margin:0 auto; }\n.r2-sel .c { display:flex; align-items:center; gap:22px; padding:18px 28px; border-radius:22px; background:rgba(47,53,61,.74); border:1.5px solid rgba(230,213,184,.25); font:700 44px 'Plex Latin'; color:rgba(31,41,55,.4); }\n.r2-sel .c.on { color:#1F2937; border-color:rgba(230,213,184,.8); box-shadow:0 0 24px rgba(230,213,184,.18); }\n.r2-sel .c .num { font:600 24px 'Plex Latin'; color:#E6D5B8; letter-spacing:.2em; width:44px; }\n.r2-sel .c .ic2 { width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(230,213,184,.1); }\n.r2-dd { position:absolute; left:50px; width:900px; }\n.r2-dd .row { display:flex; align-items:center; gap:26px; padding:24px 30px; margin-bottom:20px; border-radius:24px; background:rgba(47,53,61,.74); border:1.5px solid rgba(230,213,184,.26); }\n.r2-dd .row.on { border-color:rgba(230,213,184,.75); }\n.r2-dd .ic { width:76px; height:76px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(230,213,184,.1); flex:none; }\n.r2-dd .tx { flex:1; text-align:left; } .r2-dd .t1 { font:700 44px 'Plex Latin'; } .r2-dd .t2 { font:500 28px 'Plex Latin'; color:rgba(31,41,55,0.62); margin-top:4px; }\n.r2-dd .ok { flex:none; width:40px; height:40px; }\n.r2-save { display:flex; flex-direction:column; align-items:center; gap:12px; } .r2-save .lbl { font:700 62px 'Plex Latin'; letter-spacing:.04em; text-transform:uppercase; }\n.r2-send { display:flex; align-items:center; justify-content:center; gap:14px; font:500 32px 'Plex Latin'; color:rgba(31,41,55,0.62); }\n.r2-cap { position:absolute; left:50px; right:130px; top:1290px; text-align:center; }\n.r2-cap .box { display:inline-block; padding:12px 24px; border-radius:14px; background:rgba(47,53,61,.7); font:600 42px/1.3 'Plex Latin'; color:#1F2937; }\n.r2-cap .cw { color:#E6D5B8; }\n"
+ ],
+ "ui": [
+  {
+   "cls": "",
+   "style": "position: absolute; left: 0px; right: 0px; top: 0px; height: 760px; background: linear-gradient(rgba(47, 53, 61, 0.62), rgba(47, 53, 61, 0));",
+   "html": ""
+  },
+  {
+   "cls": "",
+   "style": "position: absolute; left: 0px; right: 0px; bottom: 0px; height: 640px; background: linear-gradient(rgba(47, 53, 61, 0), rgba(47, 53, 61, 0.55));",
+   "html": ""
+  },
+  {
+   "cls": "layer",
+   "style": "top: 250px;",
+   "html": "<div class=\"eyebrow\">OFF-PLAN · ABU DHABI</div><div class=\"rule\"></div><div class=\"h1\">How do you buy a home<br>before it’s built?</div>"
+  },
+  {
+   "cls": "layer",
+   "style": "top: 250px;",
+   "html": "<div class=\"h1\"><span class=\"latin gold\" style=\"font-size:86px\">OFF-PLAN</span></div><div class=\"rule\"></div><div class=\"h2\">Buying from the plan</div>"
+  },
+  {
+   "cls": "layer",
+   "style": "top: 250px;",
+   "html": "<div class=\"eyebrow\">ABU DHABI</div><div class=\"rule\"></div><div class=\"h2\">Abu Dhabi</div>"
+  },
+  {
+   "cls": "layer",
+   "style": "top: 270px;",
+   "html": "<div class=\"h2\" id=\"path\"><span data-k=\"0\">Project</span> <span class=\"gold\">→</span> <span data-k=\"1\">Unit</span> <span class=\"gold\">→</span> <span data-k=\"2\">Details</span></div>"
+  },
+  {
+   "cls": "layer",
+   "style": "top: 240px;",
+   "html": "<div class=\"eyebrow\">PAYMENT PLAN</div><div class=\"rule\"></div><div class=\"h2\">Payment plans vary<br>from project to project</div>"
+  },
+  {
+   "cls": "layer",
+   "style": "top: 270px;",
+   "html": "<div id=\"chips\" style=\"display: flex; justify-content: center; flex-wrap: nowrap; gap: 0px;\"><span class=\"chip\" data-k=\"0\" style=\"font-size: 36px; padding: 12px 24px; margin: 0px 7px;\">Choice</span><span class=\"chip\" data-k=\"1\" style=\"font-size: 36px; padding: 12px 24px; margin: 0px 7px;\">Staged payments</span><span class=\"chip\" data-k=\"2\" style=\"font-size: 36px; padding: 12px 24px; margin: 0px 7px;\">Future planning</span></div>"
+  },
+  {
+   "cls": "layer",
+   "style": "top: 250px;",
+   "html": "<div class=\"eyebrow\" style=\"color:#e9b86f\">RISKS</div><div class=\"rule\"></div><div class=\"h2\">Risks to know</div>"
+  },
+  {
+   "cls": "layer",
+   "style": "top: 230px;",
+   "html": "<div class=\"eyebrow\">VERIFY</div><div class=\"rule\"></div><div class=\"h1\">Verify before you decide</div>"
+  },
+  {
+   "cls": "layer",
+   "style": "top: 520px;",
+   "html": "<div style=\"display:inline-block;text-align:left\"><div class=\"check\" data-k=\"0\"><i>✓</i><span>Developer</span></div><div class=\"check\" data-k=\"1\"><i>✓</i><span>Project</span></div><div class=\"check\" data-k=\"2\"><i>✓</i><span>Contract</span></div><div class=\"check\" data-k=\"3\"><i>✓</i><span>Payment plan</span></div></div>"
+  },
+  {
+   "cls": "foot",
+   "style": "top: 1000px; bottom: auto; font-size: 27px; line-height: 1.6;",
+   "html": "Check project details and its escrow account<br>with official bodies such as the Abu Dhabi Real Estate Centre (ADREC)"
+  },
+  {
+   "cls": "ms",
+   "style": null,
+   "html": "Handover delay<small>DELAY</small>"
+  },
+  {
+   "cls": "ms",
+   "style": null,
+   "html": "Price changes<small>MARKET</small>"
+  },
+  {
+   "cls": "layer",
+   "style": "top: 330px;",
+   "html": "<div class=\"h2\" style=\"font-weight:600\">\n      <div data-k=\"0\">Know the project.</div><div data-k=\"1\">Understand the details.</div><div data-k=\"2\" class=\"gold\">Choose wisely.</div></div>"
+  },
+  {
+   "cls": "layer",
+   "style": "bottom: 285px;",
+   "html": "<div class=\"rule\" style=\"width:180px\"></div><div style=\"font-weight:500;font-size:44px\">Discover more about Abu Dhabi real estate</div>"
+  },
+  {
+   "cls": "label",
+   "style": null,
+   "html": "<div class=\"ar\">Yas Island</div><div class=\"en\">جزيرة ياس</div><div class=\"stem\"></div>"
+  },
+  {
+   "cls": "label",
+   "style": null,
+   "html": "<div class=\"ar\">Saadiyat Island</div><div class=\"en\">جزيرة السعديات</div><div class=\"stem\"></div>"
+  },
+  {
+   "cls": "label",
+   "style": null,
+   "html": "<div class=\"ar\">Al Reem Island</div><div class=\"en\">جزيرة الريم</div><div class=\"stem\"></div>"
+  },
+  {
+   "cls": "ms",
+   "style": null,
+   "html": "Booking &amp; contract<small>STEP 1</small>"
+  },
+  {
+   "cls": "ms",
+   "style": null,
+   "html": "Construction installments<small>STEP 2</small>"
+  },
+  {
+   "cls": "ms",
+   "style": null,
+   "html": "Handover<small>STEP 3</small>"
+  },
+  {
+   "cls": "ms",
+   "style": "font-size: 32px;",
+   "html": "1 bedroom"
+  },
+  {
+   "cls": "ms",
+   "style": "font-size: 32px;",
+   "html": "2 bedrooms"
+  },
+  {
+   "cls": "ms",
+   "style": "font-size: 32px;",
+   "html": "3 bedrooms"
+  },
+  {
+   "cls": "ms",
+   "style": null,
+   "html": "Floor plan<small>المخطط</small>"
+  },
+  {
+   "cls": "cap",
+   "style": null,
+   "html": "<span></span>"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 300px;",
+   "html": "<div class=\"r2-h\"><span class=\"w\">Buying</span> <span class=\"w\">a</span> <span class=\"w\">home</span><br><span class=\"w\">that</span> <span class=\"gg\"><span class=\"w\">isn't</span> <span class=\"w\">built</span> <span class=\"w\">yet?</span></span></div>"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 270px;",
+   "html": "<div class=\"r2-word\">OFF-PLAN</div>"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 440px;",
+   "html": "<div class=\"r2-steps\"><span class=\"s\">BLUEPRINT</span><span class=\"d\"></span><span class=\"s\">CONSTRUCTION</span><span class=\"d\"></span><span class=\"s\">COMPLETION</span></div>"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 280px;",
+   "html": "<div class=\"r2-eb\">Abu Dhabi</div><div class=\"r2-rule\"></div><div class=\"r2-h2\">Location first</div>"
+  },
+  {
+   "cls": "r2-north",
+   "style": null,
+   "html": "<svg viewBox=\"0 0 40 56\" width=\"34\" height=\"48\"><path d=\"M20 4L32 40L20 32L8 40Z\" fill=\"#E6D5B8\"></path><text x=\"20\" y=\"54\" text-anchor=\"middle\" font-family=\"Plex Latin\" font-weight=\"600\" font-size=\"13\" fill=\"#1F2937\">N</text></svg>"
+  },
+  {
+   "cls": "r2-attr",
+   "style": null,
+   "html": "Map data © OpenStreetMap contributors · Overture Maps (ODbL)"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 270px;",
+   "html": "<div class=\"r2-eb\">Project selection</div><div class=\"r2-rule\"></div><div class=\"r2-h2\">Choose the right</div>"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 470px;",
+   "html": "<div class=\"r2-sel\"><div class=\"c\" data-k=\"0\"><span class=\"num\">01</span><span class=\"ic2\"><svg viewBox=\"0 0 48 48\" width=\"46\" height=\"46\" fill=\"none\" stroke=\"#E6D5B8\" stroke-width=\"2.6\" stroke-linejoin=\"round\"><path d=\"M24 44s13-13.5 13-24a13 13 0 00-26 0c0 10.5 13 24 13 24z\"></path><circle cx=\"24\" cy=\"20\" r=\"5\"></circle></svg></span><span>Location</span></div><div class=\"c\" data-k=\"1\"><span class=\"num\">02</span><span class=\"ic2\"><svg viewBox=\"0 0 48 48\" width=\"50\" height=\"50\" fill=\"none\" stroke=\"#E6D5B8\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M10 42V12l14-6 14 6v30M6 42h36\"></path><path d=\"M17 18h4M27 18h4M17 26h4M27 26h4M21 42v-8h6v8\"></path></svg></span><span>Developer</span></div><div class=\"c\" data-k=\"2\"><span class=\"num\">03</span><span class=\"ic2\"><svg viewBox=\"0 0 48 48\" width=\"54\" height=\"54\" fill=\"none\" stroke=\"#E6D5B8\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><rect x=\"7\" y=\"7\" width=\"34\" height=\"34\" rx=\"2\"></rect><path d=\"M7 22h14v19M21 7v8M29 22h12M29 22v8\"></path></svg></span><span>Unit</span></div></div>"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 270px;",
+   "html": "<div class=\"r2-eb\">Payment plan</div><div class=\"r2-rule\"></div><div class=\"r2-h2\">Payments follow<br><span class=\"g\">construction</span></div>"
+  },
+  {
+   "cls": "r2-tl",
+   "style": "top: 560px;",
+   "html": "<div class=\"card\"></div>\n      <div class=\"hdr\" style=\"top:28px\">CONSTRUCTION</div><div class=\"hdr\" style=\"top:300px\">PAYMENT</div>\n      <div class=\"rail\"><div class=\"fill\"></div></div>\n      <div class=\"node\" data-k=\"0\" style=\"left: 120px;\"></div><div class=\"node\" data-k=\"1\" style=\"left: 450px;\"></div><div class=\"node\" data-k=\"2\" style=\"left: 780px;\"></div>\n      <div class=\"tick\" data-k=\"0\" style=\"left: 180px;\"></div><div class=\"tick\" data-k=\"1\" style=\"left: 290px;\"></div><div class=\"tick\" data-k=\"2\" style=\"left: 430px;\"></div><div class=\"tick\" data-k=\"3\" style=\"left: 540px;\"></div><div class=\"tick\" data-k=\"4\" style=\"left: 650px;\"></div>\n      <div class=\"col top\" data-k=\"0\" style=\"top: 72px; left: 120px;\"><div class=\"ic\"><svg viewBox=\"0 0 48 48\" width=\"54\" height=\"54\" fill=\"none\" stroke=\"#E6D5B8\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><rect x=\"7\" y=\"7\" width=\"34\" height=\"34\" rx=\"2\"></rect><path d=\"M7 22h14v19M21 7v8M29 22h12M29 22v8\"></path></svg></div><div class=\"st\">BOOKING</div></div><div class=\"col bot\" data-k=\"0\" style=\"top: 344px; left: 120px;\"><div class=\"pay\">Deposit</div><div class=\"when\">+ SPA signed</div></div><div class=\"col top\" data-k=\"1\" style=\"top: 72px; left: 450px;\"><div class=\"ic\"><svg viewBox=\"0 0 48 48\" width=\"54\" height=\"54\" fill=\"none\" stroke=\"#E6D5B8\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M12 43V8M8 43h10M12 10h30M12 10l-6 4M36 10v9M33 19h6v5h-6z\"></path><path d=\"M12 16l6-6M12 22l6-6\"></path></svg></div><div class=\"st\">BUILD</div></div><div class=\"col bot\" data-k=\"1\" style=\"top: 344px; left: 450px;\"><div class=\"pay\">Instalments</div><div class=\"when\">linked to milestones</div></div><div class=\"col top\" data-k=\"2\" style=\"top: 72px; left: 780px;\"><div class=\"ic\"><svg viewBox=\"0 0 48 48\" width=\"54\" height=\"54\" fill=\"none\" stroke=\"#E6D5B8\" stroke-width=\"2.5\" stroke-linecap=\"round\"><circle cx=\"15\" cy=\"24\" r=\"7\"></circle><path d=\"M22 24h20M36 24v6M41 24v4\"></path></svg></div><div class=\"st\">HANDOVER</div></div><div class=\"col bot\" data-k=\"2\" style=\"top: 344px; left: 780px;\"><div class=\"pay\">Final payment</div><div class=\"when\">+ keys</div></div>"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 1118px;",
+   "html": "<div class=\"r2-note\">Amounts &amp; timing vary by project — <span class=\"g\">check your SPA</span></div>"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 270px;",
+   "html": "<div class=\"r2-eb\">Due diligence</div><div class=\"r2-rule\"></div><div class=\"r2-h2\">Before you commit</div>"
+  },
+  {
+   "cls": "r2-dd",
+   "style": "top: 540px;",
+   "html": "<div class=\"row\" data-k=\"0\"><div class=\"ic\"><svg viewBox=\"0 0 48 48\" width=\"50\" height=\"50\" fill=\"none\" stroke=\"#E6D5B8\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M10 42V12l14-6 14 6v30M6 42h36\"></path><path d=\"M17 18h4M27 18h4M17 26h4M27 26h4M21 42v-8h6v8\"></path></svg></div><div class=\"tx\"><div class=\"t1\">Developer</div><div class=\"t2\">Registration &amp; track record</div></div><div class=\"ok\"></div></div><div class=\"row\" data-k=\"1\"><div class=\"ic\"><svg viewBox=\"0 0 48 48\" width=\"50\" height=\"50\" fill=\"none\" stroke=\"#E6D5B8\" stroke-width=\"2.5\" stroke-linejoin=\"round\"><path d=\"M24 5l15 6v11c0 10-6.5 17-15 21-8.5-4-15-11-15-21V11z\"></path><rect x=\"17\" y=\"22\" width=\"14\" height=\"11\" rx=\"1.5\"></rect><path d=\"M20 22v-3a4 4 0 018 0v3\"></path></svg></div><div class=\"tx\"><div class=\"t1\">Escrow account</div><div class=\"t2\">The project's dedicated account</div></div><div class=\"ok\"></div></div><div class=\"row\" data-k=\"2\"><div class=\"ic\"><svg viewBox=\"0 0 48 48\" width=\"50\" height=\"50\" fill=\"none\" stroke=\"#E6D5B8\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M12 5h17l9 9v29H12z\"></path><path d=\"M29 5v9h9M18 22h14M18 28h14M18 34h8\"></path></svg></div><div class=\"tx\"><div class=\"t1\">SPA review</div><div class=\"t2\">Sale &amp; Purchase Agreement</div></div><div class=\"ok\"></div></div>"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 1105px;",
+   "html": "<div class=\"r2-note\" style=\"font-size:26px;color:rgba(31,41,55,0.62)\">Check with ADREC — Abu Dhabi Real Estate Centre</div>"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 290px;",
+   "html": "<div class=\"r2-save\"><div class=\"ic\"><svg viewBox=\"0 0 64 80\" width=\"84\" height=\"105\"><path d=\"M10 6H54V74L32 56L10 74Z\" fill=\"none\" stroke=\"#E6D5B8\" stroke-width=\"4.5\" stroke-linejoin=\"round\"></path><path class=\"fill\" d=\"M10 6H54V74L32 56L10 74Z\" fill=\"#E6D5B8\"></path></svg></div><div class=\"lbl\">Save this guide</div></div>"
+  },
+  {
+   "cls": "r2",
+   "style": "top: 530px;",
+   "html": "<div class=\"r2-send\"><svg viewBox=\"0 0 64 64\" width=\"40\" height=\"40\" fill=\"none\" stroke=\"#E6D5B8\" stroke-width=\"4\" stroke-linejoin=\"round\"><path d=\"M6 30L58 8L44 58L30 38Z\"></path><path d=\"M30 38L58 8\"></path></svg><span>Share it with someone buying off-plan</span></div>"
+  },
+  {
+   "cls": "r2-isl",
+   "style": null,
+   "html": "<div class=\"n\">Abu Dhabi Island</div><div class=\"c\">24.47°N · 54.37°E</div><div class=\"ar\">جزيرة أبوظبي</div>"
+  },
+  {
+   "cls": "r2-isl",
+   "style": null,
+   "html": "<div class=\"n\">Al Reem Island</div><div class=\"c\">24.49°N · 54.41°E</div><div class=\"ar\">جزيرة الريم</div>"
+  },
+  {
+   "cls": "r2-isl",
+   "style": null,
+   "html": "<div class=\"n\">Saadiyat Island</div><div class=\"c\">24.55°N · 54.44°E</div><div class=\"ar\">جزيرة السعديات</div>"
+  },
+  {
+   "cls": "r2-isl",
+   "style": null,
+   "html": "<div class=\"n\">Yas Island</div><div class=\"c\">24.49°N · 54.61°E</div><div class=\"ar\">جزيرة ياس</div>"
+  },
+  {
+   "cls": "r2-room",
+   "style": null,
+   "html": "LIVING"
+  },
+  {
+   "cls": "r2-room",
+   "style": null,
+   "html": "KITCHEN"
+  },
+  {
+   "cls": "r2-room",
+   "style": null,
+   "html": "BEDROOM"
+  },
+  {
+   "cls": "r2-room",
+   "style": null,
+   "html": "BATH"
+  },
+  {
+   "cls": "r2-room",
+   "style": null,
+   "html": "BALCONY"
+  },
+  {
+   "cls": "r2-cap",
+   "style": null,
+   "html": "<span class=\"box\"></span>"
+  }
+ ],
+ "words": [
+  {
+   "w": "Buying",
+   "a": 0.15,
+   "b": 0.6013018867924528,
+   "line": "f1"
+  },
+  {
+   "w": "a",
+   "a": 0.6013018867924528,
+   "b": 0.7302452830188679,
+   "line": "f1"
+  },
+  {
+   "w": "home",
+   "a": 0.7302452830188679,
+   "b": 1.0526037735849056,
+   "line": "f1"
+  },
+  {
+   "w": "that",
+   "a": 1.0526037735849056,
+   "b": 1.3749622641509431,
+   "line": "f1"
+  },
+  {
+   "w": "isn't",
+   "a": 1.3749622641509431,
+   "b": 1.7617924528301885,
+   "line": "f1"
+  },
+  {
+   "w": "built",
+   "a": 1.7617924528301885,
+   "b": 2.1486226415094336,
+   "line": "f1"
+  },
+  {
+   "w": "yet?",
+   "a": 2.1486226415094336,
+   "b": 2.4709811320754715,
+   "line": "f1"
+  },
+  {
+   "w": "That's",
+   "a": 2.4709811320754715,
+   "b": 2.9222830188679243,
+   "line": "f1"
+  },
+  {
+   "w": "off-plan.",
+   "a": 2.9222830188679243,
+   "b": 3.5669999999999997,
+   "line": "f1"
+  },
+  {
+   "w": "You're",
+   "a": 4.35,
+   "b": 4.731783783783784,
+   "line": "f2"
+  },
+  {
+   "w": "purchasing",
+   "a": 4.731783783783784,
+   "b": 5.331729729729729,
+   "line": "f2"
+  },
+  {
+   "w": "a",
+   "a": 5.331729729729729,
+   "b": 5.44081081081081,
+   "line": "f2"
+  },
+  {
+   "w": "property",
+   "a": 5.44081081081081,
+   "b": 5.931675675675676,
+   "line": "f2"
+  },
+  {
+   "w": "directly",
+   "a": 5.931675675675676,
+   "b": 6.42254054054054,
+   "line": "f2"
+  },
+  {
+   "w": "from",
+   "a": 6.42254054054054,
+   "b": 6.695243243243242,
+   "line": "f2"
+  },
+  {
+   "w": "a",
+   "a": 6.695243243243242,
+   "b": 6.804324324324323,
+   "line": "f2"
+  },
+  {
+   "w": "developer",
+   "a": 6.804324324324323,
+   "b": 7.349729729729729,
+   "line": "f2"
+  },
+  {
+   "w": "before",
+   "a": 7.349729729729729,
+   "b": 7.731513513513512,
+   "line": "f2"
+  },
+  {
+   "w": "completion.",
+   "a": 7.731513513513512,
+   "b": 8.386,
+   "line": "f2"
+  },
+  {
+   "w": "Start",
+   "a": 13.4,
+   "b": 13.771423076923078,
+   "line": "f3"
+  },
+  {
+   "w": "with",
+   "a": 13.771423076923078,
+   "b": 14.080942307692307,
+   "line": "f3"
+  },
+  {
+   "w": "the",
+   "a": 14.080942307692307,
+   "b": 14.328557692307692,
+   "line": "f3"
+  },
+  {
+   "w": "right",
+   "a": 14.328557692307692,
+   "b": 14.69998076923077,
+   "line": "f3"
+  },
+  {
+   "w": "location,",
+   "a": 14.69998076923077,
+   "b": 15.31901923076923,
+   "line": "f3"
+  },
+  {
+   "w": "developer,",
+   "a": 15.31901923076923,
+   "b": 15.99996153846154,
+   "line": "f3"
+  },
+  {
+   "w": "and",
+   "a": 15.99996153846154,
+   "b": 16.247576923076924,
+   "line": "f3"
+  },
+  {
+   "w": "unit.",
+   "a": 16.247576923076924,
+   "b": 16.619,
+   "line": "f3"
+  },
+  {
+   "w": "Understand",
+   "a": 20.5,
+   "b": 21.095239436619718,
+   "line": "f4"
+  },
+  {
+   "w": "the",
+   "a": 21.095239436619718,
+   "b": 21.31169014084507,
+   "line": "f4"
+  },
+  {
+   "w": "payment",
+   "a": 21.31169014084507,
+   "b": 21.744591549295773,
+   "line": "f4"
+  },
+  {
+   "w": "plan",
+   "a": 21.744591549295773,
+   "b": 22.015154929577463,
+   "line": "f4"
+  },
+  {
+   "w": "—",
+   "a": 22.015154929577463,
+   "b": 22.123380281690142,
+   "line": "f4"
+  },
+  {
+   "w": "but",
+   "a": 22.123380281690142,
+   "b": 22.339830985915494,
+   "line": "f4"
+  },
+  {
+   "w": "never",
+   "a": 22.339830985915494,
+   "b": 22.664507042253522,
+   "line": "f4"
+  },
+  {
+   "w": "buy",
+   "a": 22.664507042253522,
+   "b": 22.880957746478874,
+   "line": "f4"
+  },
+  {
+   "w": "on",
+   "a": 22.880957746478874,
+   "b": 23.043295774647888,
+   "line": "f4"
+  },
+  {
+   "w": "the",
+   "a": 23.043295774647888,
+   "b": 23.25974647887324,
+   "line": "f4"
+  },
+  {
+   "w": "payment",
+   "a": 23.25974647887324,
+   "b": 23.692647887323943,
+   "line": "f4"
+  },
+  {
+   "w": "plan",
+   "a": 23.692647887323943,
+   "b": 23.963211267605633,
+   "line": "f4"
+  },
+  {
+   "w": "alone.",
+   "a": 23.963211267605633,
+   "b": 24.342,
+   "line": "f4"
+  },
+  {
+   "w": "Before",
+   "a": 26.3,
+   "b": 26.71593243243243,
+   "line": "f5"
+  },
+  {
+   "w": "committing,",
+   "a": 26.71593243243243,
+   "b": 27.42895945945946,
+   "line": "f5"
+  },
+  {
+   "w": "verify",
+   "a": 27.42895945945946,
+   "b": 27.844891891891894,
+   "line": "f5"
+  },
+  {
+   "w": "the",
+   "a": 27.844891891891894,
+   "b": 28.08256756756757,
+   "line": "f5"
+  },
+  {
+   "w": "developer,",
+   "a": 28.08256756756757,
+   "b": 28.736175675675675,
+   "line": "f5"
+  },
+  {
+   "w": "the",
+   "a": 28.736175675675675,
+   "b": 28.973851351351353,
+   "line": "f5"
+  },
+  {
+   "w": "escrow",
+   "a": 28.973851351351353,
+   "b": 29.389783783783784,
+   "line": "f5"
+  },
+  {
+   "w": "account,",
+   "a": 29.389783783783784,
+   "b": 29.924554054054056,
+   "line": "f5"
+  },
+  {
+   "w": "and",
+   "a": 29.924554054054056,
+   "b": 30.16222972972973,
+   "line": "f5"
+  },
+  {
+   "w": "the",
+   "a": 30.16222972972973,
+   "b": 30.399905405405406,
+   "line": "f5"
+  },
+  {
+   "w": "SPA.",
+   "a": 30.399905405405406,
+   "b": 30.697000000000003,
+   "line": "f5"
+  },
+  {
+   "w": "Save",
+   "a": 31.35,
+   "b": 31.645185185185188,
+   "line": "f6"
+  },
+  {
+   "w": "this",
+   "a": 31.645185185185188,
+   "b": 31.94037037037037,
+   "line": "f6"
+  },
+  {
+   "w": "guide",
+   "a": 31.94037037037037,
+   "b": 32.29459259259259,
+   "line": "f6"
+  },
+  {
+   "w": "before",
+   "a": 32.29459259259259,
+   "b": 32.707851851851856,
+   "line": "f6"
+  },
+  {
+   "w": "your",
+   "a": 32.707851851851856,
+   "b": 33.00303703703704,
+   "line": "f6"
+  },
+  {
+   "w": "next",
+   "a": 33.00303703703704,
+   "b": 33.29822222222222,
+   "line": "f6"
+  },
+  {
+   "w": "property",
+   "a": 33.29822222222222,
+   "b": 33.82955555555556,
+   "line": "f6"
+  },
+  {
+   "w": "investment.",
+   "a": 33.82955555555556,
+   "b": 34.538000000000004,
+   "line": "f6"
+  }
+ ]
+}

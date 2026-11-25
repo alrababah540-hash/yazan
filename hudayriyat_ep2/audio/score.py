@@ -62,7 +62,7 @@ def riser(d):
     n = int(d * SR); tt = ta(n); return filt(rng.standard_normal(n), 600, 9000, 1) * (tt / d) ** 2 * 0.5 + np.sin(2 * np.pi * np.cumsum(220 + 1200 * (tt / d) ** 2) / SR) * (tt / d) ** 3 * 0.25
 place(sfx, whoosh(1.0, 3500), -0.1, gain=0.25); place(sfx, impact(0.9), 0.3, gain=0.4)            # hook: zoom + hit on the number
 for c in (5.0, 9.0, 14.0, 18.0): place(sfx, whoosh(0.5, 6000), c - 0.35, gain=0.22); place(sfx, impact(0.6), c, gain=0.3)
-for c in (2.7, 6.0, 7.0, 8.0, 11.2, 12.65, 16.0): place(sfx, whoosh(0.35, 7000), c - 0.2, gain=0.14)
+for c in (2.6, 5.0, 6.45, 7.85, 9.25, 10.75, 12.25, 13.9, 18.0): place(sfx, whoosh(0.35, 7000), c - 0.05, gain=0.12); place(sfx, tick(2600), c + 0.12, gain=0.08)   # each floating window opens
 for i, c in enumerate((5.05, 5.3, 5.55)): place(sfx, tick(2200 + 150 * i), c, pan=-0.3 + 0.3 * i, gain=0.1)
 place(sfx, impact(0.5), 9.3, gain=0.22); place(sfx, impact(0.5), 11.3, gain=0.22); place(sfx, riser(0.9), 13.1, gain=0.18); place(sfx, riser(0.9), 17.1, gain=0.18)
 sfx = reverb(sfx, 1.2, 0.16, 5)

@@ -17,3 +17,12 @@ frames_reel2/
 audio/build_reel2/*.wav
 frames_reel3/
 audio/build_reel3/*.wav
+ad27/frames_*/
+ad27/audio/build/*.wav
+tools/tts/sherpa-onnx-*
+geo_raw/
+ad27/Abu_Dhabi_Video/_prepared/
+yas_ep1/assets/_prepared/
+yas_ep1/frames_*/
+hudayriyat_ep2/assets/_prepared/
+hudayriyat_ep2/frames_*/

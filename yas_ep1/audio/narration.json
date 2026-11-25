@@ -1,0 +1,11 @@
+{
+ "voice": "Kokoro-82M v0.19 (Apache-2.0), bm_george (sid 9) — confident British male documentary read; replace with client ElevenLabs file if supplied",
+ "sid": 9,
+ "lines": [
+  {"id": "y1", "start": 0.25, "window": [0.2, 2.95], "text": "Forty-four million visits. One island.", "tts": "Forty-four million visits. One island.", "speed": 1.0},
+  {"id": "y2", "start": 3.15, "window": [3.1, 6.95], "text": "Yas Island has become a major entertainment destination.", "tts": "Yas Island has become a major entertainment destination.", "speed": 1.0},
+  {"id": "y3", "start": 7.15, "window": [7.1, 11.95], "text": "With eighty-four percent hotel occupancy, demand is already established.", "tts": "With eighty-four percent hotel occupancy, demand is already established.", "speed": 1.0},
+  {"id": "y4", "start": 12.15, "window": [12.1, 15.95], "text": "And major developments could drive its next chapter.", "tts": "And major developments could drive its next chapter.", "speed": 1.0},
+  {"id": "y5", "start": 16.2, "window": [16.15, 19.6], "text": "The real opportunity is understanding where it's heading.", "tts": "The real opportunity is understanding where it's heading.", "speed": 1.0}
+ ]
+}

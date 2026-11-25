@@ -1,0 +1,13 @@
+{
+ "source": "audio/vo_user/elevenlabs_yazan_yas_ep01.mp3",
+ "note": "Client ElevenLabs recording (19.0 s), cut only at its own pauses and placed on the scenes; no time-stretch or pitch change.",
+ "clips": [
+  {"id": "u1", "text": "Forty-four million visits.", "src": [0.00, 1.97], "at": 0.00},
+  {"id": "u2", "text": "One island.", "src": [2.22, 3.14], "at": 2.10},
+  {"id": "u3", "text": "Yas Island has become a major entertainment destination.", "src": [3.60, 6.95], "at": 3.15},
+  {"id": "u4", "text": "With eighty-four percent hotel occupancy,", "src": [7.49, 9.86], "at": 7.15},
+  {"id": "u5", "text": "demand is already established.", "src": [10.18, 12.15], "at": 9.84},
+  {"id": "u6", "text": "And major developments could drive its next chapter.", "src": [12.55, 15.34], "at": 12.15},
+  {"id": "u7", "text": "The real opportunity is understanding where it's heading.", "src": [15.84, 18.99], "at": 16.20}
+ ]
+}

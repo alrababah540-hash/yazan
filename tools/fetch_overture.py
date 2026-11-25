@@ -4,7 +4,7 @@ import sys, json, pyarrow.dataset as ds, pyarrow.compute as pc, s3fs
 REL = sys.argv[1] if len(sys.argv) > 1 else '2026-11-18.0'
 TYPE = sys.argv[2] if len(sys.argv) > 2 else 'land'
 OUT = sys.argv[3]
-X0, Y0, X1, Y1 = 54.25, 24.33, 54.72, 24.64
+X0, Y0, X1, Y1 = 54.05, 24.18, 54.90, 24.76
 fs = s3fs.S3FileSystem(anon=True, client_kwargs={'region_name': 'us-west-2'})
 d = ds.dataset(f'overturemaps-us-west-2/release/{REL}/theme=base/type={TYPE}', filesystem=fs, format='parquet')
 f = (pc.field('bbox', 'xmin') < X1) & (pc.field('bbox', 'xmax') > X0) & (pc.field('bbox', 'ymin') < Y1) & (pc.field('bbox', 'ymax') > Y0)

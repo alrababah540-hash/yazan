@@ -1,0 +1,12 @@
+{
+ "source": "audio/vo_user/elevenlabs_yazan_hudayriyat_ep02.mp3",
+ "note": "Client ElevenLabs recording (22.05 s), cut only at its own pauses; scene boundaries re-timed to the voice (5, 9, 14, 18 s). No time-stretch or pitch change.",
+ "clips": [
+  {"id": "u1", "text": "More than fifty-one million square metres.", "src": [0.00, 2.75], "at": 0.00},
+  {"id": "u2", "text": "Abu Dhabi's next major destination.", "src": [3.04, 5.20], "at": 2.85},
+  {"id": "u3", "text": "An island designed around lifestyle, sports and the waterfront.", "src": [5.67, 9.67], "at": 5.15},
+  {"id": "u4", "text": "With extensive coastline, beaches and ambitious residential communities.", "src": [10.04, 14.56], "at": 9.30},
+  {"id": "u5", "text": "Creating new opportunities for long-term property investors.", "src": [14.90, 18.43], "at": 14.15},
+  {"id": "u6", "text": "The next frontier starts with understanding the location.", "src": [18.83, 21.82], "at": 18.40}
+ ]
+}

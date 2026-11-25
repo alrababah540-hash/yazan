@@ -1,0 +1,72 @@
+{
+ "voice": "Kokoro-82M v0.19 (Apache-2.0), bm_george \u2014 placeholder until the client's ElevenLabs recording arrives",
+ "sid": 9,
+ "lines": [
+  {
+   "id": "h1a",
+   "start": 0.05,
+   "window": [
+    0.05,
+    2.3
+   ],
+   "text": "Over fifty-one million square metres.",
+   "tts": "Over fifty-one million square metres.",
+   "speed": 1.0
+  },
+  {
+   "id": "h1b",
+   "start": 2.3,
+   "window": [
+    2.3,
+    4.2
+   ],
+   "text": "Abu Dhabi's next major destination.",
+   "tts": "Abu Dhabi's next major destination.",
+   "speed": 1.0
+  },
+  {
+   "id": "h2",
+   "start": 4.7,
+   "window": [
+    4.2,
+    8.0
+   ],
+   "text": "An island designed around lifestyle, sports and the waterfront.",
+   "tts": "An island designed around lifestyle, sports, and the waterfront.",
+   "speed": 1.0
+  },
+  {
+   "id": "h3",
+   "start": 8.55,
+   "window": [
+    8.1,
+    12.95
+   ],
+   "text": "With extensive coastline, beaches and ambitious residential communities.",
+   "tts": "With extensive coastline, beaches, and ambitious residential communities.",
+   "speed": 1.0
+  },
+  {
+   "id": "h4",
+   "start": 13.15,
+   "window": [
+    13.1,
+    17.95
+   ],
+   "text": "Creating new opportunities for long-term property investors.",
+   "tts": "Creating new opportunities for long-term property investors.",
+   "speed": 1.0
+  },
+  {
+   "id": "h5",
+   "start": 18.2,
+   "window": [
+    18.15,
+    21.6
+   ],
+   "text": "The next frontier starts with understanding the location.",
+   "tts": "The next frontier starts with understanding the location.",
+   "speed": 1.0
+  }
+ ]
+}

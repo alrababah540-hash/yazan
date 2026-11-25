@@ -1,0 +1,24 @@
+{
+ "source": "audio/vo_user/elevenlabs_yazan_v4.mp3",
+ "note": "Client-supplied ElevenLabs VO (26.51 s). Cut only at its own natural pauses and re-spaced onto the picture; no time-stretch, no pitch change.",
+ "clips": [
+  {"id": "u01", "text": "Seven emirates.",                   "src": [0.00, 1.21],  "at": 0.30},
+  {"id": "u02", "text": "One nation.",                       "src": [1.47, 2.34],  "at": 1.76},
+  {"id": "u03", "text": "And at its heart,",                 "src": [2.81, 3.92],  "at": 4.15},
+  {"id": "u04", "text": "the capital,",                      "src": [4.31, 4.97],  "at": 5.65},
+  {"id": "u05", "text": "Abu Dhabi.",                        "src": [5.39, 5.99],  "at": 6.73},
+  {"id": "u06", "text": "Yas Island.",                       "src": [6.37, 7.44],  "at": 8.05,  "island": "yas"},
+  {"id": "u07", "text": "Al Fahid Island.",                  "src": [7.84, 8.93],  "at": 9.20,  "island": "fahid"},
+  {"id": "u08", "text": "Saadiyat Island.",                  "src": [9.26, 10.49], "at": 10.35, "island": "saadiyat"},
+  {"id": "u09", "text": "Al Reem.",                          "src": [10.85, 11.47],"at": 11.65, "island": "reem"},
+  {"id": "u10", "text": "Al Maryah.",                        "src": [11.84, 12.57],"at": 12.40, "island": "maryah"},
+  {"id": "u11", "text": "Hudayriyat.",                       "src": [12.88, 13.95],"at": 13.25, "island": "hudayriyat"},
+  {"id": "u12", "text": "Lulu Island.",                      "src": [14.27, 15.22],"at": 14.45, "island": "lulu"},
+  {"id": "u13", "text": "2025…",                             "src": [15.65, 16.85],"at": 16.15},
+  {"id": "u14", "text": "a record year.",                    "src": [17.15, 18.17],"at": 17.55},
+  {"id": "u15", "text": "Then the first half of 2026…",      "src": [18.57, 21.32],"at": 18.80},
+  {"id": "u16", "text": "more than doubled.",                "src": [21.55, 22.74],"at": 21.70},
+  {"id": "u17", "text": "Abu Dhabi.",                        "src": [23.18, 23.81],"at": 23.30},
+  {"id": "u18", "text": "An evolving investment destination.","src": [24.17, 26.33],"at": 24.29}
+ ]
+}

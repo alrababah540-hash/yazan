@@ -1,0 +1,59 @@
+{
+ "_note": "Per-image framing for the slow push-in: fx/fy = where the move drifts toward (-1 left/top .. +1 right/bottom), z1 = end zoom.",
+ "09_Lulu_Island/01_lulu_client_aerial.jpg": {
+  "fx": 1.0,
+  "fy": 0.4,
+  "z1": 1.16,
+  "subject": "Lulu Island is the long sandy island on the right, parallel to the Corniche",
+  "kind": "photo"
+ },
+ "06_Al_Reem/01_reem_client_gate_towers.webp": {
+  "fx": -0.6,
+  "fy": -0.3,
+  "z1": 1.12,
+  "subject": "Gate Towers (sky-bridge) and Sky Tower, Shams Abu Dhabi, Al Reem Island",
+  "kind": "photo"
+ },
+ "07_Al_Maryah/01_maryah_client_adgm.jpg": {
+  "fx": 0.0,
+  "fy": -0.35,
+  "z1": 1.12,
+  "subject": "ADGM Square (Abu Dhabi Global Market), Four Seasons and Rosewood towers, Al Maryah Island",
+  "kind": "photo"
+ },
+ "08_Hudayriyat/01_hudayriyat_client_render.jpg": {
+  "fx": 0.3,
+  "fy": 0.2,
+  "z1": 1.12,
+  "subject": "Waterfront villa community render (client-identified as Hudayriyat; no unique landmark to verify independently)",
+  "kind": "render"
+ },
+ "02_Abu_Dhabi_Maps/01_skyline_client_corniche_sunset.jpg": {
+  "fx": 0.25,
+  "fy": -0.1,
+  "z1": 1.08,
+  "kind": "photo",
+  "subject": "Abu Dhabi Corniche skyline at sunset"
+ },
+ "03_Yas_Island/01_yas_client.jpg": {
+  "fx": -0.4,
+  "fy": 0.1,
+  "z1": 1.12,
+  "kind": "render",
+  "subject": "Ferrari World and Yas Marina Circuit grandstands, Yas Island"
+ },
+ "04_Al_Fahid/01_fahid_client.jpg": {
+  "fx": 0.2,
+  "fy": 0.2,
+  "z1": 1.12,
+  "kind": "render",
+  "subject": "Fahid Island masterplan render: mangroves, shoreline villas, bridge"
+ },
+ "05_Saadiyat/01_saadiyat_client.jpg": {
+  "fx": -0.5,
+  "fy": 0.0,
+  "z1": 1.12,
+  "kind": "render",
+  "subject": "Saadiyat Cultural District: Louvre Abu Dhabi dome, Guggenheim form, waterfront residences"
+ }
+}

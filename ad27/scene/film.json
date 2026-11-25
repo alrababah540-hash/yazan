@@ -1,0 +1,122 @@
+{
+ "duration": 27.0,
+ "fps": 30,
+ "islands": [
+  {
+   "key": "yas",
+   "t": 8.0,
+   "name": "Yas Island",
+   "tag": "Entertainment \u00b7 Tourism \u00b7 Residential communities",
+   "fact": "Disneyland Abu Dhabi announced for Yas Island",
+   "factSrc": "Disney & Miral, May 2025 \u00b7 opening date not yet confirmed"
+  },
+  {
+   "key": "fahid",
+   "t": 9.15,
+   "name": "Al Fahid Island",
+   "tag": "Waterfront residential \u00b7 Future investment potential",
+   "fact": "AED 40 bn masterplan unveiled by Aldar",
+   "factSrc": "Aldar / WAM, 2025"
+  },
+  {
+   "key": "saadiyat",
+   "t": 10.3,
+   "name": "Saadiyat Island",
+   "tag": "Luxury beachfront \u00b7 Culture \u00b7 Premium residential",
+   "fact": "Home of the Saadiyat Cultural District",
+   "factSrc": "Louvre Abu Dhabi opened here in 2017"
+  },
+  {
+   "key": "reem",
+   "t": 11.6,
+   "name": "Al Reem Island",
+   "tag": "High-rise residential \u00b7 Urban lifestyle",
+   "fact": "Dense high-rise waterfront district",
+   "factSrc": "Tower heights: Overture / OSM building data"
+  },
+  {
+   "key": "maryah",
+   "t": 12.35,
+   "name": "Al Maryah Island",
+   "tag": "Financial district \u00b7 Business \u00b7 Luxury lifestyle",
+   "fact": "Home of Abu Dhabi Global Market (ADGM)",
+   "factSrc": "ADGM, international financial centre"
+  },
+  {
+   "key": "hudayriyat",
+   "t": 13.2,
+   "name": "Hudayriyat Island",
+   "tag": "Waterfront living \u00b7 Villas \u00b7 Sports \u00b7 Future development",
+   "fact": "Sports, leisure and waterfront villa district",
+   "factSrc": "Modon Properties master developer"
+  },
+  {
+   "key": "lulu",
+   "t": 14.4,
+   "name": "Lulu Island",
+   "tag": "Waterfront location \u00b7 Long-term development potential",
+   "fact": "Development plan confirmed",
+   "factSrc": "The National, 25 Aug 2026"
+  }
+ ],
+ "stats": {
+  "hero": [
+   {
+    "t": 16.15,
+    "kicker": "TOTAL TRANSACTION VALUE",
+    "value": 142,
+    "decimals": 0,
+    "display": "142",
+    "period": "Full year 2025 \u00b7 record",
+    "badge": "+44% vs 2024",
+    "src": "ADREC 2025 performance release \u00b7 20 Feb 2026"
+   },
+   {
+    "t": 18.8,
+    "kicker": "TOTAL TRANSACTION VALUE",
+    "value": 117,
+    "decimals": 0,
+    "display": "117",
+    "period": "H1 2026 (January\u2013June)",
+    "badge": "+112% vs H1 2025",
+    "src": "ADREC H1 2026 release \u00b7 17 Jul 2026"
+   },
+   {
+    "t": 20.2,
+    "kicker": "FOREIGN DIRECT INVESTMENT",
+    "value": 13.8,
+    "decimals": 1,
+    "display": "13.8",
+    "period": "H1 2026 (January\u2013June)",
+    "badge": "+309% \u00b7 above all of 2025",
+    "src": "ADREC H1 2026 release \u00b7 17 Jul 2026"
+   }
+  ],
+  "secondary": {
+   "t": 21.1,
+   "title": "ALSO IN THE DATA",
+   "items": [
+    {
+     "value": "42,814",
+     "label": "Transactions in 2025 (+52%)",
+     "src": "ADREC \u00b7 FY 2025"
+    },
+    {
+     "value": "+11%",
+     "label": "Apartment prices \u00b7 Q3 2026 vs Q3 2025",
+     "src": "Cavendish Maxwell"
+    },
+    {
+     "value": "+8.9%",
+     "label": "Villa prices \u00b7 Q3 2026 vs Q3 2025",
+     "src": "Cavendish Maxwell"
+    },
+    {
+     "value": "26.6 m",
+     "label": "Visitors in 2025 \u00b7 record",
+     "src": "DCT Abu Dhabi"
+    }
+   ]
+  }
+ }
+}

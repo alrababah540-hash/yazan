@@ -18,6 +18,7 @@ const P = '/hudayriyat_ep2/assets/_prepared/';
 const SRC = {
   master: '05_Masterplan/01_hudayriyat_masterplan_aerial_render.jpg', beach: '02_Beach/01_beach_loungers.jpg', cycle: '04_Cycling_Sports/01_cycling_coastal_track.jpg',
   nawayef: '07_Villas/01_nawayef_heights_modon_render.jpg', villa: '07_Villas/02_villa_twilight_render.jpg', sunset: '09_Sunset_Aerial/01_sunset_mangrove_cycling_track.jpg',
+  family: '02_Beach/02_family_beach_pier.jpg', surf: '03_Surf_Abu_Dhabi/01_surf_abu_dhabi_aerial.jpg', velo: '04_Cycling_Sports/02_velodrome_concept_render.jpg', marina: '08_Waterfront_Marina/01_hudayriyat_marina_sign.jpg',
 };
 const IMG = {}, BLUR = {};
 await Promise.all(Object.entries(SRC).map(([k, s]) => new Promise((res, rej) => { const im = new Image(); im.onload = () => { IMG[k] = im; res(); }; im.onerror = () => rej(new Error('missing ' + s)); im.src = P + s; })));
@@ -26,7 +27,7 @@ for (const k of ['master']) {
   x.filter = 'blur(12px) brightness(0.42) saturate(0.9)'; const im = IMG[k], s = Math.max(c.width / im.width, c.height / im.height) * 1.15;
   x.drawImage(im, (c.width - im.width * s) / 2, (c.height - im.height * s) / 2, im.width * s, im.height * s); BLUR[k] = c;
 }
-const ORIG = { master: [1475, 831], beach: [1936, 1286], cycle: [1903, 1288], nawayef: [2215, 1230], villa: [2215, 1241], sunset: [1277, 1279] };
+const ORIG = { master: [1475, 831], beach: [1936, 1286], cycle: [1903, 1288], nawayef: [2215, 1230], villa: [2215, 1241], sunset: [1277, 1279], family: [2223, 1262], surf: [1925, 1281], velo: [1284, 1307], marina: [1930, 1283] };
 const sc = (k) => IMG[k].width / ORIG[k][0];
 
 // Full-bleed shot: cover the frame, keep focus point fx,fy (original px) near frame centre, zoom z, shift toward f1 over the shot
@@ -83,7 +84,7 @@ const HUD = GEO.islands.hudayriyat; let hb = [1e9, 1e9, -1e9, -1e9];
 for (const r of HUD.rings) for (const p of r) { hb = [Math.min(hb[0], p[0]), Math.min(hb[1], p[1]), Math.max(hb[2], p[0]), Math.max(hb[3], p[1])]; }
 const hc = [(hb[0] + hb[2]) / 2, (hb[1] + hb[3]) / 2];
 function mapShot(t) {
-  const u = clamp((t + 0.35) / 2.55), c0 = geo(54.42, 24.47);
+  const u = clamp((t + 0.35) / 3.0), c0 = geo(54.42, 24.47);
   const cx = lerp(c0[0], hc[0], eio(u)), cy = lerp(c0[1], hc[1] + 2500, eio(u)), w = Math.exp(lerp(Math.log(33e3), Math.log(19e3), eio(u))), s = W / w;
   const g = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, H * 0.7); g.addColorStop(0, C.navy2); g.addColorStop(1, C.navy); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
   const pr = (p) => [W / 2 + (p[0] - cx) * s, H / 2 - (p[1] - cy) * s];
@@ -97,13 +98,14 @@ function mapShot(t) {
 
 // ---------------------------------------------------------------- timeline
 const SHOTS = [
-  // 2 — lifestyle
-  { a: 4.0, b: 5.45, k: 'beach', o: { f0: [1180, 760], f1: [1080, 720], z0: 1.04, z1: 1.12 }, label: 'HUDAYRIYAT BEACH' },
-  { a: 5.35, b: 6.8, k: 'cycle', o: { f0: [960, 700], f1: [930, 560], z0: 1.06, z1: 1.15 }, label: 'CYCLING · 220 KM NETWORK PLANNED' },
-  { a: 6.7, b: 8.05, k: 'sunset', o: { f0: [560, 900], f1: [640, 860], z0: 1.35, z1: 1.45 }, label: 'WATERFRONT LIFESTYLE' },
+  // 2 — lifestyle (1 s each, on the beat)
+  { a: 5.0, b: 6.06, k: 'family', o: { f0: [1150, 760], f1: [1130, 740], z0: 1.04, z1: 1.1 }, label: 'HUDAYRIYAT BEACH' },
+  { a: 6.0, b: 7.06, k: 'surf', o: { f0: [900, 620], f1: [960, 600], z0: 1.05, z1: 1.12 }, label: 'SURF ABU DHABI' },
+  { a: 7.0, b: 8.06, k: 'cycle', o: { f0: [960, 700], f1: [930, 600], z0: 1.06, z1: 1.14 }, label: 'CYCLING · 220 KM NETWORK PLANNED' },
+  { a: 8.0, b: 9.06, k: 'velo', o: { f0: [640, 620], f1: [640, 600], z0: 1.04, z1: 1.1 }, label: 'PLANNED VELODROME', sub: 'Concept render' },
   // 4 — investment (official renders)
-  { a: 13.0, b: 15.65, k: 'nawayef', o: { f0: [1150, 640], f1: [1210, 640], z0: 1.05, z1: 1.14 }, label: 'NAWAYEF HEIGHTS · MODON', sub: 'Development render' },
-  { a: 15.55, b: 18.05, k: 'villa', o: { f0: [1000, 640], f1: [1080, 680], z0: 1.04, z1: 1.13 }, label: 'HUDAYRIYAT VILLAS', sub: 'Development render' },
+  { a: 14.0, b: 16.1, k: 'nawayef', o: { f0: [1150, 640], f1: [1210, 640], z0: 1.05, z1: 1.14 }, label: 'NAWAYEF HEIGHTS · MODON', sub: 'Development render' },
+  { a: 16.0, b: 18.05, k: 'villa', o: { f0: [1000, 640], f1: [1080, 680], z0: 1.04, z1: 1.13 }, label: 'HUDAYRIYAT VILLAS', sub: 'Development render' },
 ];
 function masterPanel(t, a, crop) {  // official masterplan render framed full-width; crop = [cx, cy, zoom] in original px
   ctx.save(); ctx.globalAlpha = a; ctx.drawImage(BLUR.master, 0, 0, W, H);
@@ -124,50 +126,53 @@ let t = 0;
 function renderAt(tt) {
   t = tt; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.filter = 'none'; ctx.setLineDash([]); ctx.shadowBlur = 0;
   ctx.fillStyle = C.navy; ctx.fillRect(0, 0, W, H);
-  if (t < 4.0) {
+  if (t < 5.0) {
     // ---- 1. HOOK: real OSM outline of Hudayriyat draws on, then the official masterplan
-    if (t < 2.4) mapShot(t);
-    const ma = ss(2.1, 2.45, t); if (ma > 0) masterPanel(t, ma, [lerp(760, 820, eio(clamp((t - 2.1) / 1.9))), 520, lerp(1.0, 1.12, eio(clamp((t - 2.1) / 1.9)))]);
+    if (t < 2.95) mapShot(t);
+    const ma = ss(2.6, 2.95, t); if (ma > 0) masterPanel(t, ma, [lerp(760, 820, eio(clamp((t - 2.6) / 2.4))), 520, lerp(1.0, 1.14, eio(clamp((t - 2.6) / 2.4)))]);
     grade(0.1, 0.6, 0.75); series(ss(0.0, 0.2, t));
     scrim(1720, 330, ss(0.3, 0.6, t));
     const ca = ss(0.0, 0.2, t), cu = clamp(t / 0.9), punch = 1 + 0.1 * (1 - eo(clamp(t / 0.45)));
     ctx.save(); ctx.translate(540 * K, 1690 * K); ctx.scale(punch, punch); ctx.translate(-540 * K, -1690 * K);
     text(`${Math.round(51 * eo(cu))} MILLION+ SQM`, 540, 1700, F(800, fitFont('51 MILLION+ SQM', 800, 104, 940)), C.white, ca, 'center', -2); ctx.restore();
     text('A NEW DESTINATION IS RISING', 540, 1760, F(700, 30), C.champ, ss(0.6, 0.9, t), 'center', 7);
-    text(t < 2.3 ? 'Hudayriyat Island · real coastline, OpenStreetMap' : 'Official masterplan render · Modon (2023)', 540, 1806, F(500, 21), C.white, ss(0.9, 1.2, t) * (1 - ss(2.1, 2.25, t)) + ss(2.35, 2.55, t), 'center');
+    text(t < 2.75 ? 'Hudayriyat Island · real coastline, OpenStreetMap' : 'Official masterplan render · Modon (2023)', 540, 1806, F(500, 21), C.white, ss(0.9, 1.2, t) * (1 - ss(2.55, 2.7, t)) + ss(2.8, 3.0, t), 'center');
     text('ABU DHABI', 540, 395, F(600, 36), C.white, 0.35 + 0.65 * ss(0.0, 0.25, t), 'center', 18);
     text('HUDAYRIYAT ISLAND', 540, 470, F(800, fitFont('HUDAYRIYAT ISLAND', 800, 78, 950)), C.champ, 0.35 + 0.65 * ss(0.0, 0.3, t), 'center', 4);
-  } else if (t < 8.0 || (t >= 13.0 && t < 18.0)) {
+  } else if (t < 9.0 || (t >= 14.0 && t < 18.0)) {
     // ---- 2 & 4: photography / official renders
     const act = SHOTS.filter((s) => t >= s.a && t < s.b);
     act.forEach((s, i) => { ctx.save(); ctx.globalAlpha = i === 0 ? 1 : ss(s.a, s.a + 0.12, t); full(s.k, clamp((t - s.a) / (s.b - s.a)), s.o); ctx.restore(); });
     grade(0.14, 0.62, 0.8);
     const cur = act[act.length - 1];
     if (cur) { const la = ss(cur.a + 0.05, cur.a + 0.25, t) * (1 - ss(cur.b - 0.12, cur.b, t)); chip(cur.label, 1440, la, cur.sub); }
-    if (t < 8.0) {
-      const a = ss(4.05, 4.35, t) * (1 - ss(7.85, 8.0, t));
+    if (t < 9.0) {
+      const a = ss(5.05, 5.35, t) * (1 - ss(8.85, 9.0, t));
       scrim(475, 360, a);
-      ['SPORT.', 'BEACH.', 'LIFESTYLE.'].forEach((w, i) => text(w, 540, 400 + i * 78, F(800, 70), i === 2 ? C.champ : C.white, a * ss(4.05 + i * 0.25, 4.35 + i * 0.25, t), 'center', 6));
+      ['SPORT.', 'BEACH.', 'LIFESTYLE.'].forEach((w, i) => text(w, 540, 400 + i * 78, F(800, 70), i === 2 ? C.champ : C.white, a * ss(5.05 + i * 0.25, 5.35 + i * 0.25, t), 'center', 6));
     } else {
-      const a = ss(13.05, 13.4, t) * (1 - ss(17.85, 18.0, t));
+      const a = ss(14.05, 14.4, t) * (1 - ss(17.85, 18.0, t));
       scrim(470, 300, a);
       text('A NEW CHAPTER OF', 540, 420, F(600, 40), C.white, a, 'center', 10);
       text('ABU DHABI', 540, 500, F(800, 76), C.champ, a, 'center', 8);
-      text('REAL ESTATE', 540, 572, F(800, 76), C.champ, a * ss(13.2, 13.55, t), 'center', 8);
+      text('REAL ESTATE', 540, 572, F(800, 76), C.champ, a * ss(14.2, 14.55, t), 'center', 8);
     }
-  } else if (t < 13.0) {
+  } else if (t < 14.0) {
     // ---- 3. THE MASTERPLAN: official render, coastline then beaches
-    const u = clamp((t - 8) / 5);
-    const crop = t < 10.5 ? [lerp(700, 760, u * 2), lerp(430, 450, u * 2), lerp(1.25, 1.4, eio(clamp((t - 8) / 2.5)))] : [lerp(1000, 1060, eio(clamp((t - 10.5) / 2.5))), 300, lerp(1.55, 1.7, eio(clamp((t - 10.5) / 2.5)))];
+    const u = clamp((t - 9) / 5);
+    const crop = t < 11.2 ? [lerp(700, 760, eio(clamp((t - 9) / 2.2))), lerp(430, 450, eio(clamp((t - 9) / 2.2))), lerp(1.25, 1.4, eio(clamp((t - 9) / 2.2)))] : [lerp(1000, 1060, eio(clamp((t - 11.2) / 1.6))), 300, lerp(1.55, 1.68, eio(clamp((t - 11.2) / 1.6)))];
     masterPanel(t, 1, crop);
-    const xf = 1 - clamp(Math.abs(t - 10.5) / 0.12); if (xf > 0) { ctx.fillStyle = `rgba(5,11,20,${0.8 * xf})`; ctx.fillRect(0, 0, W, H); }
+    const xf = 1 - clamp(Math.abs(t - 11.2) / 0.12); if (xf > 0) { ctx.fillStyle = `rgba(5,11,20,${0.8 * xf})`; ctx.fillRect(0, 0, W, H); }
     grade(0.08, 0.7, 0.85);
-    const ta = ss(8.05, 8.35, t) * (1 - ss(12.85, 13.0, t));
+    const ta = ss(9.05, 9.35, t) * (1 - ss(12.6, 12.75, t));
     text('THE MASTERPLAN', 540, 400, F(700, 44), C.white, ta, 'center', 12);
     text('Official render · Modon', 540, 452, F(500, 22), C.muted, ta, 'center', 1);
     scrim(1760, 300, ta);
-    if (t < 10.5) stat(8.3, 53.5, ' KM', 'COASTLINE', 'Modon masterplan (2023)', 1720, 1 - ss(10.35, 10.5, t), 1);
-    else stat(10.6, 16, ' KM', 'BEACHES', 'Modon masterplan (2023)', 1720, ss(10.5, 10.65, t) * (1 - ss(12.85, 13.0, t)));
+    if (t < 11.2) stat(9.3, 53.5, ' KM', 'COASTLINE', 'Modon masterplan (2023)', 1720, 1 - ss(11.05, 11.2, t), 1);
+    else stat(11.3, 16, ' KM', 'BEACHES', 'Modon masterplan (2023)', 1720, ss(11.2, 11.35, t) * (1 - ss(12.6, 12.75, t)));
+    const mra = ss(12.6, 12.78, t);   // marina — real photo with the #HUDAYRIYAT sign
+    if (mra > 0) { ctx.save(); ctx.globalAlpha = mra; full('marina', clamp((t - 12.6) / 1.45), { f0: [640, 560], f1: [700, 560], z0: 1.0, z1: 1.06 }); ctx.restore(); grade(0.12, 0.62, 0.8);
+      chip('HUDAYRIYAT MARINA', 1440, ss(12.7, 12.9, t) * (1 - ss(13.85, 14.0, t))); }
   } else {
     // ---- 5. ENDING: golden-hour aerial — mangrove cycling track, beach, waterfront homes
     const u = clamp((t - 18) / 4);
@@ -188,7 +193,7 @@ function renderAt(tt) {
     text('+971 50 500 4472', 540, 1405, F(600, 30), C.white, ss(20.15, 20.55, t), 'center', 4);
     text('Figures: Modon masterplan (2023) · Map © OpenStreetMap contributors · Renders: Modon · Not investment advice', 540, 1560, F(400, 17), C.muted, ss(20.3, 20.7, t), 'center');
   }
-  for (const c of [4.0, 8.0, 13.0, 18.0]) { const f = 1 - clamp(Math.abs(t - c) / 0.07); if (f > 0) { ctx.fillStyle = `rgba(241,221,176,${0.22 * f})`; ctx.fillRect(0, 0, W, H); } }
+  for (const c of [5.0, 9.0, 14.0, 18.0]) { const f = 1 - clamp(Math.abs(t - c) / 0.07); if (f > 0) { ctx.fillStyle = `rgba(241,221,176,${0.22 * f})`; ctx.fillRect(0, 0, W, H); } }
 }
 window.renderAt = renderAt;
 for (const w of [400, 500, 600, 700, 800]) await document.fonts.load(F(w, 20));
